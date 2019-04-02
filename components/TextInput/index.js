@@ -1,4 +1,4 @@
-import TextButton from './InputwithButton';
-import styles from './styles';
+import TextButton from './InputwithButton.js';
+import * as styles from './styles.js';
 
 export { TextButton, styles };

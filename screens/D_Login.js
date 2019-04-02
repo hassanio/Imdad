@@ -3,7 +3,8 @@ import { Dimensions } from 'react-native';
 import { Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import { Logo } from '../components/Logo';
-import { TextButton, style } from '../components/TextInput';
+import TextButton from '../components/TextInput/InputwithButton.js';
+import styles from '../components/TextInput/styles.js';
 import { TextBox } from '../components/TextBox';
 import { DeviceEventEmitter } from 'react-native';
 const usr = 'Username';
@@ -18,7 +19,6 @@ const BORDER_RADIUS = 10;
 
 class D_Login extends Component {
   componentDidMount(){
-    
   }
   componentDidUnmount(){
   }
@@ -32,6 +32,10 @@ class D_Login extends Component {
   }
 
   render() {
+
+    styles.container.height = INPUT_HEIGHT
+    console.log(JSON.stringify(styles))
+
     return (
       <Container>
         <StatusBar backgroundColor="grey" barStyle="light-content" />
@@ -53,6 +57,7 @@ class D_Login extends Component {
         <TextButton
           buttonText={login}
           onPress={this.handle_NGO_press}
+          my_style = {styles}
         />
       </Container>
     );

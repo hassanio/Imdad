@@ -9,9 +9,9 @@ const INPUT_HEIGHT = imageHeight/8;
 const BORDER_RADIUS = 10;
 
 
-export default EStyleSheet.create({
-  $buttonBackgroundColorBase: '$white',
-  $buttonBackgroundColorModifier: 0.1,
+const styles =  {
+  buttonBackgroundColorBase: '#FFFFFF',
+  buttonBackgroundColorModifier: 0.1,
   container: {
     top: imageHeight/10,
     backgroundColor: '#CAEEA2',
@@ -27,6 +27,8 @@ export default EStyleSheet.create({
     fontWeight: '600',
     alignItems: 'center',
     fontSize: INPUT_HEIGHT/2.5,
-    color: '$primaryGreen',
+    color: '#316538',
   },
-});
+};
+
+export default styles

@@ -5,21 +5,21 @@ import {Alert} from "react-native";
 import { DeviceEventEmitter } from 'react-native';
 
 EStyleSheet.build({
-	$primaryGreen: "#316538",
-	$white: "#FFFFFF",
-  	$lightGray: "#F0F0F0",
-  	$border: "#979797",
-  	$inputText: "#797979",
+  $primaryGreen: "#316538",
+  $white: "#FFFFFF",
+  $lightGray: "#F0F0F0",
+  $border: "#979797",
+  $inputText: "#797979",
 })
 
 class HelloWorldApp extends Component {
-	componentDidMount(){ 
-	}
-	render(){
-   		return (
-     		<Navigator />
-   		)
-   	}
+  componentDidMount(){ 
+  }
+  render(){
+      return (
+        <Navigator />
+      )
+    }
 }
 
 export default HelloWorldApp
