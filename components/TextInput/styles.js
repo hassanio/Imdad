@@ -9,7 +9,7 @@ const INPUT_HEIGHT = imageHeight/8;
 const BORDER_RADIUS = 10;
 
 
-const styles =  {
+const textbutton_styles =  {
   buttonBackgroundColorBase: '#FFFFFF',
   buttonBackgroundColorModifier: 0.1,
   container: {
@@ -31,4 +31,4 @@ const styles =  {
   },
 };
 
-export default styles
+export default textbutton_styles

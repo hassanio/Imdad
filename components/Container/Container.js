@@ -1,10 +1,10 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { View } from 'react-native'
-import styles from './styles'
+import container_styles from './styles'
 
 const Container = ({children}) => (
-	<View style = {styles.container}>
+	<View style = {container_styles.container}>
 		{children}
 	</View>
 )

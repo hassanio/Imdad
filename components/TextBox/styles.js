@@ -8,8 +8,8 @@ const imageHeight = Dimensions.get('window').height;
 const INPUT_HEIGHT = imageHeight/12;
 const BORDER_RADIUS = 10;
 
-export default EStyleSheet.create({
-  $buttonBackgroundColorBase: '$white',
+const textbox_styles = {
+  $buttonBackgroundColorBase: '#FFFFFF',
   $buttonBackgroundColorModifier: 0.1,
   container: {
     top: imageHeight/10,
@@ -49,4 +49,6 @@ export default EStyleSheet.create({
     color: '#000000',
     fontSize: 18,
   },
-});
+};
+
+export default textbox_styles

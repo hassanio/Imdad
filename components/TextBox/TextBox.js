@@ -5,36 +5,26 @@ import color from 'color';
 
 import styles from './styles';
 
-const TextBox = (props) => {
+const TextBox = ({keyboardType, buttonText, my_style}) => {
   const underlayColor = color(styles.$buttonBackgroundColorBase).darken(
     styles.$buttonBackgroundColorModifier,
   );
 
-  const containerStyles = [styles.container];
-  if (props.editable === false) {
-    containerStyles.push(styles.containerDisabled);
-  }
+  const containerStyles = my_style.container;
 
   return (
     <View style={containerStyles}>
       <TouchableHighlight
         //onPress={props.onPress}
-        style={styles.buttonContainer}
+        style={my_style.buttonContainer}
         underlayColor={underlayColor}
       >
-        <Text style={styles.buttonText}>{props.buttonText}</Text>
+        <Text style={my_style.buttonText}>{buttonText}</Text>
       </TouchableHighlight>
       <View style={styles.separator} />
-      <TextInput style={styles.input} underlineColorAndroid="transparent" {...props} />
+      <TextInput style={my_style.input} underlineColorAndroid="transparent" {...{...keyboardType, ...buttonText ,...my_style}} />
     </View>
   );
-};
-
-
-TextBox.propTypes = {
-  onPress: propTypes.func,
-  buttonText: propTypes.string,
-  editable: propTypes.bool,
 };
 
 export default TextBox;

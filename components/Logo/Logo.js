@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, Text, ImageBackground, Image } from 'react-native';
 
-import styles from './styles';
+const Logo = ({my_style}) => (
 
-const Logo = () => (
-  <View style={styles.container} >
+  <View style={my_style.container} >
     <ImageBackground
       resizeMode="contain"
-      style={styles.containerImage}
+      style={my_style.containerImage}
       source={require('./images/background.jpg')}
     >
     </ImageBackground>

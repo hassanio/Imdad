@@ -1,10 +1,11 @@
+import { StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
-export default EStyleSheet.create({
+const logo_styles = {
   container: {
     alignItems: 'center',
     bottom: imageHeight/6,
@@ -16,4 +17,6 @@ export default EStyleSheet.create({
     height: imageHeight/4,
     position: 'absolute',
   },
-});
+};
+
+export default logo_styles
