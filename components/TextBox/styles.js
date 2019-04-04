@@ -14,12 +14,12 @@ const textbox_styles = {
   container: {
     top: imageHeight/10,
     backgroundColor: '#F0F0F0',
-    width: '90%',
+    width: imageWidth*0.9,
     height: INPUT_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: BORDER_RADIUS,
-    marginVertical: 18,
+    marginVertical: 15,
   },
 
   buttonContainer: {
@@ -33,13 +33,13 @@ const textbox_styles = {
   buttonText: {
     fontWeight: '600',
     fontSize: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     color: '#4F6D72',
   },
   separator: {
     height: INPUT_HEIGHT,
     width: StyleSheet.hairlineWidth,
-    backgroundColor: '$border',
+    backgroundColor: '#000000',
   },
   input: {
     flex: 1,

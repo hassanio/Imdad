@@ -3,6 +3,12 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Navigator from "./config/routes"
 import {Alert} from "react-native";
 import { DeviceEventEmitter } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import reducers from './reducers';
+
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk))
 
 EStyleSheet.build({
   $primaryGreen: "#316538",
@@ -17,7 +23,9 @@ class HelloWorldApp extends Component {
   }
   render(){
       return (
-        <Navigator />
+        <Provider store = {store}>
+          <Navigator />
+        </Provider>
       )
     }
 }

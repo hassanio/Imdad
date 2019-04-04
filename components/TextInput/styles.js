@@ -15,7 +15,7 @@ const textbutton_styles =  {
   container: {
     top: imageHeight/10,
     backgroundColor: '#CAEEA2',
-    width: '90%',
+    width: imageWidth*0.9,
     height: INPUT_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
