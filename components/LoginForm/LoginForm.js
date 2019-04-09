@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
@@ -15,8 +17,25 @@ const imageHeight = Dimensions.get('window').height;
 const INPUT_HEIGHT = imageHeight/12;
 const BORDER_RADIUS = 10;
 
+const validate = values => {
+	const errors = {}
+
+	if (!values.username) {
+		errors.username = 'Required!'
+	}
+
+	if (!values.password) {
+		errors.password = 'Required!'
+	}
+
+	return errors
+}
+
 class LoginForm extends Component {
 
+	submitForm(values) {
+		this.props.loginDonor(values)
+	}
 	renderFields() {
 
 		return (
@@ -28,16 +47,20 @@ class LoginForm extends Component {
 
 	render() {
 
-    	textbutton_styles.container.height = INPUT_HEIGHT
+		const { handleSubmit, errorMsg, authState }  = this.props;
+
+    	//textbutton_styles.container.height = INPUT_HEIGHT
 
 		return(
 				<View>
 					{this.renderFields()}
 					<TextButton
 			        buttonText={login}
-			        onPress={this.handle_NGO_press}
+			        onPress={handleSubmit(this.submitForm.bind(this))}
 			        my_style = {textbutton_styles}
 			        />
+					<Text>{errorMsg}</Text>
+					<Text>{authState}</Text>
 				</View>
 
 
@@ -45,7 +68,15 @@ class LoginForm extends Component {
 	}
 }
 
+const mapStateToProps = (state) => {
+	return { 
+		errorMsg: state.auth.error,
+		authState: state.auth.isAuth
+	}
+}
+
 export default reduxForm({
 	form: 'LoginForm',
+	validate,
 	destroyOnUnmount: false,
-})(LoginForm)
+})(connect(mapStateToProps, actions)(LoginForm))

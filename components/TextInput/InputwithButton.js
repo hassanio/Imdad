@@ -3,7 +3,7 @@ import React from 'react';
 import { View, TextInput, TouchableHighlight, Text } from 'react-native';
 import color from 'color';
 
-const TextButton = ({buttonText, my_style }) => {
+const TextButton = ({buttonText, my_style, onPress }) => {
 
   const containerStyles = my_style.container
 
@@ -14,7 +14,7 @@ const TextButton = ({buttonText, my_style }) => {
   return (
     <View style={containerStyles}>
       <TouchableHighlight
-        //onPress={props.onPress}
+        onPress={onPress}
       >
         <Text style={my_style.buttonText}>{buttonText}</Text>
       </TouchableHighlight>
