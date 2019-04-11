@@ -13,7 +13,7 @@ const textbutton_styles =  {
   buttonBackgroundColorBase: '#FFFFFF',
   buttonBackgroundColorModifier: 0.1,
   container: {
-    top: imageHeight/10,
+    //top: imageHeight/10,
     backgroundColor: '#CAEEA2',
     width: imageWidth*0.9,
     height: INPUT_HEIGHT,
