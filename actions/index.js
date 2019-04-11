@@ -6,7 +6,7 @@ export const loginDonor = (values) =>
         try {
 
             //Submit login credentials to server
-            const res = await axios.post('http://192.168.8.101:3000/auth/donor/signin', values)
+            const res = await axios.post('http://10.130.35.102:3000/auth/donor/signin', values)
 
             //Store token in AsyncStorage
             console.log(JSON.stringify(res))

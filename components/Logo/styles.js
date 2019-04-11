@@ -17,7 +17,7 @@ const logo_styles = {
     justifyContent: 'center',
     width: imageWidth/1.5,
     height: imageHeight/3,
-    position: 'absolute',
+    //position: 'absolute',
   },
 };
 

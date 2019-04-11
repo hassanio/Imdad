@@ -3,6 +3,6 @@ export default [
 	{label: 'Username', name: 'Username'},
 	{label: 'Password', name: 'Password'},
 	{label: 'Contact#', name: 'Contact#'},
-	{label: 'House Addr', name: 'House Addr'},
+	{label: 'Address', name: 'Address'},
 	{label: 'City', name: 'City'},
 ]

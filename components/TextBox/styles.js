@@ -18,22 +18,25 @@ const textbox_styles = {
     height: INPUT_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: BORDER_RADIUS,
     marginVertical: 15,
   },
 
   buttonContainer: {
-    //height: INPUT_HEIGHT,
+    height: INPUT_HEIGHT,
+    width: imageWidth/3,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F0F0F0',
+    //flexDirection: 'row',
+    //backgroundColor: '#F0F0F0',
     borderTopLeftRadius: BORDER_RADIUS,
     borderBottomLeftRadius: BORDER_RADIUS,
   },
   buttonText: {
     fontWeight: '600',
     fontSize: 20,
-    paddingHorizontal: 10,
+    //paddingHorizontal: 10,
     color: '#4F6D72',
   },
   separator: {

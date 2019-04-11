@@ -11,7 +11,6 @@ import textbutton_styles from '../components/TextInput/styles.js';
 const usr = 'Username';
 const pwd = 'Password';
 const login = 'Login';
-const signup_text = 'Dont have an account? Sign up'
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -21,26 +20,9 @@ const BORDER_RADIUS = 10;
 
 console.disableYellowBox = true
 
-
-modified_button = JSON.parse(JSON.stringify(textbutton_styles))
-
-
-
 class D_Login extends Component {
 
   render() {
-
-    modified_button.container.height = INPUT_HEIGHT
-    modified_button.buttonText.fontWeight = '200'
-    modified_button.buttonText.fontSize = INPUT_HEIGHT/2
-    modified_button.container.marginVertical = 2
-    modified_button.container.backgroundColor = '#316538'
-    modified_button.buttonText.color = '#FFFFFF'
-
-
-
-
-
     return (
         <Container>
           {/* <StatusBar backgroundColor="grey" barStyle="light-content" /> */}
@@ -51,11 +33,6 @@ class D_Login extends Component {
                   my_style = {logo_styles}
                 />
                   <LoginForm />
-                  <TextButton
-                    buttonText={signup_text}
-                    onPress={this.handle_NGO_press}
-                    my_style = {modified_button}
-                    />
           </KeyboardAvoidingView>
         </Container>
     );
