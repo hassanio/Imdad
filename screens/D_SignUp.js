@@ -4,14 +4,15 @@ import { Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import Logo from '../components/Logo/Logo.js';
 import logo_styles from '../components/Logo/styles.js';
-import LoginForm from '../components/LoginForm/LoginForm.js';
+import SignUpForm from '../components/SignUpForm/SignUpForm.js';
 import { DeviceEventEmitter } from 'react-native';
 import TextButton from '../components/TextInput/InputwithButton.js';
 import textbutton_styles from '../components/TextInput/styles.js';
+
 const usr = 'Username';
 const pwd = 'Password';
 const login = 'Login';
-const signup_text = 'Dont have an account? Sign up'
+const login_text = 'Already have an account? Login'
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -26,7 +27,7 @@ modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 
 
 
-class D_Login extends Component {
+class D_SignUp extends Component {
   componentDidMount(){
   }
   componentDidUnmount(){
@@ -45,7 +46,8 @@ class D_Login extends Component {
     modified_button.container.height = INPUT_HEIGHT
     modified_button.buttonText.fontWeight = '200'
     modified_button.buttonText.fontSize = INPUT_HEIGHT/2
-    modified_button.container.marginVertical = 2
+    modified_button.container.marginVertical = 0
+    modified_button.container.top = 0
     modified_button.container.backgroundColor = '#316538'
     modified_button.buttonText.color = '#FFFFFF'
 
@@ -60,12 +62,9 @@ class D_Login extends Component {
           behavior='padding'
           keyboardVerticalOffset={imageHeight/5}
           >
-                <Logo
-                  my_style = {logo_styles}
-                />
-                  <LoginForm />
+                  <SignUpForm />
                   <TextButton
-                    buttonText={signup_text}
+                    buttonText={login_text}
                     onPress={this.handle_NGO_press}
                     my_style = {modified_button}
                     />
@@ -75,4 +74,4 @@ class D_Login extends Component {
   }
 }
 
-export default D_Login;
+export default D_SignUp;
