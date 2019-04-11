@@ -7,14 +7,16 @@ const imageHeight = Dimensions.get('window').height;
 
 const logo_styles = {
   container: {
+    flex: 1,
     alignItems: 'center',
-    bottom: imageHeight/6,
+    //bottom: imageHeight/6,
+    marginTop: imageHeight/15,
   },
   containerImage: {
     alignItems: 'center',
     justifyContent: 'center',
     width: imageWidth/1.5,
-    height: imageHeight/4,
+    height: imageHeight/3,
     position: 'absolute',
   },
 };

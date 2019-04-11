@@ -52,7 +52,7 @@ class LoginForm extends Component {
     	//textbutton_styles.container.height = INPUT_HEIGHT
 
 		return(
-				<View>
+				<View style={{flex: 2, justifyContent: 'space-evenly', paddingTop: 20}}>
 					{this.renderFields()}
 					<TextButton
 			        buttonText={login}

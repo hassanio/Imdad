@@ -21,27 +21,14 @@ const BORDER_RADIUS = 10;
 console.disableYellowBox = true
 
 class D_Login extends Component {
-  componentDidMount(){
-  }
-  componentDidUnmount(){
-  }
-
-  handleChangeUsr = () => {
-
-  }
-
-  handleChangePwd = () => {
-    
-  }
 
   render() {
 
     return (
         <Container>
-          <StatusBar backgroundColor="grey" barStyle="light-content" />
-          <KeyboardAvoidingView style = {{flex: 0}}
-          behavior='padding'
-          keyboardVerticalOffset={imageHeight/5}
+          {/* <StatusBar backgroundColor="grey" barStyle="light-content" /> */}
+          <KeyboardAvoidingView style = {{flex: 1}} behavior='padding'
+          keyboardVerticalOffset={-imageHeight/5}
           >
                 <Logo
                   my_style = {logo_styles}

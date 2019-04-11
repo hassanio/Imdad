@@ -12,7 +12,7 @@ const textbox_styles = {
   $buttonBackgroundColorBase: '#FFFFFF',
   $buttonBackgroundColorModifier: 0.1,
   container: {
-    top: imageHeight/10,
+    //top: imageHeight/15,
     backgroundColor: '#F0F0F0',
     width: imageWidth*0.9,
     height: INPUT_HEIGHT,
@@ -23,7 +23,7 @@ const textbox_styles = {
   },
 
   buttonContainer: {
-    height: INPUT_HEIGHT,
+    //height: INPUT_HEIGHT,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F0F0F0',

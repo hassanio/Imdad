@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import React from 'react';
-import { View, TextInput, TouchableHighlight, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import color from 'color';
 
 const TextButton = ({onPress, buttonText, my_style }) => {
@@ -12,12 +12,13 @@ const TextButton = ({onPress, buttonText, my_style }) => {
   );
 
   return (
-    <View style={containerStyles}>
-      <TouchableHighlight
+    <View >
+      <TouchableOpacity
       onPress={onPress}
+      style = {containerStyles}
       >
         <Text style={my_style.buttonText}>{buttonText}</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 };
