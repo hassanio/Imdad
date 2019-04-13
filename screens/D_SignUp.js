@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
+import { Header } from 'react-navigation'
 import { Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import Logo from '../components/Logo/Logo.js';
@@ -26,10 +27,10 @@ class D_SignUp extends Component {
 
     return (
         <Container>
-          {/* <StatusBar backgroundColor="grey" barStyle="light-content" /> */}
+        <StatusBar barStyle="light-content" backgroundColor='#316538' />
           <KeyboardAvoidingView style = {{flex: 1}}
           behaviour = 'padding'
-          keyboardVerticalOffset={-imageHeight/5}
+          keyboardVerticalOffset={Header.HEIGHT}
           >
                   <SignUpForm />
           </KeyboardAvoidingView>

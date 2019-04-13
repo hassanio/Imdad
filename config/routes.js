@@ -1,16 +1,17 @@
-import { StackNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import AuthNavigator from './authroutes'
 import Main from '../screens/MAIN'
+import AuthLoadingScreen from '../screens/AuthLoading'
 import D_Login from '../screens/D_Login'
 import D_SignUp from '../screens/D_SignUp'
 
-const Navigator=StackNavigator({
-	home: {
-		screen: D_SignUp,
-		path:'login/:user',
-		navigationOptions: {
-			header: null
-		}
-	},
-})
+export default createAppContainer(createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    Auth: AuthNavigator,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+));
 
-export default Navigator

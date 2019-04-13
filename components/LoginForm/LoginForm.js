@@ -48,7 +48,7 @@ class LoginForm extends Component {
 
 	render() {
 
-		const { handleSubmit, errorMsg, authState }  = this.props;
+		const { handleSubmit, errorMsg, authState}  = this.props;
 		
 		modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 		modified_button.container.height = INPUT_HEIGHT
@@ -70,9 +70,9 @@ class LoginForm extends Component {
 			        my_style = {textbutton_styles}
 			        />
 					<Text>{errorMsg}</Text>
-					<Text>{authState}</Text>
 					<TextButton
                     buttonText={signup_text}
+                    onPress = {() => this.props.navigation.navigate('d_signup')}
                     my_style = {modified_button}
                     />
 				</View>
@@ -85,7 +85,7 @@ class LoginForm extends Component {
 const mapStateToProps = (state) => {
 	return { 
 		errorMsg: state.auth.error,
-		authState: state.auth.isAuth
+		authState: state.auth.isAuth,
 	}
 }
 

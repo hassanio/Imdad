@@ -1,8 +1,8 @@
 export default [
-	{label: 'Full name', name: 'Full name'},
-	{label: 'Username', name: 'Username'},
-	{label: 'Password', name: 'Password'},
-	{label: 'Contact#', name: 'Contact#'},
-	{label: 'Address', name: 'Address'},
-	{label: 'City', name: 'City'},
+	{label: 'Full name', name: 'name'},
+	{label: 'Username', name: 'username'},
+	{label: 'Password', name: 'password'},
+	{label: 'Contact#', name: 'contact'},
+	{label: 'Address', name: 'address'},
+	{label: 'City', name: 'location'},
 ]

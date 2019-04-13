@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { reduxForm, Field } from 'redux-form'
+import { connect } from 'react-redux'
 import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
 import formFields from './formFields'
+const axios = require('axios')
 import { Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
@@ -19,16 +21,81 @@ const BORDER_RADIUS = 10;
 
 modified_textbox = JSON.parse(JSON.stringify(textbox_styles))
 
-
 modified_textbox.container.height = imageHeight/15
 modified_textbox.buttonContainer.height = imageHeight/15
 modified_textbox.separator.height = imageHeight/15
 modified_textbox.container.marginVertical = 10
 modified_textbox.container.top = 0
 
+const validate = values => {
+	const errors = {}
 
+	if (!values.name) {
+		errors.name = 'Required!'
+	}
+
+	if (!values.username) {
+		errors.username = 'Required!'
+	}
+
+	if (!values.password) {
+		errors.password = 'Required!'
+	}
+
+	if (!values.contact) {
+		errors.contact = 'Required!'
+	}
+
+	if (!values.address) {
+		errors.address = 'Required!'
+	}
+
+	if (!values.location) {
+		errors.location = 'Required!'
+	}
+	return errors
+}
 
 class SignUpForm extends Component {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			error: ''
+		}
+	}
+
+	async submitForm(values) {
+		try {
+
+        	// this.setState({error : ''})
+
+        	this.setState({error: "Sending request..." })
+
+            //Submit SignUp credentials to server
+            const res = await axios.post('http://192.168.8.107:3000/auth/donor/signup', values)
+
+            //Store token in AsyncStorage
+            console.log(JSON.stringify(res))
+
+        	this.setState({error: "Successful" })
+
+
+
+        }
+        catch(err) {
+
+        	// console.log(JSON.stringify(err.response))
+        	if (err.response) {
+            	this.setState({error: err.response.data.error })
+        	}
+            else if (err.request) {
+            	this.setState({error: "No network connection!" })
+            }
+
+        }
+	}
+
 
 	renderFields() {
 
@@ -41,10 +108,13 @@ class SignUpForm extends Component {
 
 	render() {
 
+		const { handleSubmit }  = this.props;
+
 		modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
     	modified_SignUpbutton.container.height = imageHeight/10
 		modified_SignUpbutton.container.top = imageHeight/50
-		
+
+
 		let modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 		modified_button.container.height = INPUT_HEIGHT
 		modified_button.buttonText.fontWeight = '200'
@@ -53,20 +123,21 @@ class SignUpForm extends Component {
 		modified_button.container.top = 0
 		modified_button.container.backgroundColor = '#316538'
 		modified_button.buttonText.color = '#FFFFFF'
-		modified_button.c
+		
+
 
 
 		return(
-				<View style = {{flex: 1, paddingTop: imageHeight/10}}>
+				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
 					{this.renderFields()}
 					<TextButton
 			        buttonText={login}
-			        onPress={this.handle_NGO_press}
+			        onPress={handleSubmit(this.submitForm.bind(this))}
 			        my_style = {modified_SignUpbutton}
 			        />
+			        <Text>{this.state.error}</Text>
 					<TextButton
                     buttonText={login_text}
-                    onPress={this.handle_NGO_press}
                     my_style = {modified_button}
                     />
 				</View>
@@ -78,5 +149,6 @@ class SignUpForm extends Component {
 
 export default reduxForm({
 	form: 'SignUpForm',
+	validate,
 	destroyOnUnmount: false,
 })(SignUpForm)

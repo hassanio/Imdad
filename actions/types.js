@@ -1,3 +1,5 @@
 export const LOGIN_SUCCESS = 'login_success'
 export const LOGIN_FAILURE = 'login_failure'
 export const LOGOUT = 'logout'
+export const SIGNUP_SUCCESS = 'signup_success'
+export const SIGNUP_FAILURE = 'signup_failure'

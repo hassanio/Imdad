@@ -4,7 +4,8 @@ export default function(state = {}, action) {
 
     switch(action.type) {
         case LOGIN_SUCCESS:
-            return {...state, isAuth: true, error: null}
+            console.log(action.payload)
+            return {...state, isAuth: true, error: null, token: action.payload}
         case LOGOUT:
             return {...state, isAuth: false, error: null}
         case LOGIN_FAILURE:
