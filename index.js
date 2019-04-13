@@ -6,6 +6,7 @@ const expressValidator = require('express-validator')
 const keys = require('./config/keys')
 
 const authRoutes = require('./routes/authRoutes')
+const donationRoutes = require('./routes/donationRoutes')
 
 mongoose.connect(keys.mongoURI)
 
@@ -18,6 +19,7 @@ app.use(expressValidator())
 
 //Define all routes
 authRoutes(app)
+donationRoutes(app)
 
 //Server Setup
 const port = process.env.PORT || 3000

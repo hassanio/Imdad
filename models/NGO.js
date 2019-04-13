@@ -11,7 +11,7 @@ const NGOSchema = new Schema({
     location: String,
     contact: Number,
     image: Buffer,
-    approvedList: [Number]
+    approvedList: [{ type: Schema.Types.ObjectId, ref: 'donation' }]
 });
 
 //On Save Hook, encrypt password
