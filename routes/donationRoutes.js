@@ -6,8 +6,18 @@ const requireNGO = require('../middlewares/requireNGO')
 const donationsAPI = require('../controllers/donationsAPI')
 
 module.exports = (app) => {
-    app.post('/donate', requireAuth, requireDonor, donationsAPI.donateItem)
 
+    //Donor Routes
+    app.post('/donate', requireAuth, requireDonor, donationsAPI.donateItem)
+    app.get('/approveNGO/:donation/:ngo', requireAuth, requireDonor, donationsAPI.approve_ngo)
+
+
+    //NGO Routes
+    app.get('/requestDonation/:id', requireAuth, requireNGO, donationsAPI.request_donation)
+    app.get('/getApprovedDonations', requireAuth, requireNGO, donationsAPI.fetch_approved_donations)
+
+
+    //Common Routes
     app.get('/fetchDonations', requireAuth, async (req, res) => {
         if (req.authInfo == roles.Donor) {
             donationsAPI.fetch_donations_donor(req, res)
@@ -16,10 +26,6 @@ module.exports = (app) => {
             donationsAPI.fetch_donations_ngo(req, res)
         }
     })
-
-
-    app.get('/requestDonation/:id', requireAuth, requireNGO, donationsAPI.request_donation)
-    app.get('/approveNGO/:donation/:ngo', requireAuth, requireDonor, donationsAPI.approve_ngo)
 
     app.get('/confirmPickup/:id', requireAuth, donationsAPI.confirm_pickup)
 }

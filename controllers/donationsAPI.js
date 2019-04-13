@@ -30,7 +30,7 @@ exports.fetch_donations_donor = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('categories location collection_address')
+                                        .select('status categories dateAdded')
         res.send(donations)
     }
     catch(err) {
@@ -43,32 +43,27 @@ exports.approve_ngo = async(req, res) => {
     const donation_id = req.params.donation
     const ngo_id = req.params.ngo
 
-    //One function is to update the donation status from 'Pending' to 'Waiting'
-    const updateDonationStatus = Donation.updateOne({
-        _id: donation_id,
-        donor: donor_id,
-        status: 'PENDING',
-        requestingNGOs: ngo_id
-    }, {
-        $set: { 
-            status: 'WAITING', 
-            requestingNGOs: [], 
-            approvedNGO: ngo_id
-        }
-    })
+    //Function is to update the donation status from 'Pending' to 'Waiting' and add NGO to approvedNGO
+    try {
+        await Donation.updateOne({
+            _id: donation_id,
+            donor: donor_id,
+            status: 'PENDING',
+            requestingNGOs: ngo_id
+        }, {
+            $set: { 
+                status: 'WAITING', 
+                requestingNGOs: [], 
+                approvedNGO: ngo_id
+            }
+        })
 
-    //Other function is to append the donation ID to the approved list of the NGO
-    const updateNGO = NGO.updateOne({
-        _id: ngo_id
-    }, {
-        $addToSet: { approvedList: donation_id }
-    })
-
-    //Execute both functions/promises in parallel, then return success or error
-    Promise.all([updateDonationStatus, updateNGO])
-    .then(() => res.send({ success: true }))
-    .catch(err => res.status(422).send({ error: err }))
-
+        res.send({ success: true })
+    
+    } 
+    catch (err) {
+        res.send({ error: err })
+    }
 }
 
 
@@ -122,8 +117,23 @@ exports.request_donation  = async (req, res) => {
     
 }
 
+exports.fetch_approved_donations = async (req, res) => {
+    const ngo_id = req.user.id
 
-////////////TODO: THIS DOES NOT WORK!/////
+    try {
+        const approvedDonations = await Donation.find({
+            status: 'WAITING',
+            approvedNGO: ngo_id
+        }).select('categories location collection_address')
+
+        res.send(approvedDonations)
+    }
+    catch(err) {
+        res.status(422).send({ error: err })
+    }
+}
+
+//////////////////////////////Functions for Both Donor and NGO////////////////////////
 exports.confirm_pickup = async (req, res) => {
     const isDonor = req.authInfo == roles.Donor 
     const user_id = req.user.id
@@ -148,25 +158,17 @@ exports.confirm_pickup = async (req, res) => {
 
         //If both have confirmed, then
         //1.) Set donation status to 'CONFIRMED'
-        //2.) Remove the donation from the NGO's approved list
         if(thisDonation.hasDonorConfirmed && thisDonation.hasNGOConfirmed) {
             console.log("Both have confirmed")
-            const updateNGO = NGO.updateOne({ _id: user_id }, { $pull : { approvedList: donation_id }})
             thisDonation.status = 'CONFIRMED'
-
-            //Save changes to donation and NGO
-            await thisDonation.save()
-            await updateNGO
-
-            res.send({ success: true })
-
         } 
         //Otherwise, just save the changes made to the donation
         else {
             console.log("Both have not yet confirmed donations!")
-            await thisDonation.save()
-            res.send({ success: true })
         }
+        
+        await thisDonation.save()
+        res.send({ success: true})
     }
     catch(err) {
         return res.status(422).send({ error: err })

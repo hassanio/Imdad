@@ -11,7 +11,6 @@ const donorSchema = new Schema({
     location: String,
     contact: Number,
     image: Buffer,
-    donations: [Number]
 });
 
 //On Save Hook, encrypt password

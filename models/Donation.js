@@ -24,7 +24,8 @@ const DonationSchema = new Schema({
     requestingNGOs: [ { type: Schema.Types.ObjectId, ref: 'NGO'} ],
     approvedNGO: { type: Schema.Types.ObjectId, ref: 'NGO'},
     hasDonorConfirmed: { type: Boolean, default: false},
-    hasNGOConfirmed: { type: Boolean,  default: false}
+    hasNGOConfirmed: { type: Boolean,  default: false},
+    dateAdded: { type: Date, default: Date.now}
 });
 
 //Create the model class
