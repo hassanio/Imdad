@@ -77,7 +77,11 @@ exports.fetch_donations_ngo = async (req, res) => {
     const ngo_id = req.user.id
     const { categoryFilter, locationFilter } = req.query
 
-    const filters = { requestingNGOs: { $nin: [ngo_id] } }
+    const filters = { 
+        requestingNGOs: { $nin: [ngo_id] },
+        status: { $in: ['NONE', 'PENDING'] }
+    }
+
     if (categoryFilter) {
         filters.categories = categoryFilter
     }
@@ -124,19 +128,47 @@ exports.confirm_pickup = async (req, res) => {
     const isDonor = req.authInfo == roles.Donor 
     const user_id = req.user.id
     const donation_id = req.params.id
-
+    
+    const filters = { _id: donation_id, status: 'WAITING' }
     if (isDonor) {
-        await Donation.updateOne({
-            _id: donation_id,
-            donor: user_id,
-            status: 'WAITING',
-        }, {
-            $set: { 
-                hasDonorConfirmed: true, 
-                status: $.hasNGOConfirmed == true ? 'CONFIRMED' : 'WAITING'
-            }
-        })
+        filters.donor = user_id
+    } else {
+        filters.approvedNGO = user_id
+    }
 
-        res.send({ success: true })
+    try {
+        const thisDonation = await Donation.findOne(filters)
+
+        //Set hasDonorConfirmed or hasNGOConfirmed to true
+        if (isDonor) {
+            thisDonation.hasDonorConfirmed = true
+        } else {
+            thisDonation.hasNGOConfirmed = true
+        }
+
+        //If both have confirmed, then
+        //1.) Set donation status to 'CONFIRMED'
+        //2.) Remove the donation from the NGO's approved list
+        if(thisDonation.hasDonorConfirmed && thisDonation.hasNGOConfirmed) {
+            console.log("Both have confirmed")
+            const updateNGO = NGO.updateOne({ _id: user_id }, { $pull : { approvedList: donation_id }})
+            thisDonation.status = 'CONFIRMED'
+
+            //Save changes to donation and NGO
+            await thisDonation.save()
+            await updateNGO
+
+            res.send({ success: true })
+
+        } 
+        //Otherwise, just save the changes made to the donation
+        else {
+            console.log("Both have not yet confirmed donations!")
+            await thisDonation.save()
+            res.send({ success: true })
+        }
+    }
+    catch(err) {
+        return res.status(422).send({ error: err })
     }
 }
