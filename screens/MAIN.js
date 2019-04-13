@@ -24,7 +24,7 @@ class Main extends Component {
 
     return (
       <Container>
-      <StatusBar barStyle="dark-content" backgroundColor = '#316538' />
+      <StatusBar barStyle="default"/>
         <Logo
          my_style = {logo_styles}
          />

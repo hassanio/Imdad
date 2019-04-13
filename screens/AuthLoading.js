@@ -17,8 +17,13 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
+  async remove_token() {
+    await AsyncStorage.removeItem('token');
+  }
+
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
+    // this.remove_token()
     const userToken = await AsyncStorage.getItem('token');
 
     // This will switch to the App screen or Auth screen and this loading
@@ -30,7 +35,7 @@ class AuthLoadingScreen extends React.Component {
   render() {
     return (
       <View style = {{ backgroundColor:'#316538' ,flex: 1, justifyContent: 'center', allignItems:'center'}}>
-        <StatusBar barStyle="dark-content" backgroundColor = "blue" />
+        <StatusBar barStyle="light-content" backgroundColor = '#316538' />
         <ActivityIndicator color='#CAEEA2' style = {{flex: 1, justifyContent: 'center', allignitems: 'center', height: imageHeight/2}} size='large'/>
       </View>
     );

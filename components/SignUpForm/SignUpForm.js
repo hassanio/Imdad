@@ -73,7 +73,7 @@ class SignUpForm extends Component {
         	this.setState({error: "Sending request..." })
 
             //Submit SignUp credentials to server
-            const res = await axios.post('http://192.168.8.107:3000/auth/donor/signup', values)
+            const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
 
             //Store token in AsyncStorage
             console.log(JSON.stringify(res))

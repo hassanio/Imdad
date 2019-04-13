@@ -9,7 +9,7 @@ export const loginDonor = (values) =>
             dispatch(LoginError("Sending request..."))
 
             //Submit login credentials to server
-            const res = await axios.post('http://192.168.8.107:3000/auth/donor/signin', values)
+            const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signin', values)
 
             //Store token in AsyncStorage
             console.log(JSON.stringify(res))
