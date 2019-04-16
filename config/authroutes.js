@@ -7,12 +7,11 @@ import CustomHeader from '../components/Header/Header.js'
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
-
 const AuthNavigator=createStackNavigator({
 	main: {
 		screen: Main,
 		navigationOptions: {
-			header: CustomHeader,
+			header: null,
 		}
 	},
 

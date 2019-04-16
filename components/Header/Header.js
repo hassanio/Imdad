@@ -1,13 +1,29 @@
 import React from 'react';
-import { Header } from "react-navigation";
-import { Text, View, Platform } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Text, View, Platform, Image, StyleSheet } from "react-native";
+import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { Header } from 'react-native-elements';
 
-const CustomHeader = props => {
+
+const CustomHeader = ({navigation}) => {
 
   return (
-    <View style={{height: 56, marginTop: Platform.OS == "ios" ? 20 : 0 }}>
-      <Text>CustomHeader</Text>
+    <View>
+         <Header
+		  leftComponent={{ icon: 'menu' , color: '#316538', onPress:  () => {
+			  navigation.navigate('DrawerOpen')
+			  console.log("LOLOLOL")
+		  }
+			   }}
+		  rightComponent={
+		  	 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons name="plus" size={26} color="#316538" />
+            </View>
+		  }
+		  containerStyle={{
+		    backgroundColor: 'white',
+		    justifyContent: 'space-around',
+		  }}
+		/>
     </View>
   );
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import { Header } from 'react-navigation'
-import { Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
+import { ToastAndroid, Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import Logo from '../components/Logo/Logo.js';
 import logo_styles from '../components/Logo/styles.js';

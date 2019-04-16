@@ -23,7 +23,7 @@ class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    // this.remove_token()
+    this.remove_token()
     const userToken = await AsyncStorage.getItem('token');
 
     // This will switch to the App screen or Auth screen and this loading

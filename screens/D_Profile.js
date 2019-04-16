@@ -5,7 +5,7 @@ import { View, Text, Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-
 import { Container } from '../components/Container';
 import { DeviceEventEmitter } from 'react-native';
 
-class D_Feed extends Component {
+class D_Profile extends Component {
 
   render() {
 
@@ -18,5 +18,5 @@ class D_Feed extends Component {
   }
 }
 
-export default D_Feed;
+export default D_Profile;
 

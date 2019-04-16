@@ -7,7 +7,8 @@ import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
 import formFields from './formFields'
-import { Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { ToastAndroid, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+
 
 const login = 'Login';
 const signup_text = 'Dont have an account? Sign up'
@@ -33,9 +34,12 @@ const validate = values => {
 }
 
 class LoginForm extends Component {
+	constructor(props) {
+    super(props);
+  }
 
 	submitForm(values) {
-		this.props.loginDonor(values)
+		this.props.loginDonor(values,this.props.navigation)
 	}
 	renderFields() {
 
