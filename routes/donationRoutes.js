@@ -7,9 +7,12 @@ const requireNGO = require('../middlewares/requireNGO')
 const donationsAPI = require('../controllers/donationsAPI')
 
 const configMulter = () => {
+
+    const baseDir = process.env.NODE_ENV === 'production' ? 'build' : 'public'
+
     const storage = multer.diskStorage({
         destination: function(req, file, cb) {
-            cb(null, './images/donations/')
+            cb(null, `./${baseDir}/images/donations/`)
         },
         filename: function(req, file, cb) {
             cb(null, req.user.id.toString() + file.originalname)
