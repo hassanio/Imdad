@@ -2,7 +2,7 @@ const Donor = require('../models/Donor');
 const NGO = require('../models/NGO')
 const Donation = require('../models/Donation')
 const roles = require('../config/roles')
-
+const _ = require('lodash')
 
 /////////////////////////////////////////// Donor Functions ///////////////////////////////////////////////////
 exports.donateItem = async (req, res) => {
@@ -35,6 +35,34 @@ exports.fetch_donations_donor = async (req, res) => {
     }
     catch(err) {
         res.status(422).send( { error: err })
+    }
+}
+
+
+exports.fetch_donation_donor = async (req, res) => {
+    const donation_id = req.params.id
+
+    try {
+        const donation = await Donation.findById(donation_id)
+        let baseObj = _.pick(donation, ['description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        baseObj.isDonor = true
+
+        const status = donation.status
+        if (status == 'PENDING') {
+            baseObj.requestingNGOs = await NGO.find({
+                _id: { $in: donation.requestingNGOs }
+            }).select('email')
+
+        }
+        else if (status == 'WAITING') {
+            baseObj.hasDonorConfirmed = donation.hasDonorConfirmed
+            baseObj.hasNGOConfirmed = donation.hasNGOConfirmed
+        }
+
+        res.send(baseObj)
+    }
+    catch(err) {
+        res.status(422).send({ error: err })
     }
 }
 
@@ -92,6 +120,27 @@ exports.fetch_donations_ngo = async (req, res) => {
     }
     catch(err) {
         return res.status(422).send({ error: err })
+    }
+}
+
+exports.fetch_donation_ngo = async (req, res) => {
+    const donation_id = req.params.id
+
+    try {
+        const donation = await Donation.findById(donation_id)
+        let baseObj = _.pick(donation, ['description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        baseObj.isDonor = false
+
+        const status = donation.status
+        if (status == 'WAITING') {
+            baseObj.hasDonorConfirmed = donation.hasDonorConfirmed
+            baseObj.hasNGOConfirmed = donation.hasNGOConfirmed
+        }
+
+        res.send(baseObj)
+    }
+    catch(err) {
+        res.status(422).send( { error: err })
     }
 }
 

@@ -27,5 +27,14 @@ module.exports = (app) => {
         }
     })
 
+    app.get('/fetchDonation/:id', requireAuth, async (req, res) => {
+        if (req.authInfo == roles.Donor) {
+            donationsAPI.fetch_donation_donor(req, res)
+        }
+        else {
+            donationsAPI.fetch_donation_ngo(req, res)
+        }
+    })
+
     app.get('/confirmPickup/:id', requireAuth, donationsAPI.confirm_pickup)
 }
