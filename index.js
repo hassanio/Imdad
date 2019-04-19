@@ -17,11 +17,11 @@ app.use(morgan('combined'));
 app.use(bodyParser.json())
 app.use(expressValidator())
 
-if (process.env.NODE_ENV === 'production') {
-    app.use('/build', express.static('build'))
-} else {
-    app.use('/public', express.static('public'))
-}
+// if (process.env.NODE_ENV === 'production') {
+//     app.use('/build', express.static('build'))
+// } else {
+//     app.use('/public', express.static('public'))
+// }
 
 //Define all routes
 authRoutes(app)

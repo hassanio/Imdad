@@ -11,7 +11,7 @@ exports.donateItem = async (req, res) => {
     const donation = req.body
 
     try {
-        const newDonation = await new Donation({...donation, image: req.file.path, donor: donor.id}).save()
+        const newDonation = await new Donation({...donation, donor: donor.id}).save()
         res.send(newDonation)
     }
     catch(err) {

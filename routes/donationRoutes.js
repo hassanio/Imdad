@@ -40,9 +40,9 @@ const configMulter = () => {
 
 module.exports = (app) => {
 
-    upload = configMulter()
+    //upload = configMulter()
     //Donor Routes
-    app.post('/donate', requireAuth, requireDonor, upload.single('image'), donationsAPI.donateItem)
+    app.post('/donate', requireAuth, requireDonor, donationsAPI.donateItem)
     app.get('/approveNGO/:donation/:ngo', requireAuth, requireDonor, donationsAPI.approve_ngo)
 
 
