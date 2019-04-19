@@ -17,6 +17,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.json())
 app.use(expressValidator())
 
+app.use('/images', express.static('images'))
 //Define all routes
 authRoutes(app)
 donationRoutes(app)

@@ -14,7 +14,7 @@ const DonationSchema = new Schema({
     collection_address: String,
     location: { type: String, uppercase: true },
     contact: Number,
-    image: Buffer,
+    image: String,
     categories: [{
         type: String,
         enum: ['FOOD', 'CLOTHING', 'HOUSEHOLD', 'OTHER'],

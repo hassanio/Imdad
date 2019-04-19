@@ -11,8 +11,8 @@ exports.donateItem = async (req, res) => {
     const donation = req.body
 
     try {
-        const newDonation = await new Donation({...donation, donor: donor.id}).save()
-        res.send(JSON.stringify(newDonation))
+        const newDonation = await new Donation({...donation, image: req.file.path, donor: donor.id}).save()
+        res.send(newDonation)
     }
     catch(err) {
         res.status(422).send({ success: false, error: err })
@@ -30,7 +30,7 @@ exports.fetch_donations_donor = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('status categories dateAdded')
+                                        .select('image status categories dateAdded')
         res.send(donations)
     }
     catch(err) {
@@ -44,7 +44,7 @@ exports.fetch_donation_donor = async (req, res) => {
 
     try {
         const donation = await Donation.findById(donation_id)
-        let baseObj = _.pick(donation, ['description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        let baseObj = _.pick(donation, ['image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
         baseObj.isDonor = true
 
         const status = donation.status
@@ -115,7 +115,7 @@ exports.fetch_donations_ngo = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('categories location collection_address')
+                                        .select('image categories location collection_address')
         res.send(donations)
     }
     catch(err) {
@@ -128,7 +128,7 @@ exports.fetch_donation_ngo = async (req, res) => {
 
     try {
         const donation = await Donation.findById(donation_id)
-        let baseObj = _.pick(donation, ['description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        let baseObj = _.pick(donation, ['image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
         baseObj.isDonor = false
 
         const status = donation.status
