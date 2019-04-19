@@ -3,12 +3,19 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const expressValidator = require('express-validator')
+const cloudinary = require('cloudinary').v2
 const keys = require('./config/keys')
 
 const authRoutes = require('./routes/authRoutes')
 const donationRoutes = require('./routes/donationRoutes')
 
 mongoose.connect(keys.mongoURI)
+
+cloudinary.config({
+    cloud_name: keys.CLOUDINARY_CLOUD_NAME,
+    api_key: keys.CLOUDINARY_API_KEY,
+    api_secret: keys.CLOUDINARY_API_SECRET
+})
 
 const app = express();
 

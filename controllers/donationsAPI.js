@@ -2,16 +2,27 @@ const Donor = require('../models/Donor');
 const NGO = require('../models/NGO')
 const Donation = require('../models/Donation')
 const roles = require('../config/roles')
+const DataUri = require('datauri')
+const path = require('path')
+const cloudinary = require('cloudinary').v2
 const _ = require('lodash')
 
 /////////////////////////////////////////// Donor Functions ///////////////////////////////////////////////////
 exports.donateItem = async (req, res) => {
+    //Base-64 encode the image
+    const dUri = new DataUri()
+    dUri.format(path.extname(req.file.originalname), req.file.buffer)
 
     const donor = req.user
     const donation = req.body
 
     try {
-        const newDonation = await new Donation({...donation, donor: donor.id}).save()
+        const result = await cloudinary.uploader.upload(dUri.content, {
+            folder: 'images/donations',
+            use_filename: true
+        })
+
+        const newDonation = await new Donation({...donation, image: result.url, donor: donor.id}).save()
         res.send(newDonation)
     }
     catch(err) {
