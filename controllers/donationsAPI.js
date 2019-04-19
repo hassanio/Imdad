@@ -19,7 +19,10 @@ exports.donateItem = async (req, res) => {
     try {
         const result = await cloudinary.uploader.upload(dUri.content, {
             folder: 'images/donations',
-            use_filename: true
+            use_filename: true,
+            width: 800, 
+            height: 600, 
+            crop: "limit"
         })
 
         const newDonation = await new Donation({...donation, image: result.url, donor: donor.id}).save()

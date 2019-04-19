@@ -10,7 +10,8 @@ const donorSchema = new Schema({
     address: String,
     location: String,
     contact: Number,
-    image: Buffer,
+    image: String,
+    image_id: String,
 });
 
 //On Save Hook, encrypt password

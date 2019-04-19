@@ -8,6 +8,7 @@ const keys = require('./config/keys')
 
 const authRoutes = require('./routes/authRoutes')
 const donationRoutes = require('./routes/donationRoutes')
+const profileRoutes = require('./routes/profileRoutes')
 
 mongoose.connect(keys.mongoURI)
 
@@ -32,6 +33,7 @@ app.use(expressValidator())
 
 //Define all routes
 authRoutes(app)
+profileRoutes(app)
 donationRoutes(app)
 
 //Server Setup

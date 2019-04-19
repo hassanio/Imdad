@@ -10,7 +10,8 @@ const NGOSchema = new Schema({
     organization_address: String,
     location: String,
     contact: Number,
-    image: Buffer,
+    image: String,
+    image_id: String
 });
 
 //On Save Hook, encrypt password
