@@ -8,8 +8,7 @@ import { Dimensions } from 'react-native'
 import React from 'react'
 import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
-import { Header } from 'react-native-elements';
-
+import { DrawerActions } from 'react-navigation'
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
@@ -25,13 +24,13 @@ const FeedNavigator=createStackNavigator({
 },
 
 {
-	initialRouteName: 'feed',
+	initialRouteName: 'drawer',
 	defaultNavigationOptions: ({navigation}) => ({
         headerLeft: <TouchableOpacity onPress={() => navigation.navigate('drawer')} style={{flexDirection: 'row', alignItems: 'center' }}>
-		              <MaterialCommunityIcons name="menu" size={26} color="#316538" style={{marginLeft: 15}} />
+		              <MaterialCommunityIcons name="menu" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
 		            </TouchableOpacity>,
 		headerRight:  <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center' }}>
-		              <MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
+		              	<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
 		            </TouchableOpacity>,
 
     })
