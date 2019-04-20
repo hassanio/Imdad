@@ -45,7 +45,7 @@ exports.updateProfile = async (req, res) => {
         const public_img_id = user.image_id
 
         //V.IMP: ONLY set folder if no public_id already, otherwise, it will create nested folders
-        let upload_options = {width: 800, height: 600, crop: "limit"}
+        let upload_options = {}
         if (public_img_id) {
             upload_options.public_id = public_img_id
         } else {
