@@ -21,7 +21,7 @@ export const loginDonor = (values, nav) =>
 
             ToastAndroid.show("Login Successful", ToastAndroid.LONG)
 
-            nav.navigate('Feed')
+            nav.navigate('Main')
 
         }
         catch(err) {
