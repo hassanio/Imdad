@@ -51,7 +51,7 @@ exports.updateProfile = async (req, res) => {
         } else {
             upload_options.folder = isDonor ? 'images/donors' : 'images/ngos'
         }
-        const result = await cloudinary.uploader.upload(dUri.content, upload_options)
+        const result = await cloudinary.uploader.upload(dUri.content, upload_options)
 
         //Finally, update donor/ngo
         const updateValues = req.body
