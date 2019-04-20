@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import React from 'react';
-import { View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { Picker, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import color from 'color';
 
 import styles from './styles';

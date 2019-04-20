@@ -5,9 +5,10 @@ import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
+import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
-import { Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { Item, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
@@ -66,13 +67,13 @@ class SignUpForm extends Component {
 	}
 
 	async submitForm(values) {
+		console.log(values)
 		try {
 
-        	// this.setState({error : ''})
 
         	this.setState({error: "Sending request..." })
 
-            //Submit SignUp credentials to server
+            // Submit SignUp credentials to server
             const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
 
             //Store token in AsyncStorage
@@ -109,6 +110,22 @@ class SignUpForm extends Component {
 					if (name == 'contact') {
 						type = 'numeric'
 					} 
+					if (name == 'location') {
+						return (
+							<Field
+							    name={name}
+							    label = {label}
+							    component={ renderPicker }
+							    my_style = {modified_textbox}
+							>
+							    <Item label="Karachi" value="Karachi" />
+							    <Item label="Lahore" value="Lahore" />
+							    <Item label="Islamabad" value="Islamabad" />
+							    <Item label="Multan" value="Multan" />
+							    <Item label="Quetta" value="Quetta" />
+							</Field>
+							)
+					}
 					return <Field key = {name} component = {TextBox} type={type} name={name} secure = {false} label={label} my_style = {modified_textbox} />	
 				}
 			})
