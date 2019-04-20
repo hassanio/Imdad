@@ -3,7 +3,6 @@ import Main from '../screens/MAIN'
 import D_Login from '../screens/D_Login'
 import D_SignUp from '../screens/D_SignUp'
 import { Dimensions } from 'react-native'
-import CustomHeader from '../components/Header/Header.js'
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 

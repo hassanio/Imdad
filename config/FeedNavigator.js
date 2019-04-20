@@ -1,4 +1,4 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer, DrawerActions } from 'react-navigation';
 import Main from '../screens/MAIN'
 import D_Login from '../screens/D_Login'
 import D_Feed from '../screens/D_Feed'
@@ -27,7 +27,7 @@ const FeedNavigator=createStackNavigator({
 {
 	initialRouteName: 'feed',
 	defaultNavigationOptions: ({navigation}) => ({
-        headerLeft: <TouchableOpacity onPress={() => navigation.navigate('drawer')} style={{flexDirection: 'row', alignItems: 'center' }}>
+        headerLeft: <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} style={{flexDirection: 'row', alignItems: 'center' }}>
 		              <MaterialCommunityIcons name="menu" size={26} color="#316538" style={{marginLeft: 15}} />
 		            </TouchableOpacity>,
 		headerRight:  <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center' }}>
