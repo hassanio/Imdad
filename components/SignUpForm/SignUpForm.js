@@ -101,7 +101,16 @@ class SignUpForm extends Component {
 
 		return (
 			formFields.map(({label, name}) => {
-				return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {modified_textbox} />
+				if (name == 'password') {
+					return <Field key = {name} component = {TextBox} type='text' name={name} secure = {true} label={label} my_style = {modified_textbox} />
+
+				} else {
+					type = 'text'
+					if (name == 'contact') {
+						type = 'numeric'
+					} 
+					return <Field key = {name} component = {TextBox} type={type} name={name} secure = {false} label={label} my_style = {modified_textbox} />	
+				}
 			})
 		)
 	}

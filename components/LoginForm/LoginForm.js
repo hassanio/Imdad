@@ -45,7 +45,12 @@ class LoginForm extends Component {
 
 		return (
 			formFields.map(({label, name}) => {
-				return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {textbox_styles} />
+				if (name == 'password') {
+					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {textbox_styles} secure = {true} />
+				} else {
+					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {textbox_styles} secure = {false} />
+				}
+				
 			})
 		)
 	}
