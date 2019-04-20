@@ -24,7 +24,7 @@ exports.fetchImage = async (req, res) => {
     const User = req.authInfo == roles.Donor ? Donor : NGO
 
     try {
-        const profileImg = await User.findById(req.user.id).select('image')
+        const profileImg = await User.findById(req.user.id).select('image name')
         res.send(profileImg)
     }
     catch(err) {
