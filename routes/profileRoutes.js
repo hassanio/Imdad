@@ -31,5 +31,6 @@ module.exports = (app) => {
 
     //Common Routes
     app.get('/fetchProfile', requireAuth, profileAPI.fetchProfile)
+    app.get('/fetchProfileImage', requireAuth, profileAPI.fetchImage)
     app.post('/updateProfile', requireAuth, upload.single('image'), profileAPI.updateProfile)
 }

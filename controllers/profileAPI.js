@@ -20,6 +20,18 @@ exports.fetchProfile = async (req, res) => {
     }
 }
 
+exports.fetchImage = async (req, res) => {
+    const User = req.authInfo == roles.Donor ? Donor : NGO
+
+    try {
+        const profileImg = await User.findById(req.user.id).select('image')
+        res.send(profileImg)
+    }
+    catch(err) {
+        res.status(422).send({ error: err})
+    }
+}
+
 exports.updateProfile = async (req, res) => {
     const isDonor = req.authInfo == roles.Donor
     const User = isDonor ? Donor : NGO
@@ -39,8 +51,7 @@ exports.updateProfile = async (req, res) => {
         } else {
             upload_options.folder = isDonor ? 'images/donors' : 'images/ngos'
         }
-        const result = await cloudinary.uploader.upload(dUri.content, upload_options)
-        console.log(result)
+        const result = await cloudinary.uploader.upload(dUri.content, upload_options)
 
         //Finally, update donor/ngo
         const updateValues = req.body
