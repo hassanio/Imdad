@@ -7,7 +7,7 @@ const NGOSchema = new Schema({
     email: {type: String, unique: true},
     password: String,
     name: String,
-    organization_address: String,
+    address: String,
     location: String,
     contact: Number,
     image: String,

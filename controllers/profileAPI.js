@@ -8,7 +8,7 @@ const _ = require('lodash')
 
 exports.fetchProfile = async (req, res) => {
     const User = req.authInfo == roles.Donor ? Donor : NGO
-    const addrString = req.authInfo == roles.Donor ? 'address' : 'organization_address' 
+    const addrString = req.authInfo == roles.Donor ? 'address' : 'address' 
     const filterString = 'name location contact image ' + addrString
 
     try {
