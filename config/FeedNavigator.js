@@ -3,6 +3,8 @@ import Main from '../screens/MAIN'
 import D_Login from '../screens/D_Login'
 import D_Feed from '../screens/D_Feed'
 import D_SignUp from '../screens/D_SignUp'
+import D_Form from '../screens/D_Form'
+import Cam from '../screens/Cam'
 import DrawerStack from './DrawerNav'
 import { Dimensions } from 'react-native'
 import React from 'react'
@@ -19,12 +21,24 @@ const FeedNavigator=createStackNavigator({
 
 	drawer: {
 		screen: DrawerStack
+	},
+
+	d_form: {
+		screen: D_Form,
+	},
+	cam: {
+		screen: Cam,
+		navigationOptions: {
+			header: null,
+		}
 	}
+
+
 
 },
 
 {
-	initialRouteName: 'drawer',
+	initialRouteName: 'd_form',
 	defaultNavigationOptions: ({navigation}) => ({
         headerLeft: <TouchableOpacity onPress={() => navigation.navigate('drawer')} style={{flexDirection: 'row', alignItems: 'center' }}>
 		              <MaterialCommunityIcons name="menu" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />

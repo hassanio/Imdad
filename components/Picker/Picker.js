@@ -12,7 +12,7 @@ const underlayColor = color(styles.$buttonBackgroundColorBase).darken(
 
 
 
-const renderPicker = ({ input: { onChange, value }, label, my_style, children}) =>  {
+const renderPicker = ({ input: { onChange, value }, meta: {error, touched, active}, label, my_style, children}) =>  {
 
 	const containerStyles = my_style.container;
 
@@ -31,6 +31,7 @@ const renderPicker = ({ input: { onChange, value }, label, my_style, children}) 
 		  >
 		    { children }
 		  </Picker>
+		  {touched && error && <Text>Required!</Text>}
 		</View>
 		);
 }

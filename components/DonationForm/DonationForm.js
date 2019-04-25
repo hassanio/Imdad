@@ -8,7 +8,7 @@ import textbox_styles from '../TextBox/styles.js';
 import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
-import { Item, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { ToastAndroid, Item, Image, Dimensions, Platform, View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
@@ -31,30 +31,29 @@ modified_textbox.container.top = 0
 const validate = values => {
 	const errors = {}
 
-	if (!values.name) {
-		errors.name = 'Required!'
-	}
-
-	if (!values.username) {
-		errors.username = 'Required!'
-	}
-
-	if (!values.password) {
-		errors.password = 'Required!'
+	if (!values.description) {
+		errors.description = 'Required!'
 	}
 
 	if (!values.contact) {
 		errors.contact = 'Required!'
 	}
 
-	if (!values.address) {
-		errors.address = 'Required!'
+	if (!values.collection_address) {
+		errors.collection_address = 'Required!'
 	}
 
+	if (!values.location || values.location == 'None') {
+		errors.location = 'Required!'
+	}
+
+	if (!values.categories || values.categories == 'None') {
+		errors.categories = 'Required!'
+	}
 	return errors
 }
 
-class SignUpForm extends Component {
+class DonationForm extends Component {
 
 	constructor(props) {
 		super(props)
@@ -64,19 +63,31 @@ class SignUpForm extends Component {
 	}
 
 	async submitForm(values) {
-		console.log(values)
+
+
+
 		try {
 
+			if (!this.props.navigation.state.params || !this.props.navigation.state.params.image) {
+				ToastAndroid.show("Image Missing!", ToastAndroid.LONG)
+				return
+			}
 
-        	this.setState({error: "Sending request..." })
-
+				let formData = new FormData();
+				const photo = {
+					uri: this.props.navigation.state.params.image,
+					type: 'image/jpeg',
+					name: 'photo.jpg'
+				}
+				formData.append('image', photo)
+	        	console.log(JSON.stringify(formData))
             // Submit SignUp credentials to server
-            const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
+         //    const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
 
-            //Store token in AsyncStorage
-            console.log(JSON.stringify(res))
+         //    //Store token in AsyncStorage
+         //    console.log(JSON.stringify(res))
 
-        	this.setState({error: "Successful" })
+        	// this.setState({error: "Successful" })
 
 
 
@@ -107,6 +118,22 @@ class SignUpForm extends Component {
 					if (name == 'contact') {
 						type = 'numeric'
 					} 
+					if (name == 'categories') {
+						return (
+							<Field
+							    name={name}
+							    label = {label}
+							    component={ renderPicker }
+							    my_style = {modified_textbox}
+							>
+								<Item label="None" value="None" />
+							    <Item label="Food" value="FOOD" />
+							    <Item label="Clothing" value="CLOTHING" />
+							    <Item label="HOUSEHOLD" value="HOUSEHOLD" />
+							    <Item label="OTHER" value="OTHER" />
+							</Field>
+							)
+					}
 					if (name == 'location') {
 						return (
 							<Field
@@ -115,6 +142,7 @@ class SignUpForm extends Component {
 							    component={ renderPicker }
 							    my_style = {modified_textbox}
 							>
+								<Item label="None" value="None" />
 							    <Item label="Karachi" value="Karachi" />
 							    <Item label="Lahore" value="Lahore" />
 							    <Item label="Islamabad" value="Islamabad" />
@@ -134,35 +162,46 @@ class SignUpForm extends Component {
 		const { handleSubmit }  = this.props;
 
 		modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
-    	modified_SignUpbutton.container.height = imageHeight/10
+    	modified_SignUpbutton.container.height = imageHeight/15
 		modified_SignUpbutton.container.top = imageHeight/50
+		modified_SignUpbutton.buttonText.fontSize = imageHeight/30
 
+		// console.log(this.props.navigation.state.params)
 
-		let modified_button = JSON.parse(JSON.stringify(textbutton_styles))
-		modified_button.container.height = INPUT_HEIGHT
-		modified_button.buttonText.fontWeight = '200'
-		modified_button.buttonText.fontSize = imageHeight/40
-		modified_button.container.marginVertical = 0
-		modified_button.container.top = 0
-		modified_button.container.backgroundColor = '#316538'
-		modified_button.buttonText.color = '#FFFFFF'
-		
-
-
+		if (this.props.navigation.state.params == undefined) {
+			src = require('../no_img.png')
+		} else {
+			src = {uri: this.props.navigation.state.params.image}
+		}
 
 		return(
 				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
+					<TouchableOpacity onPress = {() => {this.props.navigation.navigate('cam')}} style = {{ flexDirection: 'row', justifyContent:'center', allignItems: 'center', paddingTop: imageHeight/40}}>
+					<Image 
+					style = {{
+						height: imageHeight/5,
+						width: imageHeight/5,
+						borderRadius: 15
+					}}
+			          source={src}
+			        />
+			        <Text
+			        style = {{
+			        	paddingTop: imageHeight/11,
+			        	paddingLeft: imageWidth/20,
+			        	color: '#FFFFFF',
+			        }}
+			        >
+			        	(Click to upload image)
+			        </Text>
+			        </TouchableOpacity>
 					{this.renderFields()}
+					<Text>{this.state.error}</Text>
 					<TextButton
-			        buttonText={login}
+			        buttonText={"Submit"}
 			        onPress={handleSubmit(this.submitForm.bind(this))}
 			        my_style = {modified_SignUpbutton}
 			        />
-			        <Text>{this.state.error}</Text>
-					<TextButton
-                    buttonText={login_text}
-                    my_style = {modified_button}
-                    />
 				</View>
 
 
@@ -171,7 +210,7 @@ class SignUpForm extends Component {
 }
 
 export default reduxForm({
-	form: 'SignUpForm',
+	form: 'DonationForm',
 	validate,
 	destroyOnUnmount: false,
-})(SignUpForm)
+})(DonationForm)
