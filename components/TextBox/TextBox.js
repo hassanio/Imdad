@@ -11,7 +11,6 @@ const TextBox = ({ input, my_style, secure, type, label, meta: {error, touched, 
   );
 
   const containerStyles = my_style.container;
-
   return (
       <View style={containerStyles}>
         <TouchableHighlight
@@ -22,7 +21,7 @@ const TextBox = ({ input, my_style, secure, type, label, meta: {error, touched, 
           <Text style={my_style.buttonText}>{label}</Text>
         </TouchableHighlight>
         <View style={my_style.separator} />
-        <TextInput {...input} keyboardType = {type} style={my_style.input} secureTextEntry={secure} underlineColorAndroid="transparent"/>
+        <TextInput {...input} value={input.value.toString()}keyboardType = {type} style={my_style.input} secureTextEntry={secure} underlineColorAndroid="transparent"/>
         {touched && error && <Text>{error}</Text>}
       </View>
   );

@@ -5,23 +5,19 @@ import FeedStack from './FeedNavigator.js'
 import D_Profile from '../screens/D_Profile'
 import Help from '../screens/Help'
 import D_Form from '../screens/D_Form'
+import CustomDrawer from '../screens/CustomDrawer.js'
 
 const DrawerStack = createDrawerNavigator({
-  feed: { screen: FeedStack },
-  profile: { screen: D_Profile },
-  help: { screen: Help },
-  d_form: {
-    screen: D_Form,
-    navigationOptions: {
-      drawerLabel: () => null,
-      drawerIcon: () => null
-    }
-  }
+  Feed: { screen: FeedStack },
+  Profile: { screen: D_Profile },
+  'Help and Hints': { screen: Help },
+  d_form: { screen: D_Form }
 }, {
-  contentComponent: (props) =>
-    {
-      return <DrawerItems {...props} />
-    }
+  contentComponent: CustomDrawer,
+
+  contentOptions: {
+    activeTintColor: '#316538',
+  }
 })
 
 export default DrawerStack

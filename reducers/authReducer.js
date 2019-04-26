@@ -7,7 +7,7 @@ export default function(state = {}, action) {
             console.log(action.payload)
             return {...state, isAuth: true, error: null, token: action.payload}
         case LOGOUT:
-            return {...state, isAuth: false, error: null}
+            return {...state, isAuth: false, error: null, token: null}
         case LOGIN_FAILURE:
             return {...state, error: action.payload }
         default:

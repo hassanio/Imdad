@@ -100,6 +100,5 @@ const mapStateToProps = (state) => {
 
 export default reduxForm({
 	form: 'LoginForm',
-	validate,
-	destroyOnUnmount: false,
+	validate
 })(connect(mapStateToProps, actions)(LoginForm))

@@ -17,7 +17,7 @@ export const loginDonor = (values, nav) =>
             await AsyncStorage.setItem('token', res.data.token);
 
             //Tell redux that login is successful
-            dispatch({ type: LOGIN_SUCCESS, payload: res.data.token })
+            dispatch(LoginSuccess(res.data.token))
 
             ToastAndroid.show("Login Successful", ToastAndroid.LONG)
 
@@ -38,6 +38,13 @@ export const loginDonor = (values, nav) =>
         }
     }
 
+export const LoginSuccess = token => {
+    return {
+        type: LOGIN_SUCCESS,
+        payload: token
+    }
+}
+
 export const LoginError = error => {
     return {
         type: LOGIN_FAILURE,
@@ -45,3 +52,9 @@ export const LoginError = error => {
     }
 }
 
+export const Logout = (nav) => 
+    async (dispatch) => {
+        await AsyncStorage.removeItem('token')
+        dispatch({ type: LOGOUT })
+        nav.navigate('Auth')
+    }

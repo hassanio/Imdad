@@ -32,7 +32,7 @@ class D_SignUp extends Component {
           behaviour = 'padding'
           keyboardVerticalOffset={Header.HEIGHT}
           >
-                  <SignUpForm />
+                  <SignUpForm navigation={this.props.navigation} />
           </KeyboardAvoidingView>
         </Container>
     );

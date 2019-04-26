@@ -7,20 +7,13 @@ import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
 import formFields from './formFields'
 const axios = require('axios')
-import { Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
-
-const login = 'Sign Up';
-const login_text = 'Already have an account? Login'
+import { Dimensions, View, Text} from 'react-native';
+import { Avatar } from 'react-native-elements'
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
-const INPUT_HEIGHT = imageHeight/12;
-const BORDER_RADIUS = 10;
-
-
 modified_textbox = JSON.parse(JSON.stringify(textbox_styles))
-
 modified_textbox.container.height = imageHeight/15
 modified_textbox.buttonContainer.height = imageHeight/15
 modified_textbox.separator.height = imageHeight/15
@@ -32,14 +25,6 @@ const validate = values => {
 
 	if (!values.name) {
 		errors.name = 'Required!'
-	}
-
-	if (!values.username) {
-		errors.username = 'Required!'
-	}
-
-	if (!values.password) {
-		errors.password = 'Required!'
 	}
 
 	if (!values.contact) {
@@ -56,47 +41,29 @@ const validate = values => {
 	return errors
 }
 
-class SignUpForm extends Component {
+class ProfileForm extends Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
 			error: ''
 		}
-	}
+    }
 
-	async submitForm(values) {
-		try {
-
-        	// this.setState({error : ''})
-
-        	this.setState({error: "Sending request..." })
-
-            //Submit SignUp credentials to server
-            const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
-
-            //Store token in AsyncStorage
-            console.log(JSON.stringify(res))
-
-			this.setState({error: "Successful" })
-			
-        }
-        catch(err) {
-
-        	// console.log(JSON.stringify(err.response))
-        	if (err.response) {
-            	this.setState({error: err.response.data.error })
-        	}
-            else if (err.request) {
-            	this.setState({error: "No network connection!" })
-            }
-
-        }
-	}
-
-
+    renderImage(img_url) {
+        return (
+            <View style = {styles.avatarViewStyle}>
+                <Avatar
+                    size = 'xlarge'
+                    rounded
+                    source = {{ uri: img_url }}
+                    imageProps = {{ resizeMode: 'stretch'}}
+                    containerStyle = {styles.avatarContainer}
+                />
+            </View>
+        )
+    }
 	renderFields() {
-
 		return (
 			formFields.map(({label, name}) => {
 				if (name == 'password') {
@@ -111,40 +78,27 @@ class SignUpForm extends Component {
 				}
 			})
 		)
-	}
+    }
+    
 
 	render() {
 
-		const { handleSubmit }  = this.props;
-
+        const { handleSubmit, initialValues }  = this.props;
+        
 		modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
     	modified_SignUpbutton.container.height = imageHeight/10
 		modified_SignUpbutton.container.top = imageHeight/50
 
-
-		let modified_button = JSON.parse(JSON.stringify(textbutton_styles))
-		modified_button.container.height = INPUT_HEIGHT
-		modified_button.buttonText.fontWeight = '200'
-		modified_button.buttonText.fontSize = imageHeight/40
-		modified_button.container.marginVertical = 0
-		modified_button.container.top = 0
-		modified_button.container.backgroundColor = '#316538'
-		modified_button.buttonText.color = '#FFFFFF'
-
 		return(
 				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
+                    {this.renderImage(initialValues.image)}
 					{this.renderFields()}
 					<TextButton
-			        buttonText={login}
-			        onPress={handleSubmit(this.submitForm.bind(this))}
+			        buttonText={"Save Changes"}
+			        // onPress={handleSubmit(this.submitForm.bind(this))}
 			        my_style = {modified_SignUpbutton}
 			        />
 			        <Text>{this.state.error}</Text>
-					<TextButton
-					onPress = {() => this.props.navigation.navigate('d_login')}
-                    buttonText={login_text}
-                    my_style = {modified_button}
-                    />
 				</View>
 
 
@@ -152,7 +106,21 @@ class SignUpForm extends Component {
 	}
 }
 
+const styles = {
+    avatarViewStyle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#316538',
+        paddingBottom: imageHeight/25
+    },
+    avatarContainer: {
+        marginVertical: imageHeight/25,
+    },
+}
+
+
 export default reduxForm({
-	form: 'SignUpForm',
-	validate
-})(SignUpForm)
+    form: 'ProfileForm',
+    validate
+})(ProfileForm)
