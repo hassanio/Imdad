@@ -19,8 +19,6 @@ const BORDER_RADIUS = 10;
 console.disableYellowBox = true
 
 
-
-
 class D_Form extends Component {
 
   render() {
@@ -38,6 +36,7 @@ class D_Form extends Component {
     );
   }
 }
+
 
 export default D_Form;
 

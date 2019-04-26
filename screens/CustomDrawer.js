@@ -49,7 +49,7 @@ class CustomDrawer extends Component {
 
     renderDrawerItems(props) {
         const { items, ...rest } = props
-        const filteredItems = items.filter(item => item.key !== "d_form")
+        const filteredItems = items.filter(item => item.key !== "d_form" && item.key !== "cam")
         return (
             <View style = {styles.drawerItemsContainer}>
                  <DrawerItems items = {filteredItems} {...rest} />
