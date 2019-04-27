@@ -7,7 +7,7 @@ import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
 import formFields from './formFields'
-import { ToastAndroid, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 
 const login = 'Login';
@@ -55,10 +55,23 @@ class LoginForm extends Component {
 		)
 	}
 
+	renderLoginButton(props) {
+		if (props.isLoading) {
+			return <ActivityIndicator color='#CAEEA2' size='small'/>
+		} else {
+			return <TextButton
+			buttonText={login}
+			onPress={props.handleSubmit(this.submitForm.bind(this))}
+			my_style = {textbutton_styles}
+			/>
+
+		}
+	}
+
 	render() {
 
-		const { handleSubmit, errorMsg, authState}  = this.props;
-		
+		const { errorMsg, authState}  = this.props;
+
 		modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 		modified_button.container.height = INPUT_HEIGHT
 		modified_button.buttonText.fontWeight = '200'
@@ -66,24 +79,17 @@ class LoginForm extends Component {
 		modified_button.container.marginVertical = 2
 		modified_button.container.backgroundColor = '#316538'
 		modified_button.buttonText.color = '#FFFFFF'
-	
-
-    	//textbutton_styles.container.height = INPUT_HEIGHT
 
 		return(
 				<View style={{flex: 2, justifyContent: 'space-evenly', paddingTop: 20}}>
 					{this.renderFields()}
-					<TextButton
-			        buttonText={login}
-			        onPress={handleSubmit(this.submitForm.bind(this))}
-			        my_style = {textbutton_styles}
-			        />
+					{this.renderLoginButton(this.props)}
 					<Text>{errorMsg}</Text>
 					<TextButton
-                    buttonText={signup_text}
-                    onPress = {() => this.props.navigation.navigate('d_signup')}
-                    my_style = {modified_button}
-                    />
+						buttonText={signup_text}
+						onPress = {() => this.props.navigation.navigate('d_signup')}
+						my_style = {modified_button}
+						/>
 				</View>
 
 
@@ -95,6 +101,7 @@ const mapStateToProps = (state) => {
 	return { 
 		errorMsg: state.auth.error,
 		authState: state.auth.isAuth,
+		isLoading: state.auth.loading
 	}
 }
 

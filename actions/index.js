@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT} from './types'
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_LOADING} from './types'
 import { ToastAndroid, AsyncStorage } from "react-native"
 const axios = require('axios')
 
@@ -6,7 +6,7 @@ export const loginDonor = (values, nav) =>
     async (dispatch) => {
         try {
 
-            dispatch(LoginError("Sending request..."))
+            dispatch({ type: LOGIN_LOADING })
 
             //Submit login credentials to server
             const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signin', values)

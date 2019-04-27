@@ -8,7 +8,7 @@ import textbox_styles from '../TextBox/styles.js';
 import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
-import { ToastAndroid, Item, Image, Dimensions, Platform, View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, ToastAndroid, Item, Image, Dimensions, Platform, View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
@@ -58,13 +58,12 @@ class DonationForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			error: ''
+			error: '',
+			loading: false
 		}
 	}
 
 	async submitForm(values) {
-
-
 
 		try {
 
@@ -73,28 +72,38 @@ class DonationForm extends Component {
 				return
 			}
 
-				let formData = new FormData();
-				const photo = {
-					uri: this.props.navigation.state.params.image,
-					type: 'image/jpeg',
-					name: 'photo.jpg'
+			let formData = new FormData();
+			const photo = {
+				uri: this.props.navigation.state.params.image,
+				type: 'image/jpeg',
+				name: 'photo.jpg'
+			}
+			formData.append('image', photo)
+			
+			Object.keys(values).forEach(key => {
+				if(key !== 'categories'){
+					formData.append(key, values[key])
+				} else {
+					formData.append("categories[]", values[key])
 				}
-				formData.append('image', photo)
-	        	console.log(JSON.stringify(formData))
-            // Submit SignUp credentials to server
-         //    const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
+			})
 
-         //    //Store token in AsyncStorage
-         //    console.log(JSON.stringify(res))
+			this.setState({ loading: true })
+			const res = await axios.post('https://young-castle-56897.herokuapp.com/donate', formData, {
+				headers: { 
+					'content-type': `multipart/form-data`,
+					authorization: this.props.token
+				}
+			})
+			this.setState( { loading: false })
 
-        	// this.setState({error: "Successful" })
+			ToastAndroid.show("Submitted Successfully!", ToastAndroid.LONG)
 
-
-
+        	this.props.navigation.navigate('feed')
         }
         catch(err) {
 
-        	// console.log(JSON.stringify(err.response))
+        	console.log(JSON.stringify(err.response))
         	if (err.response) {
             	this.setState({error: err.response.data.error })
         	}
@@ -157,16 +166,27 @@ class DonationForm extends Component {
 		)
 	}
 
+	renderSubmitButton(handleSubmit) {
+		if (this.state.loading) {
+			return <ActivityIndicator color='#CAEEA2' size='large'/>
+		} else {
+
+			modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
+			modified_SignUpbutton.container.height = imageHeight/15
+			modified_SignUpbutton.container.top = imageHeight/50
+			modified_SignUpbutton.buttonText.fontSize = imageHeight/30
+
+			return <TextButton
+			buttonText={"Submit"}
+			onPress={handleSubmit(this.submitForm.bind(this))}
+			my_style = {modified_SignUpbutton}
+			/>
+		}
+	}
+
 	render() {
 
 		const { handleSubmit }  = this.props;
-
-		modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
-    	modified_SignUpbutton.container.height = imageHeight/15
-		modified_SignUpbutton.container.top = imageHeight/50
-		modified_SignUpbutton.buttonText.fontSize = imageHeight/30
-
-		// console.log(this.props.navigation.state.params)
 
 		if (this.props.navigation.state.params == undefined) {
 			src = require('../no_img.png')
@@ -196,12 +216,8 @@ class DonationForm extends Component {
 			        </Text>
 			        </TouchableOpacity>
 					{this.renderFields()}
+					{this.renderSubmitButton(handleSubmit)}
 					<Text>{this.state.error}</Text>
-					<TextButton
-			        buttonText={"Submit"}
-			        onPress={handleSubmit(this.submitForm.bind(this))}
-			        my_style = {modified_SignUpbutton}
-			        />
 				</View>
 
 
@@ -209,8 +225,13 @@ class DonationForm extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		token: state.auth.token
+	}
+}
 export default reduxForm({
 	form: 'DonationForm',
 	validate,
 	destroyOnUnmount: false,
-})(DonationForm)
+})(connect(mapStateToProps, null)(DonationForm))
