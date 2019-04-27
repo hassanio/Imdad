@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { View, Text, ActivityIndicator ,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import ProfileForm from '../components/ProfileForm/ProfileForm'
+
 const axios = require('axios')
 
 class D_Profile extends Component {
@@ -25,7 +26,6 @@ class D_Profile extends Component {
         headers: { authorization: token } 
       })
 
-      console.log(JSON.stringify(res))
       this.setState({ error: '', loading: false, profile: res.data })
       
     }
@@ -72,5 +72,7 @@ const mapStateToProps = (state) => {
     token: state.auth.token
   }
 }
-export default connect(mapStateToProps, null)(D_Profile);
+
+const connectedProfile = connect(mapStateToProps, null)(D_Profile)
+export default connectedProfile;
 

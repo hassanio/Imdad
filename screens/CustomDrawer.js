@@ -7,7 +7,6 @@ import { Avatar, Button } from 'react-native-elements'
 
 import TextButton from '../components/TextInput/InputwithButton.js';
 import textbutton_styles from '../components/TextInput/styles.js';
-
 const axios = require('axios')
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -33,6 +32,12 @@ class CustomDrawer extends Component {
 
     componentDidMount() {
         this.fetchProfileImage()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.navigation.state.isDrawerOpen === false && this.props.navigation.state.isDrawerOpen === true) {
+            this.fetchProfileImage()
+        }
     }
     renderLogoutButton = (props) => {
         const { navigation, Logout} = props
