@@ -8,7 +8,7 @@ import textbox_styles from '../TextBox/styles.js';
 import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
-import { Item, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { Item, Dimensions, ActivityIndicator, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
@@ -59,29 +59,26 @@ class SignUpForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			error: ''
+			error: '',
+			loading: false
 		}
 	}
 
 	async submitForm(values) {
-		console.log(values)
+
 		try {
-
-
-        	this.setState({error: "Sending request..." })
+        	this.setState({loading: true })
 
             // Submit SignUp credentials to server
             const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signup', values)
 
-            //Store token in AsyncStorage
-            console.log(JSON.stringify(res))
+			this.setState({error: "Successful", loading: false })
 
-			this.setState({error: "Successful" })
+			this.props.navigation.navigate('d_login')
 			
         }
         catch(err) {
 
-        	// console.log(JSON.stringify(err.response))
         	if (err.response) {
             	this.setState({error: err.response.data.error })
         	}
@@ -127,15 +124,23 @@ class SignUpForm extends Component {
 		)
 	}
 
+	renderSubmitButton({ handleSubmit }) {
+		if(this.state.loading) {
+			return <ActivityIndicator color='#CAEEA2' size='small'/>
+		} else {
+			let modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
+			modified_SignUpbutton.container.height = imageHeight/10
+			modified_SignUpbutton.container.top = imageHeight/50
+			
+			return <TextButton
+			buttonText={login}
+			onPress={handleSubmit(this.submitForm.bind(this))}
+			my_style = {modified_SignUpbutton}
+			/>
+		}
+	}
+
 	render() {
-
-		const { handleSubmit }  = this.props;
-
-		modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
-    	modified_SignUpbutton.container.height = imageHeight/10
-		modified_SignUpbutton.container.top = imageHeight/50
-
-
 		let modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 		modified_button.container.height = INPUT_HEIGHT
 		modified_button.buttonText.fontWeight = '200'
@@ -148,11 +153,7 @@ class SignUpForm extends Component {
 		return(
 				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
 					{this.renderFields()}
-					<TextButton
-			        buttonText={login}
-			        onPress={handleSubmit(this.submitForm.bind(this))}
-			        my_style = {modified_SignUpbutton}
-			        />
+					{this.renderSubmitButton(this.props)}
 			        <Text>{this.state.error}</Text>
 					<TextButton
 					onPress = {() => this.props.navigation.navigate('d_login')}
