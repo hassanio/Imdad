@@ -27,6 +27,7 @@ class D_Profile extends Component {
 
       console.log(JSON.stringify(res))
       this.setState({ error: '', loading: false, profile: res.data })
+      
     }
     catch (err) 
     {
