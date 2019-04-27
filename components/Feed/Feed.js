@@ -19,9 +19,7 @@ class ItemList extends React.Component {
             refreshControl = {
                 <RefreshControl
                     refreshing = {this.props.isLoading}
-                    onRefresh = {() => {
-                        this.props.FetchDonations(this.props.token)
-                    }}
+                    onRefresh = {() => this.props.FetchDonations(this.props.token)}
                     tintColor="#fff"
                     titleColor="#fff"
                 />
