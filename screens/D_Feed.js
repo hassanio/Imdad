@@ -24,19 +24,12 @@ class D_Feed extends Component {
 	}
 
 	renderDonationsList(props) {
-		// if (props.isLoading) {
-    //   return (
-    //     <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#316538'}}>
-    //       <ActivityIndicator color='#CAEEA2' size='large'/>
-    //     </View>
-    //   ) 
-		// }
   	donationList = []
   	if(props.donations) {
     	donationList = Object.values(props.donations)
 		}
-		
-		return <ItemList items={donationList}/>
+	
+		return <ItemList items={donationList} onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}/>
 	}
 
   render() {

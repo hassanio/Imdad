@@ -31,6 +31,7 @@ class ItemList extends React.Component {
                     DonatedImage={info.item.image}
                     itemDate={info.item.dateAdded}
                     itemdesc={info.item.description}
+                    onPress={() => this.props.onPress(info.item.id)}
                     />
                 )
 

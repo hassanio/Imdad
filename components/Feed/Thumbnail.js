@@ -7,14 +7,14 @@ const thumbnailHeight = imageHeight/6
 
 
 const Item = (props) => (
-    <TouchableOpacity onPress = {props.onItemPressed}> 
+    <TouchableOpacity onPress = {props.onPress}> 
         <View style={styles.listItem}>
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
                 <Text style={styles.textCategory}>{props.itemCategory}</Text>
                 <Text style={styles.textDescription}>{props.itemdesc}</Text>
                 <View style={styles.componentDate}>
-                    <Text style={styles.textDate}>{props.itemDate}</Text>
+                    <Text style={styles.textDate}>{new Date(props.itemDate).toDateString()}</Text>
                 </View>
             </View>
             

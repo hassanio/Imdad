@@ -3,7 +3,7 @@ import { FETCH_DONATIONS_SUCC, LOADING_DONATIONS } from "../actions/types";
 const list_to_obj = (arr) => {
     temp = {}
     arr.forEach(({_id, ...rest}) => {
-        temp[_id] = rest
+        temp[_id] = {...rest, id: _id }
     })
 
     return temp
