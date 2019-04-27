@@ -16,7 +16,7 @@ const imageHeight = Dimensions.get('window').height;
 const renderRightButton = (navigation) => {
 	const state = navigation.state
 	const currRouteName = state.routes[state.index].routeName
-	
+
 	if(currRouteName !== 'd_form' && currRouteName !== 'cam') {
 		return <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
@@ -28,11 +28,12 @@ const renderRightButton = (navigation) => {
 
 const renderLeftButton = (navigation) => {
 	const state = navigation.state
-	const currRouteName = state.routes[state.index].routeName
+	const currRoute = state.routes[state.index]
+	const currRouteName = currRoute.routeName
 
 	//If camera, return back arrow
 	if(currRouteName === 'cam') {
-		return  <TouchableOpacity onPress={() => navigation._childrenNavigation.cam.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
+		return  <TouchableOpacity onPress={() => navigation.navigate(currRoute.params.returnToRoute.routeName)} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
 				</TouchableOpacity>
 	} 
