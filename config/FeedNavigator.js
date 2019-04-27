@@ -24,15 +24,21 @@ const FeedStack = createStackNavigator({
   },
   d_details: { 
     screen: D_Details,
-    navigationOptions: ({navigation}) => {
-      return {
-        headerLeft:	<TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
-                    <AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
-                  </TouchableOpacity>
-      }
+    navigationOptions: 	{
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: '#316538',
+          shadowOffset: {
+              height: 0,
+            },
+          shadowRadius: 0,
+          elevation: 0,
+          shadowOpacity: 0
+      },
+      headerTitleStyle: { color: 'white', }
     }
 
-   },
+  },
 }, {
     initialRouteName: 'feed',
 })
