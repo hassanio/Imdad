@@ -16,7 +16,8 @@ const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
 const FeedStack = createSwitchNavigator({
-  feed: { screen: D_Feed },
+  feed: { screen: D_Feed,
+  	},
   d_details: { screen: D_Details },
 }, {
     initialRouteName: 'feed',

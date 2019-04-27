@@ -26,7 +26,9 @@ class CameraComponent extends Component {
 	    exif: true};
 	    const data = await this.camera.takePictureAsync(options)
 	    console.log("HERE")
-	    this.props.navigation.navigate('d_form',{image: data.uri})
+      const { routeName, key } = this.props.navigation.getParam('returnToRoute');
+      // console.log(routeName, key)
+	    this.props.navigation.navigate(routeName,{image: data.uri})
      }
     }
 
