@@ -63,8 +63,6 @@ export const FetchDonations = (token) =>
     async (dispatch) => {
         try {
 
-            console.log("DNKNCISN")
-
             dispatch({ type: LOADING_DONATIONS })
 
             //Submit login credentials to server

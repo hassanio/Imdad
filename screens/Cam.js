@@ -7,8 +7,6 @@ import CameraComponent from '../components/Camera/Camera.js'
 console.disableYellowBox = true
 
 class Cam extends Component {
-	componentDidMount(){
-		}
 	render() {
 		return (
 				<CameraComponent navigation={this.props.navigation}/>

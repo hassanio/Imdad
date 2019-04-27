@@ -8,23 +8,44 @@ import ItemList from '../components/Feed/Feed.js';
 import * as actions from '../actions'
 import { connect } from 'react-redux'
 
+
 class D_Feed extends Component {
 	componentDidMount() {
-		this.props.FetchDonations(this.props.token)
+		const { navigation, token } = this.props
+		//Whenever Feed screen comes into view, fetch the donations from the backend
+		this.focusListener = navigation.addListener('didFocus', () => {
+			this.props.FetchDonations(token)
+		})
+		
+	}
+
+	componentWillUnmount() {
+		//Remove event listener
+		this.focusListener.remove()
+	}
+
+	renderDonationsList(props) {
+		if (props.isLoading) {
+      return (
+        <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#316538'}}>
+          <ActivityIndicator color='#CAEEA2' size='large'/>
+        </View>
+      ) 
+		}
+
+  	donationList = []
+  	if(props.donations) {
+    	donationList = Object.values(props.donations)
+		}
+		
+		return <ItemList items={donationList}/>
 	}
 
   render() {
-
-  	donationList = []
-
-  	if(this.props.donations) {
-    	donationList = Object.values(this.props.donations)
-  	}
-
     return (
         <Container>
-        <StatusBar barStyle="light-content" backgroundColor = '#316538' />
-          <ItemList items={donationList}/>
+        	<StatusBar barStyle="light-content" backgroundColor = '#316538' />
+          {this.renderDonationsList(this.props)}
         </Container>
     );
   }
