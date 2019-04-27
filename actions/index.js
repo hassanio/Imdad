@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_LOADING} from './types'
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_LOADING, LOADING_DONATIONS, FETCH_DONATIONS_SUCC, FETCH_DONATIONS_FAIL} from './types'
 import { ToastAndroid, AsyncStorage } from "react-native"
 const axios = require('axios')
 
@@ -57,4 +57,34 @@ export const Logout = (nav) =>
         await AsyncStorage.removeItem('token')
         dispatch({ type: LOGOUT })
         nav.navigate('Auth')
+    }
+
+export const FetchDonations = (token) => 
+    async (dispatch) => {
+        try {
+
+            console.log("DNKNCISN")
+
+            dispatch({ type: LOADING_DONATIONS })
+
+            //Submit login credentials to server
+            const res = await axios.get('https://young-castle-56897.herokuapp.com/fetchDonations', {headers: {authorization: token}})
+
+            //Store token in AsyncStorage
+            // console.log(JSON.stringify(res))
+
+            //Tell redux that login is successful
+            dispatch({type: FETCH_DONATIONS_SUCC, payload: res.data})
+
+        }
+        catch(err) {
+
+            if (err.response) {
+                ToastAndroid.show("FAILED TO FETCH DONATIONS", ToastAndroid.LONG)
+            }
+            else if (err.request) {
+                ToastAndroid.show("No network connection!", ToastAndroid.LONG)
+            }
+
+        }
     }
