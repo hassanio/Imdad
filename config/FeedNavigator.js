@@ -15,11 +15,14 @@ import { DrawerActions } from 'react-navigation'
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
-const FeedStack = createSwitchNavigator({
+const FeedStack = createStackNavigator({
   feed: { screen: D_Feed },
   d_details: { screen: D_Details },
 }, {
     initialRouteName: 'feed',
+    defaultNavigationOptions: {
+      header: null
+    }
 })
 
 export default FeedStack
