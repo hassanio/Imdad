@@ -62,7 +62,7 @@ export const Logout = (nav) =>
 export const FetchDonations = (token) => 
     async (dispatch) => {
         try {
-
+            
             dispatch({ type: LOADING_DONATIONS })
 
             //Submit login credentials to server

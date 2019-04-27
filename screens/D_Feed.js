@@ -8,7 +8,6 @@ import ItemList from '../components/Feed/Feed.js';
 import * as actions from '../actions'
 import { connect } from 'react-redux'
 
-
 class D_Feed extends Component {
 	componentDidMount() {
 		const { navigation, token } = this.props
@@ -25,14 +24,13 @@ class D_Feed extends Component {
 	}
 
 	renderDonationsList(props) {
-		if (props.isLoading) {
-      return (
-        <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#316538'}}>
-          <ActivityIndicator color='#CAEEA2' size='large'/>
-        </View>
-      ) 
-		}
-
+		// if (props.isLoading) {
+    //   return (
+    //     <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#316538'}}>
+    //       <ActivityIndicator color='#CAEEA2' size='large'/>
+    //     </View>
+    //   ) 
+		// }
   	donationList = []
   	if(props.donations) {
     	donationList = Object.values(props.donations)
