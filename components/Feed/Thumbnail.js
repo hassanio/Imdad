@@ -7,7 +7,7 @@ const thumbnailHeight = imageHeight/6
 
 
 const Item = (props) => (
-    <TouchableOpacity onPress = {props.onPress}> 
+    <TouchableOpacity style = {{allignItems: 'center'}} onPress = {props.onPress}> 
         <View style={styles.listItem}>
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: "row",
         justifyContent: "center",
+        borderRadius: 5,
 
     },
     textCategory: {
@@ -56,10 +57,8 @@ const styles = StyleSheet.create({
      },
 
     DonatedImage: {
-        paddingTop: imageHeight / 10,
-        marginRight: imageHeight/45,
-        height: imageHeight / 6,
-        width: imageHeight / 6
+        height: imageHeight / 6.5,
+        width: imageHeight / 6.5,
     },
 
     Textlist: {
