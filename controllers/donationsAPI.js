@@ -44,7 +44,7 @@ exports.fetch_donations_donor = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('image status categories dateAdded')
+                                        .select('image status categories dateAdded description')
         res.send(donations)
     }
     catch(err) {
@@ -129,7 +129,7 @@ exports.fetch_donations_ngo = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('image categories location collection_address')
+                                        .select('image categories location collection_address description')
         res.send(donations)
     }
     catch(err) {
