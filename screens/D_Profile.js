@@ -59,7 +59,7 @@ class D_Profile extends Component {
     return (
         <Container>
           <StatusBar barStyle="light-content" backgroundColor = '#316538' />
-          <ProfileForm initialValues = {this.state.profile} enableReinitialize={true} />
+          <ProfileForm fetch_profile = {() => fetchUserProfile(this.props.token)} navigation = {this.props.navigation} initialValues = {this.state.profile} enableReinitialize={true} />
         </Container>
     );
 

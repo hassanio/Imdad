@@ -196,7 +196,7 @@ class DonationForm extends Component {
 
 		return(
 				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
-					<TouchableOpacity onPress = {() => {this.props.navigation.navigate('cam')}} style = {{ flexDirection: 'row', justifyContent:'center', allignItems: 'center', paddingTop: imageHeight/40}}>
+					<TouchableOpacity onPress = {() => {this.props.navigation.navigate('cam',{ returnToRoute: this.props.navigation.state })}} style = {{ flexDirection: 'row', justifyContent:'center', allignItems: 'center', paddingTop: imageHeight/40}}>
 					<Image 
 					style = {{
 						height: imageHeight/5,

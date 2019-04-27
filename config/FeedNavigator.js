@@ -17,6 +17,7 @@ const imageHeight = Dimensions.get('window').height;
 
 const FeedStack = createStackNavigator({
   feed: { screen: D_Feed },
+
   d_details: { screen: D_Details },
 }, {
     initialRouteName: 'feed',
