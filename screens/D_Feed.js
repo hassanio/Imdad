@@ -8,7 +8,6 @@ import ItemList from '../components/Feed/Feed.js';
 import * as actions from '../actions'
 import { connect } from 'react-redux'
 import renderPicker from '../components/Picker/Picker.js'
-import textbox_styles from '../components/TextBox/styles.js';
 import color from 'color';
 import styles from '../components/Picker/styles.js'
 
@@ -18,14 +17,6 @@ const underlayColor = color(styles.$buttonBackgroundColorBase).darken(
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
-modified_textbox = JSON.parse(JSON.stringify(textbox_styles))
-// modified_textbox.container.height = imageHeight/15
-// modified_textbox.input.width = imageWidth/10
-// modified_textbox.buttonContainer.height = imageHeight
-// modified_textbox.separator.height = imageHeight/15
-// modified_textbox.container.marginVertical = 10
-// modified_textbox.container.top = 0
-
 
 class D_Feed extends Component {
 	constructor(props) {
