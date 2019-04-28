@@ -189,7 +189,7 @@ class DonationForm extends Component {
 		const { handleSubmit }  = this.props;
 
 		if (this.props.navigation.state.params == undefined) {
-			src = require('../no_img.png')
+			src = require('../assets/images/no_img.png')
 		} else {
 			src = {uri: this.props.navigation.state.params.image}
 		}
@@ -233,5 +233,4 @@ const mapStateToProps = state => {
 export default reduxForm({
 	form: 'DonationForm',
 	validate,
-	destroyOnUnmount: false,
 })(connect(mapStateToProps, null)(DonationForm))
