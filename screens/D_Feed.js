@@ -62,7 +62,7 @@ class D_Feed extends Component {
 				    flexDirection: 'row',
 				    alignItems: 'center',
 				    justifyContent: 'center',
-				    borderRadius: 5,
+				    borderRadius: 8,
 				    marginVertical: 10,
         		}}>
 			        <TouchableHighlight
