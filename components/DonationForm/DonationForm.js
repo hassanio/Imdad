@@ -96,14 +96,15 @@ class DonationForm extends Component {
 				}
 			})
 			this.setState( { loading: false })
-
 			ToastAndroid.show("Submitted Successfully!", ToastAndroid.LONG)
 
+			this.props.navigation.state.params = undefined
+			this.props.destroy()
+			
         	this.props.navigation.navigate('feed')
         }
         catch(err) {
 
-        	console.log(JSON.stringify(err.response))
         	if (err.response) {
             	this.setState({error: err.response.data.error })
         	}

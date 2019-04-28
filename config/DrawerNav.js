@@ -19,7 +19,7 @@ const DrawerStack = createDrawerNavigator({
   contentComponent: CustomDrawer,
   contentOptions: {
     activeTintColor: '#316538',
-  }
+  },
 })
 
 

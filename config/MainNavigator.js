@@ -18,6 +18,8 @@ const renderRightButton = (navigation) => {
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
 				</TouchableOpacity>
 	}
+
+
 }
 
 const renderLeftButton = (navigation) => {
@@ -28,7 +30,6 @@ const renderLeftButton = (navigation) => {
 
 
 }
-
 const MainNavigator= createStackNavigator({
 	drawer: {
 		screen: DrawerStack
