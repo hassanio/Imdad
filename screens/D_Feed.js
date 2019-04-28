@@ -76,7 +76,7 @@ class D_Feed extends Component {
 			          }}
 			          underlayColor={underlayColor}
 			        >
-			          <Image source = {require('../filter.png')} style = {{height: imageHeight/15, width: imageHeight/15}} />
+			          <Image source = {require('../assets/images/filter.png')} style = {{height: imageHeight/15, width: imageHeight/15}} />
 			        </TouchableHighlight>
 			        <View style={modified_textbox.separator} />
 				  <Picker style = {{
