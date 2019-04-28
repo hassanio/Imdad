@@ -7,7 +7,7 @@ const Logo = ({my_style}) => (
     <ImageBackground
       resizeMode="contain"
       style={my_style.containerImage}
-      source={require('../assets/images/background.jpg')}
+      source={require('../../assets/images/background.jpg')}
     >
     </ImageBackground>
   </View>

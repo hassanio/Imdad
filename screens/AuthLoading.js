@@ -9,6 +9,7 @@ import {
 import { Dimensions,Linking, KeyboardAvoidingView,Alert} from 'react-native';
 import { connect } from 'react-redux'
 import {LoginSuccess} from '../actions'
+import { Asset } from 'expo'
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -18,6 +19,25 @@ class AuthLoadingScreen extends React.Component {
     super(props);
     this._bootstrapAsync();
   }
+
+
+  cacheImages(images) {
+    return images.map(img => {
+      console.log("HERE")
+      return Asset.fromModule(img).downloadAsync()
+    })
+  }
+
+  async _loadAssetsAsync() {
+    const imageAssets = this.cacheImages([
+      require('../assets/images/background.jpg'),
+      require('../assets/images/no_img.png'),
+      require('../assets/images/filter.png')
+    ])
+
+    await Promise.all(imageAssets)
+  }
+
 
   async remove_token() {
     await AsyncStorage.removeItem('token');
@@ -32,6 +52,10 @@ class AuthLoadingScreen extends React.Component {
     if (userToken) {
       this.props.setToken(userToken)
     }
+
+    //Load assets
+    this._loadAssetsAsync()
+
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     this.props.navigation.navigate(userToken ? 'Main' : 'Auth');
