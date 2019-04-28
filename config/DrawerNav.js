@@ -11,8 +11,8 @@ import CustomDrawer from '../screens/CustomDrawer.js'
 
 
 const DrawerStack = createDrawerNavigator({
-  Feed: { screen: FeedStack },
-  Profile: { screen: D_Profile },
+  'My Donations': { screen: FeedStack },
+  'My Profile': { screen: D_Profile },
   'Help and Hints': { screen: Help },
   d_form: { screen: D_Form },
 }, {
