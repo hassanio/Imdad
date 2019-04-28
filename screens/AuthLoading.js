@@ -23,7 +23,6 @@ class AuthLoadingScreen extends React.Component {
 
   cacheImages(images) {
     return images.map(img => {
-      console.log("HERE")
       return Asset.fromModule(img).downloadAsync()
     })
   }

@@ -15,7 +15,6 @@ const DrawerStack = createDrawerNavigator({
   Profile: { screen: D_Profile },
   'Help and Hints': { screen: Help },
   d_form: { screen: D_Form },
-  cam: { screen: Cam }
 }, {
   contentComponent: CustomDrawer,
   contentOptions: {

@@ -11,9 +11,6 @@ export const loginDonor = (values, nav) =>
             //Submit login credentials to server
             const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signin', values)
 
-            //Store token in AsyncStorage
-            console.log(JSON.stringify(res))
-
             await AsyncStorage.setItem('token', res.data.token);
 
             //Tell redux that login is successful

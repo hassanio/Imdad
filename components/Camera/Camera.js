@@ -17,14 +17,18 @@ class CameraComponent extends Component {
     this.setState({ hasCameraPermission: status === 'granted' })
   }
 
+  componentWillUnmount() {
+    console.log("Camera Closing")
+  }
+
   async snapPhoto() {       
-    console.log('Button Pressed');
+    // console.log('Button Pressed');
     if (this.camera) {
     	this.camera.stopRecording()
-	    console.log('Taking photo');
+	    // console.log('Taking photo');
 	    const options = { quality: 1, base64: true, fixOrientation: true };
 	    const data = await this.camera.takePictureAsync(options)
-	    console.log("HERE")
+	    // console.log("HERE")
       const { routeName, key } = this.props.navigation.getParam('returnToRoute');
       // console.log(routeName, key)
 	    this.props.navigation.navigate(routeName,{image: data.uri})
@@ -54,27 +58,27 @@ class CameraComponent extends Component {
             type={this.state.type}
             style = {{
 	          	flex: 1,
-			    justifyContent: 'flex-end',
-			    alignItems: 'center',
-			    width: Dimensions.get('window').width,
-			    height: Dimensions.get('window').height
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height
           }}>
             <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}} >
               <TouchableOpacity
                 style={{
                   	flex: 0,
-				    padding: 15,
-				    paddingHorizontal: 20,
-				    alignSelf: 'center',
-				    margin: 20,
-				    borderWidth:8,
-				    borderColor:'rgba(0,0,0,0.5)',
-				    alignItems:'center',
-				    justifyContent:'center',
-				    width:75,
-				    height:75,
-				    backgroundColor:'#fff',
-				    borderRadius:75,
+                    padding: 15,
+                    paddingHorizontal: 20,
+                    alignSelf: 'center',
+                    margin: 20,
+                    borderWidth:8,
+                    borderColor:'rgba(0,0,0,0.5)',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    width:75,
+                    height:75,
+                    backgroundColor:'#fff',
+                    borderRadius:75,
                 }}
                 onPress={this.snapPhoto.bind(this)}
                 >
