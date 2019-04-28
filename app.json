@@ -24,8 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.group22.Imdad"
     },
     "android": {
+      "package": "com.group22.Imdad",
       "permissions": ["CAMERA"]
     }
   }
