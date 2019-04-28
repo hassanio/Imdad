@@ -1,5 +1,6 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer, DrawerActions } from 'react-navigation';
 import Cam from '../screens/Cam'
+import D_Details from '../screens/D_Details'
 import DrawerStack from './DrawerNav'
 import { Dimensions } from 'react-native'
 import React from 'react'
@@ -21,16 +22,13 @@ const renderRightButton = (navigation) => {
 		return <View/>
 	}
 
-
 }
 
 const renderLeftButton = (navigation) => {
-	//Otherwise return burger menu
+	//return burger menu
 	return  <TouchableOpacity onPress={() => navigation.openDrawer()} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="menu" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
 				</TouchableOpacity>
-
-
 }
 
 const get_title = (navigation) => {
@@ -47,6 +45,7 @@ const MainNavigator= createStackNavigator({
 	drawer: {
 		screen: DrawerStack
 	},
+
 	cam: { 
 		screen: Cam,
 		navigationOptions: ({ navigation }) => {
@@ -57,7 +56,20 @@ const MainNavigator= createStackNavigator({
 										</TouchableOpacity>
 			}
 		}
-	}
+	},
+	
+	d_details: { 
+    screen: D_Details,
+    navigationOptions: ({ navigation }) =>	{
+			return {
+				headerRight: null,
+				headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
+													<AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
+										</TouchableOpacity>
+			}
+    }
+
+  }
 },
 {
 	initialRouteName: 'drawer',

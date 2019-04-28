@@ -4,7 +4,6 @@ import D_Login from '../screens/D_Login'
 import D_Feed from '../screens/D_Feed'
 import D_SignUp from '../screens/D_SignUp'
 import D_Form from '../screens/D_Form'
-import D_Details from '../screens/D_Details'
 import Cam from '../screens/Cam'
 import DrawerStack from './DrawerNav'
 import { Dimensions } from 'react-native'
@@ -21,23 +20,6 @@ const FeedStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  },
-  d_details: { 
-    screen: D_Details,
-    navigationOptions: 	{
-      headerTintColor: 'white',
-      headerStyle: {
-        backgroundColor: '#316538',
-          shadowOffset: {
-              height: 0,
-            },
-          shadowRadius: 0,
-          elevation: 0,
-          shadowOpacity: 0
-      },
-      headerTitleStyle: { color: 'white', }
-    }
-
   },
 }, {
     initialRouteName: 'feed',
