@@ -95,9 +95,9 @@ class D_Feed extends Component {
 					
 				  >
 				    <Item label="Show all" value='All' enabled={false} />
-				    <Picker.Item label="Waiting" value="Waiting" />
-				    <Picker.Item label="Pending" value="Pending" />
-				    <Picker.Item label="Confirmed" value="Confirmed" />
+				    <Item label="Waiting" value="Waiting" />
+				    <Item label="Pending" value="Pending" />
+				    <Item label="Confirmed" value="Confirmed" />
 				  </Picker>
 				</View>
         	</View>
