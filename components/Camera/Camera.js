@@ -17,10 +17,6 @@ class CameraComponent extends Component {
     this.setState({ hasCameraPermission: status === 'granted' })
   }
 
-  componentWillUnmount() {
-    console.log("Camera Closing")
-  }
-
   async snapPhoto() {       
     // console.log('Button Pressed');
     if (this.camera) {
