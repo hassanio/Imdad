@@ -9,7 +9,7 @@ import {
 import { Dimensions,Linking, KeyboardAvoidingView,Alert} from 'react-native';
 import { connect } from 'react-redux'
 import {LoginSuccess} from '../actions'
-import { Asset, SplashScreen } from 'expo'
+import { Asset } from 'expo'
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -17,7 +17,6 @@ const imageHeight = Dimensions.get('window').height;
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
-    SplashScreen.hide()
     this._bootstrapAsync();
   }
 
