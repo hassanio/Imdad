@@ -17,6 +17,8 @@ const renderRightButton = (navigation) => {
 		return <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
 				</TouchableOpacity>
+	} else {
+		return <View/>
 	}
 
 
@@ -30,6 +32,17 @@ const renderLeftButton = (navigation) => {
 
 
 }
+
+const get_title = (navigation) => {
+	const state = navigation.state
+	if(state.routeName === 'drawer' && state.routes[state.index].routeName === 'd_form') {
+		return "Donation Form"
+	}
+	if(state.routeName === 'drawer') {
+		return state.routes[state.index].routeName
+	}
+}
+
 const MainNavigator= createStackNavigator({
 	drawer: {
 		screen: DrawerStack
@@ -49,8 +62,10 @@ const MainNavigator= createStackNavigator({
 {
 	initialRouteName: 'drawer',
 	defaultNavigationOptions: ({navigation}) => ({
+		title: get_title(navigation),
 		headerLeft: renderLeftButton(navigation),
-		headerRight:  renderRightButton(navigation)
+		headerRight:  renderRightButton(navigation),
+		headerTitleStyle: { color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" },
     })
 
 }
