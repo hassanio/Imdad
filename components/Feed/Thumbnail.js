@@ -11,8 +11,8 @@ const Item = (props) => (
         <View style={styles.listItem}>
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
-                <Text style={styles.textCategory}>{props.itemCategory}</Text>
-                <Text style={styles.textDescription}>{props.itemdesc}</Text>
+                <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+                <Text style={styles.textDescription}>•  {props.itemdesc}</Text>
                 <View style={styles.componentDate}>
                     <Text style={styles.textDate}>{new Date(props.itemDate).toDateString()}</Text>
                 </View>
@@ -33,22 +33,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         borderRadius: 5,
+        paddingTop: imageHeight/150,
+        paddingLeft: imageHeight/150,
+
 
     },
     textCategory: {
         fontWeight: 'bold',
-        fontSize: imageHeight / 30
+        fontSize: imageHeight /35
     },
 
     componentDate: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        marginRight: 5,
+        paddingRight: imageHeight/80,
+        paddingBottom: imageHeight/100,
         flex: 1
     },
     textDate: {
-        fontSize: imageHeight / 50,
-        color: 'silver',
+        fontSize: imageHeight / 45,
+        color: 'grey',
     },
 
     textDescription:{
@@ -59,11 +63,15 @@ const styles = StyleSheet.create({
     DonatedImage: {
         height: imageHeight / 6.5,
         width: imageHeight / 6.5,
+        borderRadius: 5,
+        borderColor: 'grey',
+        borderWidth: 0.5,
     },
 
     Textlist: {
         flexDirection: "column",
-        flex:2
+        flex:2,
+        paddingLeft: imageHeight/70,
         
     }
 
