@@ -42,12 +42,7 @@ exports.donor_signin = (req, res) => {
 }
 
 exports.donor_signup = async (req, res, next) => {
-
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) { 
-        return res.status(422).json({ errors: errors.array()})
-    }
-
+    
     const { username } = req.body
     
     try {

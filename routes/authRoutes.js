@@ -18,22 +18,6 @@ module.exports = (app) => {
     app.post('/auth/ngo/signup', Authentication.ngo_signup)
     
     app.post('/auth/donor/signin', verifyDonorSignin, Authentication.donor_signin)
-
-    const validateDonor = () => {
-        return [
-            body('username', 'Username must be provided!').exists(),
-
-            body('password', 'Password cannot be empty.').exists().isLength({ min: 1 }),
-
-            body('name', 'You must provide your name.').isLength({ min: 1 }),
-
-            body('address', 'Address is not provided.').isLength( { min: 1}),
-
-            body('location', 'Invalid Location').isIn(['Lahore', 'Islamabad', 'Karachi']),
-
-            body('contact').exists().isNumeric().withMessage('Contact Number is Invalid').toInt()
-        ]
-    }
-    app.post('/auth/donor/signup', validateDonor(), Authentication.donor_signup)
+    app.post('/auth/donor/signup', Authentication.donor_signup)
 
 }

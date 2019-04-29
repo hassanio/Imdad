@@ -15,12 +15,7 @@ const DonationSchema = new Schema({
     location: { type: String, uppercase: true },
     contact: Number,
     image: String,
-    categories: [{
-        type: String,
-        enum: ['FOOD', 'CLOTHING', 'HOUSEHOLD', 'OTHER'],
-        default: 'OTHER',
-        uppercase: true
-    }],
+    categories: [{ type: String, uppercase: true }],
     requestingNGOs: [ { type: Schema.Types.ObjectId, ref: 'NGO'} ],
     approvedNGO: { type: Schema.Types.ObjectId, ref: 'NGO'},
     hasDonorConfirmed: { type: Boolean, default: false},
