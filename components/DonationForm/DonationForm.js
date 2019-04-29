@@ -104,12 +104,12 @@ class DonationForm extends Component {
         	this.props.navigation.navigate('feed')
         }
         catch(err) {
-
+			this.setState({ loading: false })
         	if (err.response) {
-            	this.setState({error: err.response.data.error })
+				ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
         	}
             else if (err.request) {
-            	this.setState({error: "No network connection!" })
+				ToastAndroid.show("No network connection!", ToastAndroid.LONG)
             }
 
         }
@@ -218,7 +218,6 @@ class DonationForm extends Component {
 			        </TouchableOpacity>
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
-					<Text>{this.state.error}</Text>
 				</View>
 
 

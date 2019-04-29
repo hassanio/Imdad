@@ -22,7 +22,7 @@ class CameraComponent extends Component {
     if (this.camera) {
     	this.camera.stopRecording()
 	    // console.log('Taking photo');
-	    const options = { quality: 1, base64: true, fixOrientation: true };
+	    const options = { quality: 0, base64: true, fixOrientation: true };
 	    const data = await this.camera.takePictureAsync(options)
 	    // console.log("HERE")
       const { routeName, key } = this.props.navigation.getParam('returnToRoute');
