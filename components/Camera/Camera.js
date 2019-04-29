@@ -2,6 +2,8 @@ import { Camera, Permissions } from 'expo';
 import React, { Component } from 'react'
 import { ActivityIndicator, Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { ImageManipulator } from 'expo';
+
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -25,16 +27,19 @@ class CameraComponent extends Component {
   async snapPhoto() {       
     // console.log('Button Pressed');
     if (this.camera) {
+      this.camera.stopRecording()
       this.setState({ loading: true })
-    	this.camera.stopRecording()
-	    console.log('Taking photo');
-	    const options = { quality: 0, base64: true, fixOrientation: true };
-	    const data = await this.camera.takePictureAsync(options)
-	    console.log("HERE")
+      // console.log('Taking photo');
+      const options = { quality: 0 };
+      const data = await this.camera.takePictureAsync(options)
+      const resizedPhoto = await ImageManipulator.manipulateAsync(data.uri, [
+        { resize: { width: 300, height: 400 }}
+      ])
+
       this.setState({ loading: false })
-      const { routeName, key } = this.props.navigation.getParam('returnToRoute');
-      // console.log(routeName, key)
-	    this.props.navigation.navigate(routeName,{image: data.uri})
+      const { routeName, key } = this.props.navigation.getParam('returnToRoute'); 
+
+      this.props.navigation.navigate(routeName,{image: resizedPhoto.uri})
      }
     }
 
@@ -92,9 +97,10 @@ class CameraComponent extends Component {
                                   height: imageHeight,
                                   width: imageWidth,
                                   position: 'absolute',
+                                  paddingLeft: 0,
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  opacity: 0.8,
+                                  opacity: 0.6,
                                   backgroundColor: '#808080',
                                 }}>
             <ActivityIndicator style= {{paddingBottom: imageHeight/4}} color='#316538' size='large'/>

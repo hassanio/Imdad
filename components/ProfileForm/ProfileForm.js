@@ -29,7 +29,9 @@ const validate = values => {
 	}
 
 	if (!values.contact) {
-		errors.contact = 'Required!'
+		errors.contact = '(Required) '
+	} else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
+		errors.contact = '(Invalid) '
 	}
 
 	if (!values.address) {
@@ -150,6 +152,7 @@ class ProfileForm extends Component {
         }
         catch(err) {
 
+        	this.setState({ loading: false })
         	console.log(JSON.stringify(err.response))
         	if (err.response) {
             	this.setState({error: err.response.data.error })

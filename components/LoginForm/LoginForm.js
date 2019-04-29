@@ -23,11 +23,11 @@ const validate = values => {
 	const errors = {}
 
 	if (!values.username) {
-		errors.username = 'Required!'
+		errors.username = '(Required) '
 	}
 
 	if (!values.password) {
-		errors.password = 'Required!'
+		errors.password = '(Required) '
 	}
 
 	return errors
@@ -84,7 +84,6 @@ class LoginForm extends Component {
 				<View style={{flex: 2, justifyContent: 'space-evenly', paddingTop: 20}}>
 					{this.renderFields()}
 					{this.renderLoginButton(this.props)}
-					<Text>{errorMsg}</Text>
 					<TextButton
 						buttonText={signup_text}
 						onPress = {() => this.props.navigation.navigate('d_signup')}

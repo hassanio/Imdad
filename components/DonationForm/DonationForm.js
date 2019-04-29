@@ -37,7 +37,7 @@ const validate = values => {
 
 	if (!values.contact) {
 		errors.contact = '(Required) '
-	} else if (isNaN(values.contact)) {
+	} else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
 		errors.contact = '(Invalid) '
 	}
 
@@ -112,7 +112,7 @@ class DonationForm extends Component {
 				ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
         	}
             else if (err.request) {
-				ToastAndroid.show("No network connection!", ToastAndroid.LONG)
+				ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
             }
 
         }
@@ -195,7 +195,7 @@ class DonationForm extends Component {
 		}
 
 		return(
-				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
+				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'center'} }>
 					<TouchableOpacity onPress = {() => {this.props.navigation.navigate('cam',{ returnToRoute: this.props.navigation.state })}} style = {{ flexDirection: 'row', justifyContent:'center', allignItems: 'center', paddingTop: imageHeight/40}}>
 					<Image 
 					style = {{
@@ -220,14 +220,14 @@ class DonationForm extends Component {
 					{this.state.loading && <View style = {{
 												height: imageHeight,
 												width: imageWidth,
-												paddingLeft: 0,
+												marginLeft: 0,
 												position: 'absolute',
 											    alignItems: 'center',
 											    justifyContent: 'center',
 									            opacity: 0.6,
 									            backgroundColor: '#808080',
 											}}>
-						<ActivityIndicator color='#CAEEA2' size='large'/>
+							<ActivityIndicator color='#CAEEA2' size='large'/>
 					</View>}
 				</View>
 
