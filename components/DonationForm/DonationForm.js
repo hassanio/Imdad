@@ -9,7 +9,6 @@ import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
 import { ActivityIndicator, ToastAndroid, Item, Image, Dimensions, Platform, View, TextInput, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
-
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
 
@@ -63,6 +62,31 @@ class DonationForm extends Component {
 		}
 	}
 
+	// async uploadImage(imageUri) {
+	// 	let mime = 'image/jpeg'
+	// 	const blob = await new Promise((resolve, reject) => {
+	// 	  const xhr = new XMLHttpRequest();
+	// 	  xhr.onload = function() {
+	// 		resolve(xhr.response);
+	// 	  };
+	// 	  xhr.onerror = function(e) {
+	// 		console.log(e);
+	// 		reject(new TypeError('Network request failed'));
+	// 	  };
+	// 	  xhr.responseType = 'blob';
+	// 	  xhr.open('GET', imageUri, true);
+	// 	  xhr.send(null);
+	// 	});
+  
+	// 	const imageName = new Date() + "-photo.jpg"
+	// 	const ref = firebase.storage().ref().child('images/' + imageName)
+
+	// 	const snapshot = await ref.put(blob, { contentType: mime })
+	// 	const url = await snapshot.ref.getDownloadURL()
+
+	// 	return url
+	// }
+
 	async submitForm(values) {
 
 		try {
@@ -76,7 +100,7 @@ class DonationForm extends Component {
 			const photo = {
 				uri: this.props.navigation.state.params.image,
 				type: 'image/jpeg',
-				name: 'photo.jpg'
+				name: 'photo.jpg',
 			}
 			formData.append('image', photo)
 			
@@ -89,6 +113,9 @@ class DonationForm extends Component {
 			})
 
 			this.setState({ loading: true })
+			// const url = await this.uploadImage(photo.uri)
+			// console.log(url)
+
 			const res = await axios.post('https://young-castle-56897.herokuapp.com/donate', formData, {
 				headers: { 
 					'content-type': `multipart/form-data`,
@@ -104,6 +131,7 @@ class DonationForm extends Component {
         	this.props.navigation.navigate('feed')
         }
         catch(err) {
+			console.log(err)
 			this.setState({ loading: false })
         	if (err.response) {
 				ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)

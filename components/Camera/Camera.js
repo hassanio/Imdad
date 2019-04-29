@@ -2,6 +2,8 @@ import { Camera, Permissions } from 'expo';
 import React, { Component } from 'react'
 import { Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { ImageManipulator } from 'expo'
+import firebase from 'firebase'
 
 class CameraComponent extends Component {
 	constructor(props) {
@@ -22,12 +24,15 @@ class CameraComponent extends Component {
     if (this.camera) {
     	this.camera.stopRecording()
 	    // console.log('Taking photo');
-	    const options = { quality: 0, base64: true, fixOrientation: true };
-	    const data = await this.camera.takePictureAsync(options)
-	    // console.log("HERE")
-      const { routeName, key } = this.props.navigation.getParam('returnToRoute');
-      // console.log(routeName, key)
-	    this.props.navigation.navigate(routeName,{image: data.uri})
+	    const options = { quality: 1 };
+      const data = await this.camera.takePictureAsync(options)
+      const resizedPhoto = await ImageManipulator.manipulateAsync(data.uri, [
+        { resize: { width: 300, height: 400 }}
+      ])
+
+      const { routeName, key } = this.props.navigation.getParam('returnToRoute'); 
+
+      this.props.navigation.navigate(routeName,{image: resizedPhoto.uri})
      }
     }
 
