@@ -31,24 +31,27 @@ const validate = values => {
 	const errors = {}
 
 	if (!values.description) {
-		errors.description = 'Required!'
+		errors.description = '(Required) '
 	}
 
 	if (!values.contact) {
-		errors.contact = 'Required!'
+		errors.contact = '(Required) '
+	} else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
+		errors.contact = '(Invalid) '
 	}
 
 	if (!values.collection_address) {
-		errors.collection_address = 'Required!'
+		errors.collection_address = '(Required) '
 	}
 
 	if (!values.location || values.location == 'None') {
-		errors.location = 'Required!'
+		errors.location = '(Required) '
 	}
 
 	if (!values.categories || values.categories == 'None') {
-		errors.categories = 'Required!'
+		errors.categories = '(Required) '
 	}
+
 	return errors
 }
 
@@ -58,7 +61,7 @@ class DonationForm extends Component {
 		super(props)
 		this.state = {
 			error: '',
-			loading: false
+			loading: false,
 		}
 	}
 
@@ -137,7 +140,7 @@ class DonationForm extends Component {
 				ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
         	}
             else if (err.request) {
-				ToastAndroid.show("No network connection!", ToastAndroid.LONG)
+				ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
             }
 
         }
@@ -196,9 +199,6 @@ class DonationForm extends Component {
 	}
 
 	renderSubmitButton(handleSubmit) {
-		if (this.state.loading) {
-			return <ActivityIndicator color='#CAEEA2' size='large'/>
-		} else {
 
 			modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
 			modified_SignUpbutton.container.height = imageHeight/15
@@ -210,7 +210,6 @@ class DonationForm extends Component {
 			onPress={handleSubmit(this.submitForm.bind(this))}
 			my_style = {modified_SignUpbutton}
 			/>
-		}
 	}
 
 	render() {
@@ -224,7 +223,7 @@ class DonationForm extends Component {
 		}
 
 		return(
-				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
+				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'center'} }>
 					<TouchableOpacity onPress = {() => {this.props.navigation.navigate('cam',{ returnToRoute: this.props.navigation.state })}} style = {{ flexDirection: 'row', justifyContent:'center', allignItems: 'center', paddingTop: imageHeight/40}}>
 					<Image 
 					style = {{
@@ -246,6 +245,18 @@ class DonationForm extends Component {
 			        </TouchableOpacity>
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
+					{this.state.loading && <View style = {{
+												height: imageHeight,
+												width: imageWidth,
+												marginLeft: 0,
+												position: 'absolute',
+											    alignItems: 'center',
+											    justifyContent: 'center',
+									            opacity: 0.6,
+									            backgroundColor: '#808080',
+											}}>
+							<ActivityIndicator color='#CAEEA2' size='large'/>
+					</View>}
 				</View>
 
 

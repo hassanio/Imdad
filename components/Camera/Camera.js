@@ -1,16 +1,26 @@
 import { Camera, Permissions } from 'expo';
 import React, { Component } from 'react'
-import { Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+<<<<<<< HEAD
 import { ImageManipulator } from 'expo'
 import firebase from 'firebase'
+=======
+import { ImageManipulator } from 'expo';
+
+
+const imageWidth = Dimensions.get('window').width;
+const imageHeight = Dimensions.get('window').height;
+
+>>>>>>> 7d41e01bd59b202d5ae83391936917d6bc94fecd
 
 class CameraComponent extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 		    hasCameraPermission: null,
-		    type: Camera.Constants.Type.back
+		    type: Camera.Constants.Type.back,
+        loading: false
 		  }
 	}
 
@@ -22,14 +32,16 @@ class CameraComponent extends Component {
   async snapPhoto() {       
     // console.log('Button Pressed');
     if (this.camera) {
-    	this.camera.stopRecording()
-	    // console.log('Taking photo');
-	    const options = { quality: 1 };
+      this.camera.stopRecording()
+      this.setState({ loading: true })
+      // console.log('Taking photo');
+      const options = { quality: 0 };
       const data = await this.camera.takePictureAsync(options)
       const resizedPhoto = await ImageManipulator.manipulateAsync(data.uri, [
         { resize: { width: 300, height: 400 }}
       ])
 
+      this.setState({ loading: false })
       const { routeName, key } = this.props.navigation.getParam('returnToRoute'); 
 
       this.props.navigation.navigate(routeName,{image: resizedPhoto.uri})
@@ -86,6 +98,18 @@ class CameraComponent extends Component {
               </TouchableOpacity>
             </View>
           </Camera>
+          {this.state.loading && <View style = {{
+                                  height: imageHeight,
+                                  width: imageWidth,
+                                  position: 'absolute',
+                                  paddingLeft: 0,
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  opacity: 0.6,
+                                  backgroundColor: '#808080',
+                                }}>
+            <ActivityIndicator style= {{paddingBottom: imageHeight/4}} color='#316538' size='large'/>
+          </View>}
         </View>
       );
     }

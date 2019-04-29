@@ -29,7 +29,9 @@ const validate = values => {
 	}
 
 	if (!values.contact) {
-		errors.contact = 'Required!'
+		errors.contact = '(Required) '
+	} else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
+		errors.contact = '(Invalid) '
 	}
 
 	if (!values.address) {
@@ -150,6 +152,7 @@ class ProfileForm extends Component {
         }
         catch(err) {
 
+        	this.setState({ loading: false })
         	console.log(JSON.stringify(err.response))
         	if (err.response) {
             	this.setState({error: err.response.data.error })
@@ -214,6 +217,18 @@ class ProfileForm extends Component {
                     {this.renderImage(initialValues.image)}
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
+					{this.state.loading && <View style = {{
+												height: imageHeight,
+												width: imageWidth,
+												marginLeft: 0,
+												position: 'absolute',
+											    alignItems: 'center',
+											    justifyContent: 'center',
+									            opacity: 0.6,
+									            backgroundColor: '#808080',
+											}}>
+							<ActivityIndicator color='#CAEEA2' size='large'/>
+					</View>}
 				</View>
 
 

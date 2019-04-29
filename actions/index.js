@@ -28,8 +28,8 @@ export const loginDonor = (values, nav) =>
                 ToastAndroid.show("Unauthorized. Provide valid credentials.", ToastAndroid.LONG)
             }
             else if (err.request) {
-                dispatch(LoginError("No network connection!"))
-                ToastAndroid.show("No network connection!", ToastAndroid.LONG)
+                dispatch(LoginError("Unable to process! Please check your internet connection!"))
+                ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
             }
 
         }
@@ -78,7 +78,7 @@ export const FetchDonations = (token) =>
                 ToastAndroid.show("FAILED TO FETCH DONATIONS", ToastAndroid.LONG)
             }
             else if (err.request) {
-                ToastAndroid.show("No network connection!", ToastAndroid.LONG)
+                ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
             }
 
         }

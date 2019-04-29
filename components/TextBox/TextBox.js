@@ -22,7 +22,7 @@ const TextBox = ({ input, my_style, secure, type, label, meta: {error, touched, 
         </TouchableHighlight>
         <View style={my_style.separator} />
         <TextInput {...input} value={input.value.toString()}keyboardType = {type} style={my_style.input} secureTextEntry={secure} underlineColorAndroid="transparent"/>
-        {touched && error && <Text>{error}</Text>}
+        {touched && error && <Text style = {{color: 'red'}}>{error}</Text>}
       </View>
   );
 };

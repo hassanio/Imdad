@@ -8,7 +8,7 @@ import textbox_styles from '../TextBox/styles.js';
 import renderPicker from '../Picker/Picker.js'
 import formFields from './formFields'
 const axios = require('axios')
-import { Item, Dimensions, ActivityIndicator, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { Item, Dimensions, ToastAndroid, ActivityIndicator, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 const login = 'Sign Up';
 const login_text = 'Already have an account? Login'
@@ -32,23 +32,26 @@ const validate = values => {
 	const errors = {}
 
 	if (!values.name) {
-		errors.name = 'Required!'
+		errors.name = '(Required) '
 	}
 
 	if (!values.username) {
-		errors.username = 'Required!'
+		errors.username = '(Required) '
 	}
 
 	if (!values.password) {
-		errors.password = 'Required!'
+		errors.password = '(Required) '
 	}
 
 	if (!values.contact) {
-		errors.contact = 'Required!'
+		errors.contact = '(Required) '
 	}
+	// } else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
+	// 	errors.contact = '(Invalid) '
+	// }
 
 	if (!values.address) {
-		errors.address = 'Required!'
+		errors.address = '(Required) '
 	}
 
 	return errors
@@ -79,11 +82,18 @@ class SignUpForm extends Component {
         }
         catch(err) {
 
-        	if (err.response) {
-            	this.setState({error: err.response.data.error })
+        	this.setState({loading: false })
+
+        	console.log(err)
+
+        	if (err.response.status === 422) {
+            	ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+
         	}
             else if (err.request) {
-            	this.setState({error: "No network connection!" })
+            	console.log(JSON.stringify(err.request.data))
+            	ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+
             }
 
         }
@@ -154,7 +164,6 @@ class SignUpForm extends Component {
 				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
 					{this.renderFields()}
 					{this.renderSubmitButton(this.props)}
-			        <Text>{this.state.error}</Text>
 					<TextButton
 					onPress = {() => this.props.navigation.navigate('d_login')}
                     buttonText={login_text}
