@@ -2,17 +2,12 @@ import { Camera, Permissions } from 'expo';
 import React, { Component } from 'react'
 import { ActivityIndicator, Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
-<<<<<<< HEAD
-import { ImageManipulator } from 'expo'
-import firebase from 'firebase'
-=======
 import { ImageManipulator } from 'expo';
 
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
->>>>>>> 7d41e01bd59b202d5ae83391936917d6bc94fecd
 
 class CameraComponent extends Component {
 	constructor(props) {
