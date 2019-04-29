@@ -217,6 +217,18 @@ class ProfileForm extends Component {
                     {this.renderImage(initialValues.image)}
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
+					{this.state.loading && <View style = {{
+												height: imageHeight,
+												width: imageWidth,
+												marginLeft: 0,
+												position: 'absolute',
+											    alignItems: 'center',
+											    justifyContent: 'center',
+									            opacity: 0.6,
+									            backgroundColor: '#808080',
+											}}>
+							<ActivityIndicator color='#CAEEA2' size='large'/>
+					</View>}
 				</View>
 
 
