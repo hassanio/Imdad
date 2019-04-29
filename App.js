@@ -3,6 +3,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 import Navigator from "./config/routes"
 import {Alert} from "react-native";
 import { DeviceEventEmitter } from 'react-native';
+import { SplashScreen } from 'expo'
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -20,6 +21,7 @@ EStyleSheet.build({
 
 class HelloWorldApp extends Component {
   componentDidMount(){ 
+    SplashScreen.hide()
   }
   render(){
       return (
