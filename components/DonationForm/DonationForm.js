@@ -169,7 +169,15 @@ class DonationForm extends Component {
 
 	renderSubmitButton(handleSubmit) {
 		if (this.state.loading) {
-			return <ActivityIndicator color='#CAEEA2' size='large'/>
+			return (<View style = {{
+	            opacity: 0.5,
+	            backgroundColor: '#F5FCFF88',
+	            justifyContent: 'center',
+	            alignItems: 'center'
+			}}>
+						<ActivityIndicator color='#CAEEA2' size='large'/>
+					</View>
+				)
 		} else {
 
 			modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
