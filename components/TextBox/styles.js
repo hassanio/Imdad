@@ -21,6 +21,8 @@ const textbox_styles = {
     justifyContent: 'center',
     borderRadius: BORDER_RADIUS,
     marginVertical: 15,
+    borderColor: 'red',
+    borderWidth: 0
   },
 
   buttonContainer: {

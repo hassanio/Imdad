@@ -1,14 +1,19 @@
 import { Camera, Permissions } from 'expo';
 import React, { Component } from 'react'
-import { Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, Icon, Item, Dimensions, Platform, View, TextInput, TouchableOpacity, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+
+const imageWidth = Dimensions.get('window').width;
+const imageHeight = Dimensions.get('window').height;
+
 
 class CameraComponent extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 		    hasCameraPermission: null,
-		    type: Camera.Constants.Type.back
+		    type: Camera.Constants.Type.back,
+        loading: false
 		  }
 	}
 
@@ -20,11 +25,13 @@ class CameraComponent extends Component {
   async snapPhoto() {       
     // console.log('Button Pressed');
     if (this.camera) {
+      this.setState({ loading: true })
     	this.camera.stopRecording()
-	    // console.log('Taking photo');
+	    console.log('Taking photo');
 	    const options = { quality: 0, base64: true, fixOrientation: true };
 	    const data = await this.camera.takePictureAsync(options)
-	    // console.log("HERE")
+	    console.log("HERE")
+      this.setState({ loading: false })
       const { routeName, key } = this.props.navigation.getParam('returnToRoute');
       // console.log(routeName, key)
 	    this.props.navigation.navigate(routeName,{image: data.uri})
@@ -81,6 +88,17 @@ class CameraComponent extends Component {
               </TouchableOpacity>
             </View>
           </Camera>
+          {this.state.loading && <View style = {{
+                                  height: imageHeight,
+                                  width: imageWidth,
+                                  position: 'absolute',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  opacity: 0.8,
+                                  backgroundColor: '#808080',
+                                }}>
+            <ActivityIndicator style= {{paddingBottom: imageHeight/4}} color='#316538' size='large'/>
+          </View>}
         </View>
       );
     }

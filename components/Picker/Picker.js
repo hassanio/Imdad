@@ -31,7 +31,7 @@ const renderPicker = ({ input: { onChange, value }, meta: {error, touched, activ
 		  >
 		    { children }
 		  </Picker>
-		  {touched && error && <Text>Required!</Text>}
+		  {touched && error && <Text style = {{color: 'red'}}>{error}</Text>}
 		</View>
 		);
 }

@@ -32,24 +32,27 @@ const validate = values => {
 	const errors = {}
 
 	if (!values.description) {
-		errors.description = 'Required!'
+		errors.description = '(Required) '
 	}
 
 	if (!values.contact) {
-		errors.contact = 'Required!'
+		errors.contact = '(Required) '
+	} else if (isNaN(values.contact)) {
+		errors.contact = '(Invalid) '
 	}
 
 	if (!values.collection_address) {
-		errors.collection_address = 'Required!'
+		errors.collection_address = '(Required) '
 	}
 
 	if (!values.location || values.location == 'None') {
-		errors.location = 'Required!'
+		errors.location = '(Required) '
 	}
 
 	if (!values.categories || values.categories == 'None') {
-		errors.categories = 'Required!'
+		errors.categories = '(Required) '
 	}
+
 	return errors
 }
 
@@ -59,7 +62,7 @@ class DonationForm extends Component {
 		super(props)
 		this.state = {
 			error: '',
-			loading: false
+			loading: false,
 		}
 	}
 
@@ -168,17 +171,6 @@ class DonationForm extends Component {
 	}
 
 	renderSubmitButton(handleSubmit) {
-		if (this.state.loading) {
-			return (<View style = {{
-	            opacity: 0.5,
-	            backgroundColor: '#F5FCFF88',
-	            justifyContent: 'center',
-	            alignItems: 'center'
-			}}>
-						<ActivityIndicator color='#CAEEA2' size='large'/>
-					</View>
-				)
-		} else {
 
 			modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
 			modified_SignUpbutton.container.height = imageHeight/15
@@ -190,7 +182,6 @@ class DonationForm extends Component {
 			onPress={handleSubmit(this.submitForm.bind(this))}
 			my_style = {modified_SignUpbutton}
 			/>
-		}
 	}
 
 	render() {
@@ -226,6 +217,18 @@ class DonationForm extends Component {
 			        </TouchableOpacity>
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
+					{this.state.loading && <View style = {{
+												height: imageHeight,
+												width: imageWidth,
+												paddingLeft: 0,
+												position: 'absolute',
+											    alignItems: 'center',
+											    justifyContent: 'center',
+									            opacity: 0.6,
+									            backgroundColor: '#808080',
+											}}>
+						<ActivityIndicator color='#CAEEA2' size='large'/>
+					</View>}
 				</View>
 
 
