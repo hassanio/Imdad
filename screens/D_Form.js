@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import { Header } from 'react-navigation'
-import { Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
+import { View, Linking,StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import { Container } from '../components/Container';
 import Logo from '../components/Logo/Logo.js';
 import logo_styles from '../components/Logo/styles.js';
@@ -26,12 +26,10 @@ class D_Form extends Component {
     return (
         <Container>
         <StatusBar barStyle="light-content" backgroundColor='#316538' />
-          <KeyboardAvoidingView style = {{flex: 1}}
-          behaviour = 'padding'
-          keyboardVerticalOffset={Header.HEIGHT}
+          <View style = {{flex: 1}}
           >
                   <DonationForm navigation={this.props.navigation} />
-          </KeyboardAvoidingView>
+          </View>
         </Container>
     );
   }

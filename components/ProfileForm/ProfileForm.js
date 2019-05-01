@@ -8,7 +8,9 @@ import textbox_styles from '../TextBox/styles.js';
 import formFields from './formFields'
 import renderPicker from '../Picker/Picker.js'
 const axios = require('axios')
-import { Item, ToastAndroid, ActivityIndicator, Dimensions, View, Text, TouchableOpacity} from 'react-native';
+import { ImagePicker } from 'expo';
+import { Permissions, ImageManipulator } from 'expo';
+import { StyleSheet, Item, ToastAndroid, ActivityIndicator, Dimensions, View, Text, TouchableOpacity} from 'react-native';
 import { Avatar } from 'react-native-elements'
 
 const imageWidth = Dimensions.get('window').width;
@@ -51,20 +53,23 @@ class ProfileForm extends Component {
 		super(props)
 		this.state = {
 			error: '',
-			loading: false
+			loading: false,
+			is_image: false,
+			image: null,
+			hasCameraPermission: null,
 		}
     }
 
     renderImage(img_url) {
 
-    	if (this.props.navigation.state.params == undefined) {
+		if (this.state.image == null) {
 			src = { uri: img_url }
 		} else {
-			src = {uri: this.props.navigation.state.params.image}
+			src = {uri: this.state.image}
 		}
 
         return (
-            <TouchableOpacity  onPress = {() => {this.props.navigation.navigate('cam',{ returnToRoute: this.props.navigation.state })}} style = {styles.avatarViewStyle}>
+            <TouchableOpacity disabled={this.state.is_image ? true : false}  onPress = {() => {this.setState({is_image: true})}} style = {styles.avatarViewStyle}>
                 <Avatar
                     size = 'xlarge'
                     rounded
@@ -86,10 +91,7 @@ class ProfileForm extends Component {
     }
 
     renderSubmitButton(handleSubmit) {
-		if (this.state.loading) {
-			return <ActivityIndicator color='#CAEEA2' size='large'/>
-		} else {
-
+    	
 			modified_SignUpbutton = JSON.parse(JSON.stringify(textbutton_styles))
 			modified_SignUpbutton.container.height = imageHeight/15
 			modified_SignUpbutton.container.top = imageHeight/50
@@ -109,20 +111,34 @@ class ProfileForm extends Component {
 
 			let photo = {}
 
-			if (!this.props.navigation.state.params || !this.props.navigation.state.params.image) {
+			if (!this.state.image) {
+
+				img_type = ((this.props.initialValues.image).split(".").pop())
+				if (img_type == "jpg") {
+					img_type = "jpeg"
+				}
+				const type_ = "image/" + img_type;
+				const name_ = "photo." + ((this.props.initialValues.image).split(".").pop());
 				
 				photo = {
 					uri: this.props.initialValues.image,
-					type: 'image/jpeg',
-					name: 'photo.jpg'
+					type: type_,
+					name: name_
 				}
 
 			} else {
+
+				img_type = ((this.state.image).split(".").pop())
+				if (img_type == "jpg") {
+					img_type = "jpeg"
+				}
+				const type_ = "image/" + img_type;
+				const name_ = "photo." + ((this.state.image).split(".").pop());
 				
 				photo = {
-				uri: this.props.navigation.state.params.image,
-				type: 'image/jpeg',
-				name: 'photo.jpg'
+					uri: this.state.image,
+					type: type_,
+					name: name_
 				}
 
 			}
@@ -153,7 +169,9 @@ class ProfileForm extends Component {
         catch(err) {
 
         	this.setState({ loading: false })
-        	console.log(JSON.stringify(err.response))
+
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+
         	if (err.response) {
             	this.setState({error: err.response.data.error })
         	}
@@ -163,6 +181,49 @@ class ProfileForm extends Component {
 
         }
 	}
+
+	_pickImage = async () => {
+
+	    let result = await ImagePicker.launchImageLibraryAsync({
+	      allowsEditing: true,
+	      aspect: [4, 3],
+	    });
+
+	    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+      const resizedPhoto = await ImageManipulator.manipulateAsync(result.uri, [
+        { resize: { width: 300, height: 400 }}
+      ])
+
+    	}
+	}
+
+	PickImage = async () => {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    	this.setState({ hasCameraPermission: status === 'granted' })
+    	const { hasCameraPermission } = this.state
+
+	    if (hasCameraPermission === null) {
+	      return null
+	    }
+	    else if (hasCameraPermission === false) {
+	      return null
+	    }
+
+		let pickerResult = await ImagePicker.launchCameraAsync({
+		  allowsEditing: false,
+		});
+
+		if (!pickerResult.cancelled) {
+			this.setState({image: pickerResult.uri});
+			const resizedPhoto = await ImageManipulator.manipulateAsync(pickerResult.uri, [
+		        { resize: { width: 300, height: 400 }}
+		      ])
+		}
+
+		console.log(this.state.image)
+		
+	};
 
 
 
@@ -213,10 +274,61 @@ class ProfileForm extends Component {
 		modified_SignUpbutton.container.top = imageHeight/50
 
 		return(
-				<View style = {{flex: 1, paddingTop: imageHeight/22, justifyContent:'flex-end'} }>
+				<View style = {{height: imageHeight, width: imageWidth, paddingTop: imageHeight/10 ,paddingLeft: imageWidth/20,paddingRight: imageWidth/20, paddingBottom: imageHeight/10, justifyContent:'center', allignItems: 'center'} }>
                     {this.renderImage(initialValues.image)}
 					{this.renderFields()}
 					{this.renderSubmitButton(handleSubmit)}
+					{this.state.is_image && <View pointerEvents={'auto'} style = {{
+												height: imageHeight,
+												width: imageWidth,
+												position: 'absolute',
+											    alignItems: 'center',
+											    justifyContent: 'center',
+											    paddingBottom: imageHeight/4,
+
+
+											}}>
+							<View style = {{
+								height: imageHeight/3,
+								width: imageWidth/1.2,
+								backgroundColor: 'white',
+								flexDirection: 'column',
+								borderRadius: 10,
+								borderWidth: 2,
+								borderColor: 'grey'
+							}}>
+							<Text style = {{paddingTop: imageHeight/50, paddingBottom: imageHeight/50, fontWeight: '600', fontSize: 20, paddingLeft: imageWidth/40}}>Add image from..</Text>
+							<View style = {{height: StyleSheet.hairlineWidth,
+										    width: imageWidth/1.2,
+										    backgroundColor: '#dcdcdc',}}/>
+							<TouchableOpacity onPress = {() => {
+								this.setState({is_image: false})
+								this.PickImage()
+
+							}}
+								   style = {{paddingLeft: imageWidth/50, paddingTop: imageHeight/50, paddingLeft: imageWidth/40, paddingBottom: imageHeight/50}}>
+								   <Text style={{fontWeight: '600', fontSize: 20, color: '#696969'}}>Camera</Text>
+							</TouchableOpacity>
+							<TouchableOpacity onPress= {() => {
+													this.setState({is_image: false})
+													this._pickImage()
+												}}
+								   style = {{paddingLeft: imageWidth/50, paddingTop: imageHeight/50, paddingLeft: imageWidth/40, paddingBottom: imageHeight/50}}>
+								   <Text style={{fontWeight: '600', fontSize: 20, color: '#696969'}}>Gallery</Text>
+							</TouchableOpacity>
+							<View style = {{height: StyleSheet.hairlineWidth,
+										    width: imageWidth/1.2,
+										    backgroundColor: '#dcdcdc',}}/>
+							<TouchableOpacity onPress= {() => {
+													this.setState({is_image: false})
+													console.log("FALSED")
+												}}
+								   style = {{paddingTop: imageHeight/50, paddingLeft: imageWidth/40, paddingBottom: imageHeight/50}}>
+								   <Text style={{fontWeight: '600', fontSize: 20, textAlign: 'center' , color: 'red'}}>Close</Text>
+								   </TouchableOpacity>
+
+							</View>
+					</View>}
 					{this.state.loading && <View style = {{
 												height: imageHeight,
 												width: imageWidth,

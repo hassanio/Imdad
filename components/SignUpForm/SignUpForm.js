@@ -84,6 +84,8 @@ class SignUpForm extends Component {
 
         	this.setState({loading: false })
 
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+
         	console.log(err)
 
         	if (err.response.status === 422) {

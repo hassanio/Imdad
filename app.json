@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.group22.Imdad",
-      "permissions": ["CAMERA"]
+      "permissions": ["CAMERA", "CAMERA_ROLL"],
     }
   }
 }
