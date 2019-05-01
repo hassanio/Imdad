@@ -29,7 +29,7 @@ class CameraComponent extends Component {
     if (this.camera) {
       this.camera.stopRecording()
       this.setState({ loading: true })
-      // console.log('Taking photo');
+      console.log('Taking photo');
       const options = { quality: 0 };
       const data = await this.camera.takePictureAsync(options)
       const resizedPhoto = await ImageManipulator.manipulateAsync(data.uri, [

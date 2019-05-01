@@ -23,6 +23,8 @@ export const loginDonor = (values, nav) =>
         }
         catch(err) {
 
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+
             if (err.response) {
                 dispatch(LoginError("Unauthorized. Provide valid credentials."))
                 ToastAndroid.show("Unauthorized. Provide valid credentials.", ToastAndroid.LONG)

@@ -46,9 +46,9 @@ const validate = values => {
 	if (!values.contact) {
 		errors.contact = '(Required) '
 	}
-	// } else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
-	// 	errors.contact = '(Invalid) '
-	// }
+	else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
+		errors.contact = '(Invalid) '
+	}
 
 	if (!values.address) {
 		errors.address = '(Required) '
@@ -82,19 +82,25 @@ class SignUpForm extends Component {
         }
         catch(err) {
 
-        	this.setState({loading: false })
+			console.log(JSON.stringify(err))
 
-        	console.log(err)
+			this.setState({loading: false })
+			
+			if (err.response) {
+				if (err.response.status === 422) {
+					ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+	
+				} else {
+					ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+				}
 
-        	if (err.response.status === 422) {
-            	ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
-
-        	}
+			}
             else if (err.request) {
-            	console.log(JSON.stringify(err.request.data))
             	ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
 
-            }
+            } else {
+				ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+			}
 
         }
 	}
