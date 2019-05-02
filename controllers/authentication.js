@@ -24,7 +24,7 @@ exports.ngo_signup = async (req, res, next) => {
 
     try {
 
-        const newNGO = await new NGO({ email: email, password: password }).save()
+        const newNGO = await new NGO(req.body).save()
 
         res.json({ token: genToken(newNGO, roles.NGO ), isDonor: false})
 
