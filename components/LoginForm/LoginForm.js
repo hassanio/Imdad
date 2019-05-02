@@ -40,6 +40,10 @@ const required = value => {
 	}
 }
 
+const isEmail = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+  '(Invalid email)' : undefined
+
 class LoginForm extends Component {
 	constructor(props) {
     super(props);
@@ -54,9 +58,12 @@ class LoginForm extends Component {
 			formFields.map(({label, name}) => {
 				if (name == 'password') {
 					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required]} my_style = {textbox_styles} secure = {true} />
-				} else {
-					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required]} my_style = {textbox_styles} secure = {false} />
 				}
+				if (name == 'email') {
+					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required, isEmail]} my_style = {textbox_styles} secure = {false} />
+				}
+
+				return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required]} my_style = {textbox_styles} secure = {false} />
 			})
 		)
 	}

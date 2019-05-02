@@ -10,6 +10,7 @@ import React from 'react'
 import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { DrawerActions } from 'react-navigation'
+import { connect } from 'react-redux';
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
