@@ -11,7 +11,7 @@ const genToken = (user, role) => {
 }
 
 exports.ngo_signin = (req, res) => {
-    res.send( {token: genToken(req.user, roles.NGO )})
+    res.send( {token: genToken(req.user, roles.NGO ), isDonor: false})
 }
 
 //FOR TESTING PURPOSES ONLY!!!
@@ -26,7 +26,7 @@ exports.ngo_signup = async (req, res, next) => {
 
         const newNGO = await new NGO({ email: email, password: password }).save()
 
-        res.json({ token: genToken(newNGO, roles.NGO )})
+        res.json({ token: genToken(newNGO, roles.NGO ), isDonor: false})
 
     }
     catch(err)
@@ -37,7 +37,7 @@ exports.ngo_signup = async (req, res, next) => {
 
 exports.donor_signin = (req, res) => {
     //Donor's username and password already verified so provide him/her with the json web token.
-    res.send( { token: genToken(req.user, roles.Donor)})
+    res.send( { token: genToken(req.user, roles.Donor), isDonor: true })
 
 }
 

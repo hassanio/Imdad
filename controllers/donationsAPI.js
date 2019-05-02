@@ -6,7 +6,6 @@ const DataUri = require('datauri')
 const path = require('path')
 const cloudinary = require('cloudinary').v2
 const _ = require('lodash')
-
 /////////////////////////////////////////// Donor Functions ///////////////////////////////////////////////////
 exports.donateItem = async (req, res) => {
     //Base-64 encode the image
