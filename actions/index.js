@@ -11,10 +11,13 @@ export const loginDonor = (values, nav) =>
             //Submit login credentials to server
             const res = await axios.post('https://young-castle-56897.herokuapp.com/auth/donor/signin', values)
 
-            await AsyncStorage.setItem('token', res.data.token);
+            await Promise.all([
+                AsyncStorage.setItem('token', res.data.token),
+                AsyncStorage.setItem('isDonor', JSON.stringify(res.data.isDonor))
+            ])
 
             //Tell redux that login is successful
-            dispatch(LoginSuccess(res.data.token))
+            dispatch(LoginSuccess({ token: res.data.token, isDonor: res.data.isDonor}))
 
             ToastAndroid.show("Login Successful", ToastAndroid.LONG)
 
@@ -37,10 +40,10 @@ export const loginDonor = (values, nav) =>
         }
     }
 
-export const LoginSuccess = token => {
+export const LoginSuccess = data => {
     return {
         type: LOGIN_SUCCESS,
-        payload: token
+        payload: data
     }
 }
 

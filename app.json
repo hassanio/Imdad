@@ -27,8 +27,7 @@
       "bundleIdentifier": "com.group22.Imdad"
     },
     "android": {
-      "package": "com.group22.Imdad",
-      "permissions": ["CAMERA", "CAMERA_ROLL"]
+      "package": "com.group22.Imdad"
     }
   }
 }
