@@ -66,6 +66,7 @@ const locationFilters = [
 ]
 
 class D_Feed extends Component {
+
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -81,7 +82,6 @@ class D_Feed extends Component {
 		this.focusListener = navigation.addListener('didFocus', () => {
 			this.props.FetchDonations(token)
 		})
-		
 	}
 
 	componentWillUnmount() {

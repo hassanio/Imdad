@@ -27,8 +27,6 @@ export const login = (values, isDonor, nav) =>
         }
         catch(err) {
 
-            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
-
             if (err.response) {
                 dispatch(LoginError("Unauthorized. Provide valid credentials."))
                 ToastAndroid.show("Unauthorized. Provide valid credentials.", ToastAndroid.LONG)
@@ -36,6 +34,10 @@ export const login = (values, isDonor, nav) =>
             else if (err.request) {
                 dispatch(LoginError("Unable to process! Please check your internet connection!"))
                 ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+            }
+            else {
+                dispatch(LoginError("Unexpected Error Occurred. Try again later"))
+                ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
             }
 
         }
