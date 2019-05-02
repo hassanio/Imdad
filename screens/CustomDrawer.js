@@ -53,8 +53,14 @@ class CustomDrawer extends Component {
     }
 
     renderDrawerItems(props) {
-        const { items, ...rest } = props
-        const filteredItems = items.filter(item => item.key !== "d_form" && item.key !== "cam")
+        const { items, isDonor, ...rest } = props
+        const filteredItems = items.filter(item => {
+            if (item.key === 'd_form' || (isDonor && item.key === 'Approved Donations')) {
+                return false
+            }
+            return true
+        })
+        
         return (
             <View style = {styles.drawerItemsContainer}>
                  <DrawerItems items = {filteredItems} {...rest} />
@@ -147,7 +153,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.token
+        token: state.auth.token,
+        isDonor: state.auth.isDonor
     }
 }
 export default connect(mapStateToProps, actions)(CustomDrawer);

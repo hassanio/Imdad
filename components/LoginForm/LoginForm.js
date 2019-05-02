@@ -6,7 +6,8 @@ import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
 import TextBox from '../TextBox/TextBox.js';
 import textbox_styles from '../TextBox/styles.js';
-import formFields from './formFields'
+import formFieldsDonor from './formFieldsDonor'
+import formFieldsNGO from './formFieldsNGO'
 import { ActivityIndicator, Dimensions, Platform, View, TextInput, TouchableHighlight, Text, KeyboardAvoidingView } from 'react-native';
 
 
@@ -33,24 +34,29 @@ const validate = values => {
 	return errors
 }
 
+const required = value => {
+	if(!value) {
+		return '(Required)'
+	}
+}
+
 class LoginForm extends Component {
 	constructor(props) {
     super(props);
   }
 
 	submitForm(values) {
-		this.props.loginDonor(values,this.props.navigation)
+		this.props.login(values, this.props.isDonor, this.props.navigation)
 	}
-	renderFields() {
+	renderFields(formFields) {
 
 		return (
 			formFields.map(({label, name}) => {
 				if (name == 'password') {
-					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {textbox_styles} secure = {true} />
+					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required]} my_style = {textbox_styles} secure = {true} />
 				} else {
-					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} my_style = {textbox_styles} secure = {false} />
+					return <Field key = {name} component = {TextBox} type='text' name={name} label={label} validate={[required]} my_style = {textbox_styles} secure = {false} />
 				}
-				
 			})
 		)
 	}
@@ -70,7 +76,8 @@ class LoginForm extends Component {
 
 	render() {
 
-		const { errorMsg, authState}  = this.props;
+		const { isDonor }  = this.props;
+		const formFields = isDonor ? formFieldsDonor : formFieldsNGO
 
 		modified_button = JSON.parse(JSON.stringify(textbutton_styles))
 		modified_button.container.height = INPUT_HEIGHT
@@ -82,13 +89,13 @@ class LoginForm extends Component {
 
 		return(
 				<View style={{flex: 2, justifyContent: 'space-evenly', paddingTop: 20}}>
-					{this.renderFields()}
+					{this.renderFields(formFields)}
 					{this.renderLoginButton(this.props)}
-					<TextButton
+					{isDonor && <TextButton
 						buttonText={signup_text}
 						onPress = {() => this.props.navigation.navigate('d_signup')}
 						my_style = {modified_button}
-						/>
+						/>}
 				</View>
 
 
@@ -106,5 +113,4 @@ const mapStateToProps = (state) => {
 
 export default reduxForm({
 	form: 'LoginForm',
-	validate
 })(connect(mapStateToProps, actions)(LoginForm))

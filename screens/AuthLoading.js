@@ -46,10 +46,13 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     //this.remove_token()
 
-    const userToken = await AsyncStorage.getItem('token');
+    const [userToken, isDonor] = await Promise.all([
+      AsyncStorage.getItem('token'),
+      AsyncStorage.getItem('isDonor')
+    ])
 
     if (userToken) {
-      this.props.setToken(userToken)
+      this.props.setToken({ token: userToken, isDonor: JSON.parse(isDonor)})
     }
 
     //Load assets
