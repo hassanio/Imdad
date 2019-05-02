@@ -77,7 +77,7 @@ class SignUpForm extends Component {
 
 			this.setState({error: "Successful", loading: false })
 
-			this.props.navigation.navigate('d_login')
+			this.props.navigation.navigate('d_login', { isDonor: true })
 			
         }
         catch(err) {
@@ -171,7 +171,7 @@ class SignUpForm extends Component {
 					{this.renderFields()}
 					{this.renderSubmitButton(this.props)}
 					<TextButton
-					onPress = {() => this.props.navigation.navigate('d_login')}
+					onPress = {() => this.props.navigation.navigate('d_login', { isDonor: true })}
                     buttonText={login_text}
                     my_style = {modified_button}
                     />

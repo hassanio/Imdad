@@ -23,7 +23,15 @@ console.disableYellowBox = true
 
 class D_Login extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   render() {
+
+    const { navigation } = this.props
+    const isDonor = navigation.getParam('isDonor', true)
+
     return (
         <Container>
         <StatusBar barStyle="light-content" backgroundColor = '#316538' />
@@ -33,7 +41,7 @@ class D_Login extends Component {
                 <Logo
                   my_style = {logo_styles}
                 />
-                  <LoginForm navigation={this.props.navigation}/>
+                  <LoginForm navigation={this.props.navigation} isDonor={isDonor}/>
           </KeyboardAvoidingView>
         </Container>
     );

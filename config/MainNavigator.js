@@ -4,6 +4,7 @@ import D_Details from '../screens/D_Details'
 import DrawerStack from './DrawerNav'
 import { Dimensions } from 'react-native'
 import React from 'react'
+import { connect } from 'react-redux' 
 import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
@@ -11,18 +12,25 @@ const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
 
-const renderRightButton = (navigation) => {
+const renderRightButton = ({navigation, isDonor}) => {
 	const state = navigation.state
 
-	if(state.routeName === 'drawer' && state.routes[state.index].routeName !== 'd_form') {
-		return <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
+	if(state.routeName === 'drawer' && state.routes[state.index].routeName !== 'd_form' && isDonor) {
+		return ( <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
-				</TouchableOpacity>
+		</TouchableOpacity> )
 	} else {
-		return <View/>
+		return null
 	}
 
 }
+
+const mapStateToProps = (state) => {
+	return {
+		isDonor: state.auth.isDonor
+	}
+}
+const ConnectedRightButton = connect(mapStateToProps)(renderRightButton)
 
 const renderLeftButton = (navigation) => {
 	//return burger menu
@@ -40,6 +48,7 @@ const get_title = (navigation) => {
 		return state.routes[state.index].routeName
 	}
 }
+
 
 const MainNavigator= createStackNavigator({
 	drawer: {
@@ -76,7 +85,7 @@ const MainNavigator= createStackNavigator({
 	defaultNavigationOptions: ({navigation}) => ({
 		title: get_title(navigation),
 		headerLeft: renderLeftButton(navigation),
-		headerRight:  renderRightButton(navigation),
+		headerRight:  <ConnectedRightButton navigation = {navigation}/>,
 		headerTitleStyle: { color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" },
     })
 

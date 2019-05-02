@@ -31,12 +31,12 @@ class Main extends Component {
          <View style = {{flex: 2, paddingTop: imageHeight/10}}>
           <TextButton
             buttonText={DONOR_TEXT}
-            onPress={() => this.props.navigation.navigate('d_login')}
+            onPress={() => this.props.navigation.navigate('d_login', { isDonor: true })}
             my_style = {textbutton_styles}
           />
           <TextButton
             buttonText={NGO_TEXT}
-            onPress={this.handle_NGO_press}
+            onPress={() => this.props.navigation.navigate('d_login', { isDonor: false })}
             my_style = {textbutton_styles}
           />
         </View>
