@@ -6,7 +6,6 @@ import FeedStack from './FeedNavigator.js'
 import D_Profile from '../screens/D_Profile'
 import Help from '../screens/Help'
 import D_Form from '../screens/D_Form'
-import Cam from '../screens/Cam'
 import CustomDrawer from '../screens/CustomDrawer.js'
 
 
