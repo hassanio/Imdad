@@ -17,11 +17,13 @@ const underlayColor = color($buttonBackgroundColorBase).darken(
 	$buttonBackgroundColorModifier,
 );
 
-const Filter = ({ children, filterImageContainerStyle }) => {
+let is_Donor = false
+
+const Filter = ({ src, children, filterImageContainerStyle }) => {
 	return (
 		<View style={[styles.filterImageContainer, filterImageContainerStyle]}>
 		<TouchableHighlight style={styles.filterImageButton}underlayColor={underlayColor}>
-			<Image source = {require('../assets/images/filter.png')} style = {styles.filterButton} />
+			<Image source = {src} style = {styles.filterButton} />
 		</TouchableHighlight>
 		<View style={modified_textbox.separator} />
 		{children}
@@ -29,14 +31,14 @@ const Filter = ({ children, filterImageContainerStyle }) => {
 	)
 }
 
-const RenderPicker = ({style, selectedValue, onValueChange, items }) => {
+const RenderPicker = ({style, selectedValue, onValueChange, children }) => {
 	return (
 		<Picker
 			style = {[styles.pickerStyle, style]}
 			selectedValue = {selectedValue}
 			onValueChange = {onValueChange}
 		>
-			{items.map(item => <Picker.Item label={item.label} value={items.value} />)}
+			{children}
 		</Picker>
 	)
 }
@@ -91,33 +93,53 @@ class D_Feed extends Component {
 
 	renderFilters({ isDonor }) {
 		if(isDonor) {
+			is_Donor = true
 			return (
 				<View style={styles.filterContainer}>
-					<Filter>
+					<Filter src={require('../assets/images/filter.png')}>
 						<RenderPicker 
 							selectedValue = {this.state.statusFilter}
 							onValueChange={(value) => this.setState({statusFilter: value})}
-							items={statusFilters}
-						/>
+						>
+							<Picker.Item label="All" value="Show all" />
+							<Picker.Item label="Pending" value="Pending" />
+							<Picker.Item label="Waiting" value="Waiting" />
+							<Picker.Item label="Confirmed" value="Confirmed" />
+						</RenderPicker>
 					</Filter>
 				</View>
 			)
 		} else {
+
+			is_Donor = false
+
 			return (
 				<View style={[styles.filterContainer, { justifyContent: 'space-around'}]}>
-					<Filter filterImageContainerStyle = {{ width: imageWidth * 0.45 }}>
+					<Filter src={require('../assets/images/filter.png')} filterImageContainerStyle = {{ width: imageWidth * 0.48 }}>
 						<RenderPicker 
 							selectedValue = {this.state.categoryFilter}
 							onValueChange={(value) => this.setState({categoryFilter: value})}
-							items={categoryFilters}
-						/>
+						>
+							<Picker.Item label="All" value="" />
+							<Picker.Item label="Food" value="Food" />
+							<Picker.Item label="Clothing" value="Clothing" />
+							<Picker.Item label="Household" value="Household" />
+							<Picker.Item label="Other" value="Other" />
+						</RenderPicker>
 					</Filter>
-					<Filter filterImageContainerStyle = {{ width: imageWidth * 0.45 }}>
+					<Filter src={require('../assets/images/location.png')} filterImageContainerStyle = {{ width: imageWidth * 0.48 }}>
 						<RenderPicker 
 							selectedValue = {this.state.locationFilter}
 							onValueChange={(value) => this.setState({locationFilter: value})}
-							items={locationFilters}
-						/>
+						>
+							<Picker.Item label="All" value="" />
+							<Picker.Item label="Karachi" value="Karachi" />
+							<Picker.Item label="Lahore" value="Lahore" />
+							<Picker.Item label="Islamabad" value="Islamabad" />
+							<Picker.Item label="Quetta" value="Quetta" />
+							<Picker.Item label="Multan" value="Multan" />
+
+						</RenderPicker>
 				</Filter>
 			</View>
 			)
@@ -155,8 +177,7 @@ const mapStateToProps = (state) => {
 
 const styles = {
 	filterContainer: { 
-		marginRight: 
-		imageWidth/40, 
+		marginRight: is_Donor ? imageWidth/40 : imageWidth/50, 
 		flexDirection: 'row', 
 		justifyContent: 'flex-end', 
 		height: imageHeight/10, 
