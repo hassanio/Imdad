@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 
 import Item from './Thumbnail.js';
+import ItemNGO from './ThumbnailNGO.js'
+
 
 class ItemList extends React.Component {
     constructor(props) {
@@ -25,15 +27,28 @@ class ItemList extends React.Component {
                 />
             }
             renderItem={(info) => {
-                return (
-                    <Item
-                    itemCategory={info.item.categories[0]}
-                    DonatedImage={info.item.image}
-                    itemDate={info.item.dateAdded}
-                    itemdesc={info.item.description}
-                    onPress={() => this.props.onPress(info.item.id)}
-                    />
-                )
+                if(this.props.isDonor) {
+                    return (
+                        <Item
+                        itemCategory={info.item.categories[0]}
+                        DonatedImage={info.item.image}
+                        itemDate={info.item.dateAdded}
+                        itemdesc={info.item.description}
+                        onPress={() => this.props.onPress(info.item.id)}
+                        />
+                    )
+                } else {
+                    return (
+                        <ItemNGO
+                            itemCategory = {info.item.categories[0]}
+                            DonatedImage = {info.item.image}
+                            itemLocation = {info.item.location}
+                            itemdesc = {info.item.description}
+                            itemAddress = {info.item.collection_address}
+                            onPress = {() => this.props.onPress(info.item.id)}
+                        />
+                    )
+                }
 
             }
         }
@@ -55,7 +70,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        isLoading: state.all_donations.loading
+        isLoading: state.all_donations.loading,
+        isDonor: state.auth.isDonor
     }
 }
 
