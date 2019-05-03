@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
-import { Header } from 'react-navigation'
 import { Item, Image, Picker, ActivityIndicator, View, Text, Linking,StatusBar, KeyboardAvoidingView,Alert, TouchableHighlight} from 'react-native';
 import { Container } from '../components/Container';
-import { DeviceEventEmitter } from 'react-native';
 import ItemList from '../components/Feed/Feed.js';
 import * as actions from '../actions'
 import { connect } from 'react-redux'
@@ -68,7 +66,14 @@ const locationFilters = [
 ]
 
 class D_Feed extends Component {
-
+	static navigationOptions = ({ navigation }) => {
+		const { state } = navigation
+		if(state.params != undefined) {
+			return {
+				drawerLabel: state.params.isDonor ? 'My Donations' : 'Donations'
+			}
+		}
+	}
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -84,6 +89,8 @@ class D_Feed extends Component {
 		this.focusListener = navigation.addListener('didFocus', () => {
 			this.props.FetchDonations(token)
 		})
+
+		this.props.navigation.setParams({ isDonor: this.props.isDonor })
 	}
 
 	componentWillUnmount() {
