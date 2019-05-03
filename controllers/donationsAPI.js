@@ -56,7 +56,7 @@ exports.fetch_donation_donor = async (req, res) => {
 
     try {
         const donation = await Donation.findById(donation_id)
-        let baseObj = _.pick(donation, ['image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        let baseObj = _.pick(donation, ['_id', 'image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
         baseObj.isDonor = true
 
         const status = donation.status
@@ -140,7 +140,7 @@ exports.fetch_donation_ngo = async (req, res) => {
 
     try {
         const donation = await Donation.findById(donation_id)
-        let baseObj = _.pick(donation, ['image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
+        let baseObj = _.pick(donation, ['_id', 'image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
         baseObj.isDonor = false
 
         const status = donation.status
