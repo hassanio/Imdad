@@ -101,10 +101,9 @@ class D_Feed extends Component {
 							selectedValue = {this.state.statusFilter}
 							onValueChange={(value) => this.setState({statusFilter: value})}
 						>
-							<Picker.Item label="All" value="Show all" />
-							<Picker.Item label="Pending" value="Pending" />
-							<Picker.Item label="Waiting" value="Waiting" />
-							<Picker.Item label="Confirmed" value="Confirmed" />
+							{statusFilters.map(filter => {
+								return <Picker.Item label = {filter.label} value = {filter.label} />
+							})}
 						</RenderPicker>
 					</Filter>
 				</View>
@@ -120,11 +119,9 @@ class D_Feed extends Component {
 							selectedValue = {this.state.categoryFilter}
 							onValueChange={(value) => this.setState({categoryFilter: value})}
 						>
-							<Picker.Item label="All" value="" />
-							<Picker.Item label="Food" value="Food" />
-							<Picker.Item label="Clothing" value="Clothing" />
-							<Picker.Item label="Household" value="Household" />
-							<Picker.Item label="Other" value="Other" />
+							{categoryFilters.map(filter => {
+								return <Picker.Item label = {filter.label} value = {filter.label} />
+							})}
 						</RenderPicker>
 					</Filter>
 					<Filter src={require('../assets/images/location.png')} filterImageContainerStyle = {{ width: imageWidth * 0.48 }}>
@@ -132,13 +129,9 @@ class D_Feed extends Component {
 							selectedValue = {this.state.locationFilter}
 							onValueChange={(value) => this.setState({locationFilter: value})}
 						>
-							<Picker.Item label="All" value="" />
-							<Picker.Item label="Karachi" value="Karachi" />
-							<Picker.Item label="Lahore" value="Lahore" />
-							<Picker.Item label="Islamabad" value="Islamabad" />
-							<Picker.Item label="Quetta" value="Quetta" />
-							<Picker.Item label="Multan" value="Multan" />
-
+							{locationFilters.map(filter => {
+								return <Picker.Item label = {filter.label} value = {filter.label} />
+							})}
 						</RenderPicker>
 				</Filter>
 			</View>
