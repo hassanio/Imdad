@@ -161,7 +161,7 @@ class ProfileForm extends Component {
 
 			ToastAndroid.show("Changes Saved Successfully!", ToastAndroid.LONG)
 
-        	this.props.navigation.navigate('feed')
+        	this.props.navigation.navigate(this.props.isDonor? 'My Donations': 'Donations')
 
         	this.props.fetch_profile()
         }
@@ -370,7 +370,8 @@ const styles = {
 
 const mapStateToProps = state => {
 	return {
-		token: state.auth.token
+		token: state.auth.token,
+		isDonor: state.auth.isDonor
 	}
 }
 

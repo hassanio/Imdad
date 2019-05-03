@@ -148,7 +148,7 @@ class DonationForm extends Component {
 				this.state.image = null
 				this.props.destroy()
 			
-        this.props.navigation.navigate('feed')
+        this.props.navigation.navigate('My Donations')
       }
 		catch(err) {
 			console.log(JSON.stringify(err))
@@ -397,7 +397,7 @@ class DonationForm extends Component {
 
 const mapStateToProps = state => {
 	return {
-		token: state.auth.token
+		token: state.auth.token,
 	}
 }
 export default reduxForm({

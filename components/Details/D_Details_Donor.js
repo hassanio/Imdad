@@ -64,6 +64,7 @@ const styles = {
         height: imageHeight / 5,
         width: imageHeight / 5,
         borderRadius: 5,
+        backgroundColor: 'grey'
     },
     detailContainer: {
         flex:1,
