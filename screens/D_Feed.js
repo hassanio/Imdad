@@ -151,6 +151,10 @@ class D_Feed extends Component {
   	if(props.donations) {
     	donationList = Object.values(props.donations)
 		}
+
+		if(donationList == []) {
+			return <View />
+		}
 	
 		return <ItemList items={donationList} onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}/>
 	}

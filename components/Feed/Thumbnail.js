@@ -6,9 +6,9 @@ const imageHeight = Dimensions.get('window').height;
 const thumbnailHeight = imageHeight/6 
 
 const renderStatus = (status) => {
-    if (status === "NONE") {
+    if (status.toUpperCase() === "NONE") {
         return null
-    } else if (status === toUpperCase("Pending")) {
+    } else if (status.toUpperCase() ==="PENDING") {
         return (
             <Image
             source = {require('../../assets/images/pending.png')}
@@ -16,14 +16,14 @@ const renderStatus = (status) => {
             />
         )
         
-    } else if (status === toUpperCase("Waiting")) {
+    } else if (status.toUpperCase() ==="WAITING") {
         return (
             <Image
             source = {require('../../assets/images/waiting.png')}
             style = {{height: imageHeight/30, width: imageHeight/30}}
             />
         )
-    } else if (status === toUpperCase("Confirmed")) {
+    } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
             <Image
             source = {require('../../assets/images/confirmed.png')}

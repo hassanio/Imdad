@@ -1,4 +1,8 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_LOADING, LOADING_DONATIONS, FETCH_DONATIONS_SUCC, FETCH_DONATIONS_FAIL} from './types'
+import { 
+    LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_LOADING, 
+    LOADING_DONATIONS, FETCH_DONATIONS_SUCC, FETCH_DONATIONS_FAIL, 
+    FETCH_DONATION_SUCC, FETCHING_DONATION, FETCH_DONATION_FAIL
+} from './types'
 import { ToastAndroid, AsyncStorage } from "react-native"
 const axios = require('axios')
 
@@ -72,12 +76,41 @@ export const FetchDonations = (token) =>
             dispatch({type: FETCH_DONATIONS_SUCC, payload: res.data})
         }
         catch(err) {
+            dispatch({ type: FETCH_DONATIONS_FAIL })
 			if (err.response) {
 				if (err.response.status === 422) {
 					ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
 	
 				} else {
 					ToastAndroid.show("Failed to Fetch Donations", ToastAndroid.LONG)
+				}
+			}
+            else if (err.request) {
+            	ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+
+            } else {
+				ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+			}
+        }
+    }
+
+
+export const fetchDonation = (donationID, token) => 
+    async (dispatch) => {
+        try {
+            dispatch({ type: FETCHING_DONATION })
+            const res = await axios.get(`https://young-castle-56897.herokuapp.com/fetchDonation/${donationID}`, {headers: {authorization: token}})
+            console.log(JSON.stringify(res))
+            dispatch({type: FETCH_DONATION_SUCC, payload: res.data})
+        }
+        catch(err) {
+            dispatch({ type: FETCH_DONATION_FAIL })
+			if (err.response) {
+				if (err.response.status === 422) {
+					ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+	
+				} else {
+					ToastAndroid.show("Failed to Fetch Donation", ToastAndroid.LONG)
 				}
 			}
             else if (err.request) {

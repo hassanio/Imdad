@@ -1,4 +1,5 @@
-import { FETCH_DONATIONS_SUCC, LOADING_DONATIONS } from "../actions/types";
+import { FETCH_DONATIONS_SUCC, LOADING_DONATIONS, FETCH_DONATIONS_FAIL,
+         FETCHING_DONATION, FETCH_DONATION_SUCC, FETCH_DONATION_FAIL } from "../actions/types";
 
 const list_to_obj = (arr) => {
     temp = {}
@@ -9,13 +10,25 @@ const list_to_obj = (arr) => {
     return temp
 }
 
-export default function(state = {}, action) {
+export default function(state = {loading: true, isFetching: true}, action) {
 
     switch(action.type) {
         case LOADING_DONATIONS:
             return {...state, loading: true}
         case FETCH_DONATIONS_SUCC:
-            return {donations: list_to_obj(action.payload), loading: false}
+            return {...state, donations: list_to_obj(action.payload), loading: false}
+        case FETCH_DONATIONS_FAIL:
+            return {...state, loading: false}
+        case FETCHING_DONATION:
+            return {...state, isFetching: true }
+        case FETCH_DONATION_FAIL:
+            return {...state, isFetching: false}
+        case FETCH_DONATION_SUCC:
+            const key = action.payload._id
+            return {...state, isFetching: false, donations: {
+                ...state.donations,
+                [key]: {...action.payload, id: action.payload._id}
+            }}
         default:
             return state
     }

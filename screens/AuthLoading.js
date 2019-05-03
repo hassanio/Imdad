@@ -31,7 +31,8 @@ class AuthLoadingScreen extends React.Component {
     const imageAssets = this.cacheImages([
       require('../assets/images/background.jpg'),
       require('../assets/images/no_img.png'),
-      require('../assets/images/filter.png')
+      require('../assets/images/filter.png'),
+      require('../assets/images/location.png'),
     ])
 
     await Promise.all(imageAssets)
