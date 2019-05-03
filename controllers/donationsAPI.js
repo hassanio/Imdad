@@ -63,7 +63,7 @@ exports.fetch_donation_donor = async (req, res) => {
         if (status == 'PENDING') {
             baseObj.requestingNGOs = await NGO.find({
                 _id: { $in: donation.requestingNGOs }
-            }).select('email')
+            }).select('email name')
 
         }
         else if (status == 'WAITING') {
