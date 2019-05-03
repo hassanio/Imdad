@@ -44,14 +44,14 @@ const RenderPicker = ({style, selectedValue, onValueChange, children }) => {
 }
 
 const statusFilters = [
-	{'label': 'Show All', value: ''},
+	{'label': 'All', value: ''},
 	{'label': 'Pending', value: 'Pending'},
 	{'label': 'Waiting', value: 'Waiting'},
 	{'label': 'Confirmed', value: 'Confirmed'}
 ]
 
 const categoryFilters = [
-	{'label': 'Show All', value: ''},
+	{'label': 'All', value: ''},
 	{'label': 'Food', value: 'Food'},
 	{'label': 'Clothing', value: 'Clothing'},
 	{'label': 'Household', value: 'Household'},
@@ -59,7 +59,7 @@ const categoryFilters = [
 ]
 
 const locationFilters = [
-	{'label': 'Show All', value: ''},
+	{'label': 'All', value: ''},
 	{'label': 'Karachi', value: 'Karachi'},
 	{'label': 'Lahore', value: 'Lahore'},
 	{'label': 'Islamabad', value: 'Islamabad'},

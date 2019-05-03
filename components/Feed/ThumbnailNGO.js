@@ -12,7 +12,6 @@ const ItemNGO = (props) => (
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
                 <Text style={styles.textCategory}>• {props.itemCategory}</Text>
-                <Text style={styles.textDescription}>•  {props.itemdesc}</Text>
                 <Text style={styles.textDescription}>•  {props.itemAddress} </Text>
                 <View style={styles.componentLocation}>
                     <Text style={styles.textLocation}>{props.itemLocation}</Text>
