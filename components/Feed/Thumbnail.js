@@ -5,13 +5,48 @@ const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 const thumbnailHeight = imageHeight/6 
 
+const renderStatus = (status) => {
+    if (status === "NONE") {
+        return null
+    } else if (status === toUpperCase("Pending")) {
+        return (
+            <Image
+            source = {require('../../assets/images/pending.png')}
+            style = {{height: imageHeight/30, width: imageHeight/30}}
+            />
+        )
+        
+    } else if (status === toUpperCase("Waiting")) {
+        return (
+            <Image
+            source = {require('../../assets/images/waiting.png')}
+            style = {{height: imageHeight/30, width: imageHeight/30}}
+            />
+        )
+    } else if (status === toUpperCase("Confirmed")) {
+        return (
+            <Image
+            source = {require('../../assets/images/confirmed.png')}
+            style = {{height: imageHeight/30, width: imageHeight/30}}
+            />
+        )
+    }
+}
+
 
 const Item = (props) => (
     <TouchableOpacity style = {{allignItems: 'center'}} onPress = {props.onPress}> 
         <View style={styles.listItem}>
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
-                <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+            <View style = {{flexDirection: "row", width: '100%'}}>
+                <View style = {{width: '50%'}}>
+                    <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+                </View>
+                <View style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
+                    {renderStatus(props.itemstatus)}
+                </View>
+            </View>
                 <Text style={styles.textDescription}>•  {props.itemdesc}</Text>
                 <View style={styles.componentDate}>
                     <Text style={styles.textDate}>{new Date(props.itemDate).toDateString()}</Text>
@@ -40,7 +75,12 @@ const styles = StyleSheet.create({
     },
     textCategory: {
         fontWeight: 'bold',
-        fontSize: imageHeight /35
+        fontSize: imageHeight /40,
+    },
+
+    textStatus: {
+        fontSize: imageHeight /50,
+        paddingRight: imageWidth/40,
     },
 
     componentDate: {
@@ -56,7 +96,7 @@ const styles = StyleSheet.create({
     },
 
     textDescription:{
-        fontSize: imageHeight / 40,
+        fontSize: imageHeight / 45,
         color: 'black'
      },
 
@@ -72,7 +112,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flex:2,
         paddingLeft: imageHeight/70,
-        
     }
 
 });
