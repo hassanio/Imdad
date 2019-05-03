@@ -8,7 +8,7 @@ export default function(state = {}, action) {
         case LOGIN_SUCCESS:
             return {...state, isAuth: true, error: null, token: action.payload.token, isDonor: action.payload.isDonor, loading: false}
         case LOGOUT:
-            return {...state, isAuth: false, error: null, token: null}
+            return {}
         case LOGIN_FAILURE:
             return {...state, error: action.payload, loading: false }
         default:

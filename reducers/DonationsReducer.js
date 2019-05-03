@@ -1,5 +1,7 @@
 import { FETCH_DONATIONS_SUCC, LOADING_DONATIONS, FETCH_DONATIONS_FAIL,
-         FETCHING_DONATION, FETCH_DONATION_SUCC, FETCH_DONATION_FAIL } from "../actions/types";
+         FETCHING_DONATION, FETCH_DONATION_SUCC, FETCH_DONATION_FAIL,
+         LOGOUT } from "../actions/types";
+import { Logout } from "../actions";
 
 const list_to_obj = (arr) => {
     temp = {}
@@ -29,6 +31,9 @@ export default function(state = {loading: true, isFetching: true}, action) {
                 ...state.donations,
                 [key]: {...action.payload, id: action.payload._id}
             }}
+        case LOGOUT: {
+            return {loading: true, isFetching: true}
+        }
         default:
             return state
     }
