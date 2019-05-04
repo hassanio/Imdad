@@ -102,7 +102,7 @@ exports.approve_ngo = async(req, res) => {
     
     } 
     catch (err) {
-        res.send({ error: err })
+        res.status(422).send({ error: err })
     }
 }
 
