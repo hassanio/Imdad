@@ -143,6 +143,10 @@ exports.fetch_donation_ngo = async (req, res) => {
         let baseObj = _.pick(donation, ['_id', 'image', 'description', 'collection_address', 'location', 'categories', 'contact', 'status'])
         baseObj.isDonor = false
 
+        //Also return donor's name
+        const donor = await Donor.findById(donation.donor)
+        baseObj.donorName = donor.name
+
         const status = donation.status
         if (status == 'WAITING') {
             baseObj.hasDonorConfirmed = donation.hasDonorConfirmed
