@@ -21,7 +21,7 @@ class ItemList extends React.Component {
             refreshControl = {
                 <RefreshControl
                     refreshing = {this.props.isLoading}
-                    onRefresh = {() => this.props.FetchDonations(this.props.token)}
+                    onRefresh = {this.props.onRefresh}
                     tintColor="#fff"
                     titleColor="#fff"
                 />
@@ -78,4 +78,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, actions)(ItemList);
+export default connect(mapStateToProps, null)(ItemList);

@@ -77,9 +77,9 @@ class D_Feed extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			statusFilter: '',
-			categoryFilter: '',
-			locationFilter: ''
+			statusFilter: null,
+			categoryFilter: null,
+			locationFilter: null
 		}
 	}
 
@@ -87,7 +87,7 @@ class D_Feed extends Component {
 		const { navigation, token } = this.props
 		//Whenever Feed screen comes into view, fetch the donations from the backend
 		this.focusListener = navigation.addListener('didFocus', () => {
-			this.props.FetchDonations(token, {})
+			this.props.FetchDonations(token, this.state)
 		})
 
 		this.props.navigation.setParams({ isDonor: this.props.isDonor })
@@ -172,8 +172,24 @@ class D_Feed extends Component {
 		if(donationList == []) {
 			return <View />
 		}
-	
-		return <ItemList isLoading = {props.isLoading} items={donationList} onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}/>
+
+		return <ItemList 
+						isLoading = {props.isLoading} 
+						items={donationList} 
+						onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}
+						onRefresh = {() => {
+							if(this.props.isDonor) {
+								this.props.FetchDonations(this.props.token, {
+									statusFilter: this.state.statusFilter
+								})
+							} else {
+								this.props.FetchDonations(this.props.token, {
+									locationFilter: this.state.locationFilter,
+									categoryFilter: this.state.categoryFilter
+								})
+							}
+						}}
+					/>
 	}
 
   render() {
