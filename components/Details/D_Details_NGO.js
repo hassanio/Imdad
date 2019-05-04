@@ -76,7 +76,7 @@ class D_Details_Donor extends Component {
     } else {
       return (
         <TouchableOpacity onPress = {() => {this.setState({is_image: false})}}>
-           <Image style = {{width: imageWidth}} source = {{uri: this.props.donation.image}} />
+           <Image style = {{height: imageWidth, width: imageWidth}} source = {{uri: this.props.donation.image}} />
         </TouchableOpacity>
       )
     }
