@@ -1,37 +1,93 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import React, { Component } from 'react';
+import { ToastAndroid, View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
+import TextButton from '../TextInput/InputwithButton.js';
+import textbutton_styles from '../TextInput/styles.js';
+import { Container } from '../Container';
+const axios = require('axios')
+import DonationsReducer from '../../reducers/DonationsReducer';
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 const thumbnailHeight = imageHeight/6 
 
 
-const ItemNGO = (props) => (
-    <TouchableOpacity style = {{alignItems: 'center'}} onPress = {props.onPress}> 
+class ItemNGO extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    }
+  }
+
+  async performAsyncRequest(url, token) {
+    try 
+    {
+        this.setState({ loading: true })
+        const res = await axios.get(url, {
+            headers: {
+                authorization: token
+            }
+        })
+        this.setState({ loading: false})
+        ToastAndroid.show("Your request was successful!", ToastAndroid.LONG)
+        this.props.FetchDonations(this.props.token)
+    }
+    catch(err) {
+        console.log(err)
+        this.setState({ loading: false})
+        if (err.response) {
+            if (err.response.status === 422) {
+                ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+            } else {
+                ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+            }
+        }
+        else if (err.request) {
+            ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+        } else {
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+        }
+      }
+    }
+
+  render() {
+
+    if (this.state.loading) {
+        src = require('../../assets/images/loading.jpg')
+    } else {
+        src = require('../../assets/images/request.png')
+    }
+
+    return(
+            <TouchableOpacity style = {{alignItems: 'center'}} onPress = {this.props.onPress}> 
         <View style={styles.listItem}>
-            <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
+            <Image source={{uri: this.props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
             <View style = {{flexDirection: "row", width: '100%'}}>
                 <View style = {{width: '50%'}}>
-                    <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+                    <Text style={styles.textCategory}>• {this.props.itemCategory}</Text>
                 </View>
-                <View style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
+                <TouchableOpacity onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${this.props.itemid}`, this.props.token)} style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
                      <Image
-                    source = {require('../../assets/images/request.png')}
+                    source = {src}
                     style = {{height: imageHeight/30, width: imageHeight/30}}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
-                <Text style={styles.textDescription}>•  {props.itemAddress} </Text>
+                <Text style={styles.textDescription}>•  {this.props.itemAddress} </Text>
                 <View style={styles.componentLocation}>
-                    <Text style={styles.textLocation}>{props.itemLocation}</Text>
+                    <Text style={styles.textLocation}>{this.props.itemLocation}</Text>
                 </View>
-            </View>
-            
-            
+            </View>   
         </View>
     </TouchableOpacity>
-);
+
+        )
+  }
+    
+};
 
 const styles = StyleSheet.create({
     listItem: {
@@ -87,4 +143,10 @@ const styles = StyleSheet.create({
 
 });
 
-export default ItemNGO;  
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+  }
+}
+
+export default connect(mapStateToProps, actions)(ItemNGO);  

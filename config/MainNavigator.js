@@ -51,6 +51,8 @@ const get_title = ({navigation, isDonor}) => {
 		return <Text style = {{fontWeight: 'bold', fontSize: 20, color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" }}>{state.routes[state.index].routeName}</Text>
 
 	}
+
+	return <Text style = {{fontWeight: 'bold', fontSize: 20, color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" }}>Donation Details</Text>
 }
 
 const ConnectedTitle = connect(mapStateToProps)(get_title)
@@ -66,7 +68,7 @@ const MainNavigator= createStackNavigator({
 		screen: Cam,
 		navigationOptions: ({ navigation }) => {
 			return {
-				headerRight: null,
+				headerRight: <View/>,
 				headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
 													<AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
 										</TouchableOpacity>
@@ -78,7 +80,7 @@ const MainNavigator= createStackNavigator({
     screen: D_Details,
     navigationOptions: ({ navigation }) =>	{
 			return {
-				headerRight: null,
+				headerRight: <View/>,
 				headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
 													<AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
 										</TouchableOpacity>

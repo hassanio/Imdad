@@ -46,6 +46,7 @@ class ItemList extends React.Component {
                             itemLocation = {info.item.location}
                             itemdesc = {info.item.description}
                             itemAddress = {info.item.collection_address}
+                            itemid = {info.item.id}
                             onPress = {() => this.props.onPress(info.item.id)}
                         />
                     )
