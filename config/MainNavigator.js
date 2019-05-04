@@ -39,18 +39,22 @@ const renderLeftButton = (navigation) => {
 				</TouchableOpacity>
 }
 
-const get_title = (navigation) => {
+const get_title = ({navigation, isDonor}) => {
 	const state = navigation.state
 	if(state.routeName === 'drawer' && state.routes[state.index].routeName === 'd_form') {
-		return "Donation Form"
+			return <Text style = {{fontWeight: 'bold', fontSize: 20, color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" }}>Donation Form</Text>
 	}
 	if(state.routeName === 'drawer') {
-		if (state.routes[state.index].routeName === "My Donations") {
-			return "Donations"
+		if (state.routes[state.index].routeName === "My Donations" && !isDonor) {
+			return <Text style = {{fontWeight: 'bold', fontSize: 20, color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" }}>Donations</Text>
 		}
-		return state.routes[state.index].routeName
+		return <Text style = {{fontWeight: 'bold', fontSize: 20, color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" }}>{state.routes[state.index].routeName}</Text>
+
 	}
 }
+
+const ConnectedTitle = connect(mapStateToProps)(get_title)
+
 
 
 const MainNavigator= createStackNavigator({
@@ -86,10 +90,9 @@ const MainNavigator= createStackNavigator({
 {
 	initialRouteName: 'drawer',
 	defaultNavigationOptions: ({navigation}) => ({
-		title: get_title(navigation),
+		headerTitle: <ConnectedTitle navigation = {navigation}/>,
 		headerLeft: renderLeftButton(navigation),
 		headerRight:  <ConnectedRightButton navigation = {navigation}/>,
-		headerTitleStyle: { color: '#316538', alignSelf: 'center', flex: 1, textAlign:"center" },
     })
 
 }
