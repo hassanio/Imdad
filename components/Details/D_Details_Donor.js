@@ -98,7 +98,11 @@ class D_Details_Donor extends Component {
 
   renderExtra(donation, onAccept, onConfirm) {
       if(this.state.loading) {
-          return <ActivityIndicator color='#CAEEA2' size='small'/>
+          return (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
+            <ActivityIndicator color='#CAEEA2' size='small'/>
+          </View>
+          )
       }
 
       const status = donation.status.toUpperCase()
@@ -109,6 +113,10 @@ class D_Details_Donor extends Component {
 
       if(status === 'PENDING') {
           const { requestingNGOs } = donation
+
+          if(!requestingNGOs) {
+              return null
+          }
 
           return (
               <View style={{ borderWidth: 0.25, borderColor: 'white', borderRadius: 5}}>
@@ -145,7 +153,7 @@ class D_Details_Donor extends Component {
           const { hasDonorConfirmed } = donation
           if(hasDonorConfirmed) {
               return (
-                <View  style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
                     <Text style={{color: 'white', fontSize: 17}}>Waiting for NGO...</Text>
                 </View>
               )
@@ -200,16 +208,16 @@ class D_Details_Donor extends Component {
       if(!this.state.is_image) {
         return (
             <ScrollView style={styles.scrollView}>
-              <View style={{flex: 1}}>
+              <View style={{flex: 2}}>
                   {this.renderDetails(donation)}
-                  <View style={{flex: 1}}>
+              </View>
+              <View style={{flex: 1}}>
                       {this.renderExtra(
                           donation,
                           (ngoID, donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/approveNGO/${donationID}/${ngoID}`, token, navigation)},
                           (donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donationID}`, token, navigation)}
                           )}
-                  </View>
-              </View>         
+                  </View>         
             </ScrollView>
         )
       } 

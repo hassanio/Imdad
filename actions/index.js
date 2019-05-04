@@ -68,11 +68,14 @@ export const Logout = (nav) =>
         nav.navigate('Auth')
     }
 
-export const FetchDonations = (token) => 
+export const FetchDonations = (token, queryParams) => 
     async (dispatch) => {
         try {
             dispatch({ type: LOADING_DONATIONS })
-            const res = await axios.get('https://young-castle-56897.herokuapp.com/fetchDonations', {headers: {authorization: token}})
+            const res = await axios.get('https://young-castle-56897.herokuapp.com/fetchDonations', {
+                headers: {authorization: token},
+                params: queryParams
+            })
             dispatch({type: FETCH_DONATIONS_SUCC, payload: res.data})
         }
         catch(err) {

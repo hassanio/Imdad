@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        isLoading: state.all_donations.loading,
         isDonor: state.auth.isDonor
     }
 }

@@ -6,13 +6,15 @@ const imageHeight = Dimensions.get('window').height;
 const thumbnailHeight = imageHeight/6 
 
 const renderStatus = (status) => {
+
+    const styleObj = {height: imageHeight/15, width: imageHeight/15}
     if (status.toUpperCase() === "NONE") {
         return null
     } else if (status.toUpperCase() ==="PENDING") {
         return (
             <Image
             source = {require('../../assets/images/pending.png')}
-            style = {{height: imageHeight/30, width: imageHeight/30}}
+            style = {styleObj}
             />
         )
         
@@ -20,14 +22,14 @@ const renderStatus = (status) => {
         return (
             <Image
             source = {require('../../assets/images/waiting.png')}
-            style = {{height: imageHeight/30, width: imageHeight/30}}
+            style = {styleObj}
             />
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
             <Image
             source = {require('../../assets/images/confirmed.png')}
-            style = {{height: imageHeight/30, width: imageHeight/30}}
+            style = {styleObj}
             />
         )
     }

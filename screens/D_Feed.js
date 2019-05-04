@@ -42,14 +42,14 @@ const RenderPicker = ({style, selectedValue, onValueChange, children }) => {
 }
 
 const statusFilters = [
-	{'label': 'All', value: ''},
+	{'label': 'All', value: null},
 	{'label': 'Pending', value: 'Pending'},
 	{'label': 'Waiting', value: 'Waiting'},
 	{'label': 'Confirmed', value: 'Confirmed'}
 ]
 
 const categoryFilters = [
-	{'label': 'All', value: ''},
+	{'label': 'All', value: null},
 	{'label': 'Food', value: 'Food'},
 	{'label': 'Clothing', value: 'Clothing'},
 	{'label': 'Household', value: 'Household'},
@@ -57,7 +57,7 @@ const categoryFilters = [
 ]
 
 const locationFilters = [
-	{'label': 'All', value: ''},
+	{'label': 'All', value: null},
 	{'label': 'Karachi', value: 'Karachi'},
 	{'label': 'Lahore', value: 'Lahore'},
 	{'label': 'Islamabad', value: 'Islamabad'},
@@ -77,7 +77,7 @@ class D_Feed extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			statusfilter: '',
+			statusFilter: '',
 			categoryFilter: '',
 			locationFilter: ''
 		}
@@ -87,10 +87,27 @@ class D_Feed extends Component {
 		const { navigation, token } = this.props
 		//Whenever Feed screen comes into view, fetch the donations from the backend
 		this.focusListener = navigation.addListener('didFocus', () => {
-			this.props.FetchDonations(token)
+			this.props.FetchDonations(token, {})
 		})
 
 		this.props.navigation.setParams({ isDonor: this.props.isDonor })
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.isDonor && prevState.statusFilter !== this.state.statusFilter) {
+			this.props.FetchDonations(this.props.token, {
+				statusFilter: this.state.statusFilter
+			})
+		} 
+		else if (!this.props.isDonor) {
+			if((prevState.locationFilter !== this.state.locationFilter) || (prevState.categoryFilter !== this.state.categoryFilter)) 
+			{
+				this.props.FetchDonations(this.props.token, {
+					locationFilter: this.state.locationFilter,
+					categoryFilter: this.state.categoryFilter
+				})
+			}
+		}
 	}
 
 	componentWillUnmount() {
@@ -109,7 +126,7 @@ class D_Feed extends Component {
 							onValueChange={(value) => this.setState({statusFilter: value})}
 						>
 							{statusFilters.map(filter => {
-								return <Picker.Item label = {filter.label} value = {filter.label} />
+								return <Picker.Item label = {filter.label} value = {filter.value} />
 							})}
 						</RenderPicker>
 					</Filter>
@@ -127,7 +144,7 @@ class D_Feed extends Component {
 							onValueChange={(value) => this.setState({categoryFilter: value})}
 						>
 							{categoryFilters.map(filter => {
-								return <Picker.Item label = {filter.label} value = {filter.label} />
+								return <Picker.Item label = {filter.label} value = {filter.value} />
 							})}
 						</RenderPicker>
 					</Filter>
@@ -137,7 +154,7 @@ class D_Feed extends Component {
 							onValueChange={(value) => this.setState({locationFilter: value})}
 						>
 							{locationFilters.map(filter => {
-								return <Picker.Item label = {filter.label} value = {filter.label} />
+								return <Picker.Item label = {filter.label} value = {filter.value} />
 							})}
 						</RenderPicker>
 				</Filter>
@@ -156,7 +173,7 @@ class D_Feed extends Component {
 			return <View />
 		}
 	
-		return <ItemList items={donationList} onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}/>
+		return <ItemList isLoading = {props.isLoading} items={donationList} onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}/>
 	}
 
   render() {
