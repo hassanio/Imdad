@@ -45,6 +45,9 @@ const get_title = (navigation) => {
 		return "Donation Form"
 	}
 	if(state.routeName === 'drawer') {
+		if (state.routes[state.index].routeName === "My Donations") {
+			return "Donations"
+		}
 		return state.routes[state.index].routeName
 	}
 }
