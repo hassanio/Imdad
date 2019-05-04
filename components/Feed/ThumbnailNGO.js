@@ -11,7 +11,17 @@ const ItemNGO = (props) => (
         <View style={styles.listItem}>
             <Image source={{uri: props.DonatedImage}} style={styles.DonatedImage} />
             <View style={styles.Textlist}>
-                <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+            <View style = {{flexDirection: "row", width: '100%'}}>
+                <View style = {{width: '50%'}}>
+                    <Text style={styles.textCategory}>• {props.itemCategory}</Text>
+                </View>
+                <View style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
+                     <Image
+                    source = {require('../../assets/images/request.png')}
+                    style = {{height: imageHeight/30, width: imageHeight/30}}
+                    />
+                </View>
+            </View>
                 <Text style={styles.textDescription}>•  {props.itemAddress} </Text>
                 <View style={styles.componentLocation}>
                     <Text style={styles.textLocation}>{props.itemLocation}</Text>

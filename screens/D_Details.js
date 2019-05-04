@@ -5,6 +5,8 @@ import * as actions from '../actions'
 import D_Details_Donor from '../components/Details/D_Details_Donor';
 import D_Details_NGO from '../components/Details/D_Details_NGO';
 
+
+
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
@@ -23,9 +25,13 @@ class D_Details extends Component {
   renderDetails({ isDonor, navigation, donations }) {
     const donationID = navigation.getParam('donationID')
     if (isDonor) {
-      return <D_Details_Donor donation={donations[donationID]} />
+      return (
+          <D_Details_Donor donation={donations[donationID]} />
+                )
     } else {
-      return <D_Details_NGO donation={donations[donationID]} />
+      return (
+          <D_Details_NGO donation={donations[donationID]} />
+                )
     }
   }
 

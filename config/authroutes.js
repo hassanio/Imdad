@@ -5,6 +5,7 @@ import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from "react
 import D_Login from '../screens/D_Login'
 import D_SignUp from '../screens/D_SignUp'
 import { Dimensions } from 'react-native'
+
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
