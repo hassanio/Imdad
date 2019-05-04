@@ -44,11 +44,10 @@ class D_Details_Donor extends Component {
   renderDonationDetail() {
     if (!this.state.is_image) {
       return(
-        <View style = {styles.scrollview}>
+        <ScrollView style = {styles.scrollview}>
             <View style = {styles.imageview}>
               <TouchableOpacity onPress = {() => {
                 this.setState({is_image: true})
-                console.log("PRESSED")
               }}>
                 <Image style = {styles.image} source = {{uri: this.props.donation.image}}/>
               </TouchableOpacity>
@@ -71,7 +70,7 @@ class D_Details_Donor extends Component {
             <View style = {{justifyContent: 'center', allignItems: 'center', flexDirection: 'row'}}>
               {this.renderButton()}
             </View>            
-          </View>
+          </ScrollView>
       )
     } else {
       return (
