@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, Text, Dimensions, ActivityIndicator, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView,Alert} from 'react-native';
+import { View, Text, Dimensions, ActivityIndicator, ToastAndroid, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView,Alert} from 'react-native';
 import * as actions from '../../actions'
 import { Avatar, ListItem, Button } from 'react-native-elements'
 import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
+import { getTimeFieldValues } from 'uuid-js';
+const axios = require('axios')
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
@@ -45,7 +47,8 @@ class D_Details_Donor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        is_image: false
+        is_image: false,
+        loading: false
     }
   }
 
@@ -93,7 +96,11 @@ class D_Details_Donor extends Component {
     )
   }
 
-  renderExtra(donation) {
+  renderExtra(donation, onAccept, onConfirm) {
+      if(this.state.loading) {
+          return <ActivityIndicator color='#CAEEA2' size='small'/>
+      }
+
       const status = donation.status.toUpperCase()
 
       if(status === 'NONE' || status === 'CONFIRMED') {
@@ -122,6 +129,7 @@ class D_Details_Donor extends Component {
                                 raised
                                 buttonStyle = {styles.acceptButton}
                                 titleStyle = {styles.acceptButtonTitle}
+                                onPress={() => onAccept(ngo._id, donation.id)}
                             />}
                             bottomDivider={true}
                             topDivider = {true}
@@ -147,16 +155,47 @@ class D_Details_Donor extends Component {
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <TextButton
                     buttonText={'Confirm Pickup'}
-                     my_style = {textbutton_styles}
+                    my_style = {textbutton_styles}
+                    onPress = {() => onConfirm(donation.id)}
                 />
             </View>
           )
       }
   }
 
+  async performAsyncRequest(url, token, nav) {
+    try 
+    {
+        this.setState({ loading: true })
+        const res = await axios.get(url, {
+            headers: {
+                authorization: token
+            }
+        })
+        this.setState({ loading: false})
+        ToastAndroid.show("Your request was successful!", ToastAndroid.LONG)
+        nav.goBack()
+    }
+    catch(err) {
+        this.setState({ loading: false })
+        if (err.response) {
+            if (err.response.status === 422) {
+                ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+            } else {
+                ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+            }
+        }
+        else if (err.request) {
+            ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+        } else {
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+        }
+    }
+}   
+
   render() {
 
-      const{ donation } = this.props
+      const{ donation, token, navigation } = this.props
 
       if(!this.state.is_image) {
         return (
@@ -164,7 +203,11 @@ class D_Details_Donor extends Component {
               <View style={{flex: 1}}>
                   {this.renderDetails(donation)}
                   <View style={{flex: 1}}>
-                      {this.renderExtra(donation)}
+                      {this.renderExtra(
+                          donation,
+                          (ngoID, donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/approveNGO/${donationID}/${ngoID}`, token, navigation)},
+                          (donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donationID}`, token, navigation)}
+                          )}
                   </View>
               </View>         
             </ScrollView>

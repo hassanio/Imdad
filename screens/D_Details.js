@@ -16,7 +16,7 @@ class D_Details extends Component {
     super(props)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { navigation, token, fetchDonation } = this.props
     const donationID = navigation.getParam('donationID')
     fetchDonation(donationID, token)
@@ -26,11 +26,11 @@ class D_Details extends Component {
     const donationID = navigation.getParam('donationID')
     if (isDonor) {
       return (
-          <D_Details_Donor donation={donations[donationID]} />
+          <D_Details_Donor donation={donations[donationID]} navigation={navigation} />
                 )
     } else {
       return (
-          <D_Details_NGO donation={donations[donationID]} />
+          <D_Details_NGO donation={donations[donationID]} navigation={navigation} />
                 )
     }
   }

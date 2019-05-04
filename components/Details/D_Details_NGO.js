@@ -1,43 +1,107 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { TouchableOpacity, Image, View, Text, Dimensions, ActivityIndicator, Linking, ScrollView, StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
+import { TouchableOpacity, Image, View, Text, Dimensions, ActivityIndicator, Linking, ScrollView, ToastAndroid, KeyboardAvoidingView,Alert} from 'react-native';
 import * as actions from '../../actions'
 import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
 import { Container } from '../Container';
+const axios = require('axios')
+import DonationsReducer from '../../reducers/DonationsReducer';
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 
-class D_Details_Donor extends Component {
+class D_Details_NGO extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       is_image: false,
       has_requested: false,
+      loading: false
     }
   }
 
-  renderButton() {
-    if (!this.state.has_requested) {
-      return(
-          <TextButton
-          buttonText="Request"
-          my_style = {textbutton_styles}
-          />
+  async performAsyncRequest(url, token, nav) {
+    try 
+    {
+        this.setState({ loading: true })
+        const res = await axios.get(url, {
+            headers: {
+                authorization: token
+            }
+        })
+        this.setState({ loading: false})
+        ToastAndroid.show("Your request was successful!", ToastAndroid.LONG)
+        nav.goBack()
+    }
+    catch(err) {
+        console.log(err)
+        this.setState({ loading: false })
+        if (err.response) {
+            if (err.response.status === 422) {
+                ToastAndroid.show(err.response.data.error, ToastAndroid.LONG)
+            } else {
+                ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+            }
+        }
+        else if (err.request) {
+            ToastAndroid.show("Unable to process! Please check your internet connection!", ToastAndroid.LONG)
+        } else {
+            ToastAndroid.show("Unexpected Error Occurred. Try again later", ToastAndroid.LONG)
+        }
+      }
+    }   
+
+  renderButton({ donation, token }) {
+
+    if(this.state.loading) {
+      return (
+        <View style = {{flex: 1, justifyContent:'center', alignItems:'center'}}>
+          <ActivityIndicator color='#CAEEA2' size='small'/>
+        </View>
+      )
+    }
+
+    if(!donation.status) {
+      return null
+    }
+
+    const status = donation.status.toUpperCase()
+    if(status === 'CONFIRMED') {
+      return null
+    }
+
+    if(status === 'NONE' || status === 'PENDING') {
+      return (
+        <TextButton
+        buttonText="Request"
+        my_style = {textbutton_styles}
+        onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${donation.id}`, token, this.props.navigation)}
+        />
+      )
+    }
+
+    if(status === 'WAITING') {
+      const { hasNGOConfirmed } = donation
+
+      if(hasNGOConfirmed) {
+        return (
+          <View  style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color: 'white', fontSize: 17}}>Waiting for Donor...</Text>
+          </View>
         )
-    } else {
-      return(
-            <Text style = {{
-            color: 'white',
-            paddingTop: imageHeight/70,
-            paddingBottom: imageHeight/100,
-            textAlign: 'center',
-            fontSize: imageHeight /35,
-            }}>*Awaiting request approval</Text>
-        )
-      
+      }
+
+      return (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <TextButton
+                buttonText={'Confirm Pickup'}
+                my_style = {textbutton_styles}
+                onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donation.id}`, token, this.props.navigation)}
+            />
+        </View>
+      )
     }
   }
 
@@ -68,7 +132,7 @@ class D_Details_Donor extends Component {
               <Text style = {styles.itemview}>• {this.props.donation.collection_address}, {this.props.donation.location}</Text>
             </View>
             <View style = {{justifyContent: 'center', allignItems: 'center', flexDirection: 'row'}}>
-              {this.renderButton()}
+              {this.renderButton(this.props)}
             </View>            
           </ScrollView>
       )
@@ -168,4 +232,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(D_Details_Donor);
+export default connect(mapStateToProps, actions)(D_Details_NGO);
