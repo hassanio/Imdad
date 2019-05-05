@@ -154,6 +154,8 @@ class D_Details_NGO extends Component {
         )
     }
 
+    return null
+
   }
 }
 

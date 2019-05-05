@@ -19,13 +19,6 @@ const renderRightButton = ({navigation, isDonor}) => {
 		return ( <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
 		</TouchableOpacity> )
-	} else if(state.routeName === 'd_details' && !isDonor) {
-		return (
-			<TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
-					<Image source = {require('../assets/images/call.png')} style={{ height: 25, width: 25, marginRight: 15}} />
-			</TouchableOpacity>
-		)
-
 	} else {
 		return <View/>
 	}
@@ -85,15 +78,6 @@ const MainNavigator= createStackNavigator({
 	
 	d_details: { 
     screen: D_Details,
-    navigationOptions: ({ navigation }) =>	{
-			return {
-				headerRight: <ConnectedRightButton navigation = {navigation}/>,
-				headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
-													<AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
-										</TouchableOpacity>
-			}
-    }
-
   }
 },
 {

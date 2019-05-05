@@ -55,7 +55,7 @@ class CustomDrawer extends Component {
     renderDrawerItems(props) {
         const { items, isDonor, ...rest } = props
         const filteredItems = items.filter(item => {
-            if (item.key === 'd_form' || (isDonor && item.key === 'Approved Donations')) {
+            if (item.key === 'd_form' || (isDonor && item.key === 'Approved Donations') || (!isDonor && item.key === 'Help & Hints')) {
                 return false
             }
             return true
