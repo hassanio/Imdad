@@ -17,7 +17,7 @@ class D_Details extends Component {
     super(props)
   }
 
-  static navigationOptions = ({ navigation}) => {
+  static navigationOptions = ({ navigation, isDonor}) => {
     if (navigation.getParam('tele') !== undefined) {
       const phone = navigation.getParam('tele')
       return {
@@ -28,6 +28,14 @@ class D_Details extends Component {
                           <AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
                     </TouchableOpacity>
       }
+    } else {
+      return {
+        headerRight:<View/>,
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
+                          <AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
+                    </TouchableOpacity>
+
+        }
     }
   }
 

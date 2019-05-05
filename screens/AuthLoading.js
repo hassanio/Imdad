@@ -36,7 +36,8 @@ class AuthLoadingScreen extends React.Component {
       require('../assets/images/pending.png'),
       require('../assets/images/waiting.png'),
       require('../assets/images/confirmed.png'),
-      require('../assets/images/request.png')
+      require('../assets/images/request.png'),
+      require('../assets/images/call.png')
     ])
 
     await Promise.all(imageAssets)
