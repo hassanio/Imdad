@@ -127,7 +127,7 @@ exports.fetch_donations_ngo = async (req, res) => {
 
     try {
         const donations = await Donation.find(filters)
-                                        .select('image categories location collection_address description')
+                                        .select('image categories location collection_address description status')
         res.send(donations)
     }
     catch(err) {
@@ -189,7 +189,7 @@ exports.fetch_approved_donations = async (req, res) => {
         const approvedDonations = await Donation.find({
             status: 'WAITING',
             approvedNGO: ngo_id
-        }).select('image categories location collection_address description')
+        }).select('image categories location collection_address description status')
 
         res.send(approvedDonations)
     }
