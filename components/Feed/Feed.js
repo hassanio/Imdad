@@ -16,7 +16,7 @@ class ItemList extends React.Component {
         return (
             <FlatList
             style={styles.listContainer}
-            data={this.props.items}
+            data={this.props.items.reverse()}
             keyExtractor={(item, index) => index.toString()}
             refreshControl = {
                 <RefreshControl

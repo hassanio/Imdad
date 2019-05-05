@@ -23,8 +23,6 @@ class ApprovedDonations extends Component {
                     authorization: token
                 }
             })
-            ToastAndroid.show("Successfully fetched approved donations!", ToastAndroid.LONG)
-
             const donations = res.data.map(donation => {
                 return {
                     ...donation,
