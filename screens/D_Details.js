@@ -7,9 +7,9 @@ import D_Details_NGO from '../components/Details/D_Details_NGO';
 import { AntDesign, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
 
-
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
+let c = 0
 
 class D_Details extends Component {
 
