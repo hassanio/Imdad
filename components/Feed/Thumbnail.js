@@ -7,7 +7,7 @@ const thumbnailHeight = imageHeight/6
 
 const renderStatus = (status) => {
 
-    const styleObj = {height: imageHeight/15, width: imageHeight/15}
+    const styleObj = {height: imageHeight/25, width: imageHeight/25}
     if (status.toUpperCase() === "NONE") {
         return null
     } else if (status.toUpperCase() ==="PENDING") {
