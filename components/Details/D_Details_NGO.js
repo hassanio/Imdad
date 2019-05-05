@@ -146,12 +146,14 @@ class D_Details_NGO extends Component {
   }
 
   render() {
-    console.log(JSON.stringify(this.props.donation))
+    if(this.props.donation) {
       return (
-      <Container>
-        {this.renderDonationDetail()}
-      </Container>
-      )
+        <Container>
+          {this.renderDonationDetail()}
+        </Container>
+        )
+    }
+
   }
 }
 
