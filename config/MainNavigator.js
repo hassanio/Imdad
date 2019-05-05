@@ -19,7 +19,7 @@ const renderRightButton = ({navigation, isDonor}) => {
 		return ( <TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<MaterialCommunityIcons name="plus" size={26} color="#316538" style={{marginRight: 15}} />
 		</TouchableOpacity> )
-	} else if(state.routeName === 'drawer' && state.routes[state.index].routeName === 'Approved Donations' && !isDonor) {
+	} else if(state.routeName === 'd_details' && !isDonor) {
 		return (
 			<TouchableOpacity onPress = {() => navigation.navigate('d_form')} style={{flexDirection: 'row', alignItems: 'center' }}>
 					<Image source = {require('../assets/images/call.png')} style={{ height: 25, width: 25, marginRight: 15}} />
