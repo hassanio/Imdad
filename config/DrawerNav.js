@@ -14,7 +14,7 @@ const DrawerStack = createDrawerNavigator({
   'My Donations': { screen: D_Feed },
   'My Profile': { screen: D_Profile },
   'Approved Donations': { screen: ApprovedDonations },
-  'Help and Hints': { screen: Help },
+  'Help & Hints': { screen: Help },
   d_form: { screen: D_Form },
 }, {
   contentComponent: CustomDrawer,

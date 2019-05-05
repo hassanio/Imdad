@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, Text, Dimensions, ActivityIndicator, Linking, ScrollView, StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
+import { TouchableOpacity, Image, View, Text, Dimensions, ActivityIndicator, Linking, ScrollView, StatusBar, KeyboardAvoidingView,Alert} from 'react-native';
 import * as actions from '../actions'
 import D_Details_Donor from '../components/Details/D_Details_Donor';
 import D_Details_NGO from '../components/Details/D_Details_NGO';
+import { AntDesign, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 
 
 
@@ -14,6 +15,20 @@ class D_Details extends Component {
 
   constructor(props) {
     super(props)
+  }
+
+  static navigationOptions = ({ navigation}) => {
+    if (navigation.getParam('tele') !== undefined) {
+      const phone = navigation.getParam('tele')
+      return {
+        headerRight: <TouchableOpacity onPress = {() => {Linking.openURL(`tel:+92${phone}`)}} style={{flexDirection: 'row', alignItems: 'center' }}>
+                        <Image source = {require('../assets/images/call.png')} style={{ height: 25, width: 25, marginRight: 15}} />
+                    </TouchableOpacity>,
+        headerLeft: <TouchableOpacity onPress={() => navigation.goBack()} style={{flexDirection: 'row', alignItems: 'center' }}>
+                          <AntDesign name="arrowleft" size={26} color="#316538" style={{fontWeight: '200', marginLeft: 15}} />
+                    </TouchableOpacity>
+      }
+    }
   }
 
   componentWillMount() {
@@ -29,6 +44,11 @@ class D_Details extends Component {
           <D_Details_Donor donation={donations[donationID]} navigation={navigation} />
                 )
     } else {
+
+      if (this.props.navigation.getParam('tele') === undefined) {
+          this.props.navigation.setParams({ tele: donations[donationID].contact })
+      }
+
       return (
           <D_Details_NGO donation={donations[donationID]} navigation={navigation} />
                 )

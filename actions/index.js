@@ -103,7 +103,6 @@ export const fetchDonation = (donationID, token) =>
         try {
             dispatch({ type: FETCHING_DONATION })
             const res = await axios.get(`https://young-castle-56897.herokuapp.com/fetchDonation/${donationID}`, {headers: {authorization: token}})
-            console.log(JSON.stringify(res))
             dispatch({type: FETCH_DONATION_SUCC, payload: res.data})
         }
         catch(err) {
