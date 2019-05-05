@@ -189,7 +189,7 @@ exports.fetch_approved_donations = async (req, res) => {
         const approvedDonations = await Donation.find({
             status: 'WAITING',
             approvedNGO: ngo_id
-        }).select('categories location collection_address')
+        }).select('image categories location collection_address description')
 
         res.send(approvedDonations)
     }
