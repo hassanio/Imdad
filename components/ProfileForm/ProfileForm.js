@@ -147,11 +147,7 @@ class ProfileForm extends Component {
 			}
 
 			let formData = new FormData();
-
-			console.log(this.props.initialValues.image)
-
 			if (this.props.initialValues.image != null || this.state.image != null) {
-				console.log("HERE")
 				formData.append('image', photo)
 			} 
 						
