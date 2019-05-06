@@ -48,7 +48,9 @@ const validate = values => {
 	}
 	else if (isNaN(values.contact) || (values.contact).toString().indexOf('.') !== -1 || (values.contact).toString().indexOf('-') !== -1) {
 		errors.contact = '(Invalid) '
-	}
+	} else if ((values.contact).toString().length > 11) {
+		errors.contact = '(Too long) '
+	} 
 
 	if (!values.address) {
 		errors.address = '(Required) '
