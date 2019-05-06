@@ -161,7 +161,7 @@ class ProfileForm extends Component {
 
 			ToastAndroid.show("Changes Saved Successfully!", ToastAndroid.LONG)
 
-        	this.props.navigation.navigate(this.props.isDonor? 'My Donations': 'Donations')
+        	this.props.navigation.navigate('My Donations')
 
         	this.props.fetch_profile()
         }
