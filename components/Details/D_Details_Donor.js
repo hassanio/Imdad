@@ -15,28 +15,40 @@ const renderStatus = (status) => {
     const w = imageHeight/8
     const styleObj = {height: h, width: w}
     if (status.toUpperCase() === "NONE") {
-        return null
+        return (
+        <View>
+            <Text style={styles.textDesc}>(None)</Text>
+        </View>)
     } else if (status.toUpperCase() ==="PENDING") {
         return (
-            <Image
-            source = {require('../../assets/images/pending.png')}
-            style = {styleObj}
-            />
+            <View style={{flex: 'space-around'}}>
+                <Image
+                source = {require('../../assets/images/pending.png')}
+                style = {styleObj}
+                />
+                <Text style={styles.textDesc}>(Pending)</Text>
+            </View>
         )
         
     } else if (status.toUpperCase() ==="WAITING") {
         return (
-            <Image
-            source = {require('../../assets/images/waiting.png')}
-            style = {styleObj}
-            />
+            <View style={{flex: 'space-around'}}>
+                <Image
+                source = {require('../../assets/images/waiting.png')}
+                style = {styleObj}
+                />
+                <Text style={styles.textDesc}>(Waiting)</Text>
+            </View>
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
-            <Image
-            source = {require('../../assets/images/confirmed.png')}
-            style = {styleObj}
-            />
+            <View style={{flex: 'space-around'}}>
+                <Image
+                source = {require('../../assets/images/confirmed.png')}
+                style = {styleObj}
+                />
+                <Text style={styles.textDesc}>(Confirmed)</Text>
+            </View>
         )
     }
 }
