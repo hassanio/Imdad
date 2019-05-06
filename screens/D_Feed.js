@@ -169,10 +169,6 @@ class D_Feed extends Component {
     	donationList = Object.values(props.donations)
 		}
 
-		if(donationList == []) {
-			return <View />
-		}
-
 		return <ItemList 
 						isLoading = {props.isLoading} 
 						items={donationList} 
