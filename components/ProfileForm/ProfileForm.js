@@ -112,17 +112,21 @@ class ProfileForm extends Component {
 
 			if (!this.state.image) {
 
-				img_type = ((this.props.initialValues.image).split(".").pop())
-				if (img_type == "jpg") {
-					img_type = "jpeg"
-				}
-				const type_ = "image/" + img_type;
-				const name_ = "photo." + ((this.props.initialValues.image).split(".").pop());
-				
-				photo = {
-					uri: this.props.initialValues.image,
-					type: type_,
-					name: name_
+				if (this.props.initialValues.image !== undefined) {
+
+					img_type = ((this.props.initialValues.image).split(".").pop())
+					if (img_type == "jpg") {
+						img_type = "jpeg"
+					}
+					const type_ = "image/" + img_type;
+					const name_ = "photo." + ((this.props.initialValues.image).split(".").pop());
+					
+					photo = {
+						uri: this.props.initialValues.image,
+						type: type_,
+						name: name_
+					}
+
 				}
 
 			} else {
@@ -143,9 +147,14 @@ class ProfileForm extends Component {
 			}
 
 			let formData = new FormData();
-			
-			formData.append('image', photo)
-			
+
+			console.log(this.props.initialValues.image)
+
+			if (this.props.initialValues.image != null || this.state.image != null) {
+				console.log("HERE")
+				formData.append('image', photo)
+			} 
+						
 			Object.keys(values).forEach(key => {
 				formData.append(key, values[key])
 			})
