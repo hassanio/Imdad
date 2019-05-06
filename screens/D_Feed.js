@@ -169,13 +169,6 @@ class D_Feed extends Component {
     	donationList = Object.values(props.donations)
 		}
 
-		if(donationList.length <= 0) {
-			return (
-			<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-				<Text style={{color: 'white', fontSize: 17}}>No donations to show.</Text>
-			</View>)
-		}
-
 		return <ItemList 
 						isLoading = {props.isLoading} 
 						items={donationList} 

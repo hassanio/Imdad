@@ -1,7 +1,7 @@
 import React from 'react';
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
-import { FlatList, StyleSheet, RefreshControl } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl, View, Text } from 'react-native';
 
 import Item from './Thumbnail.js';
 import ItemNGO from './ThumbnailNGO.js'
@@ -12,12 +12,23 @@ class ItemList extends React.Component {
     super(props);
   }
 
+  renderFooter({ items }) {
+      if(items && items.length > 0) { return null }
+
+      return (
+          <View style={{justifyContent:'center', alignItems: 'center'}} >
+            <Text style={{color: 'white', fontSize: 17}}>No donations to show</Text>
+          </View>
+      )
+  }
+
     render() {
         return (
             <FlatList
             style={styles.listContainer}
             data={this.props.items.reverse()}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={this.renderFooter(this.props)}
             refreshControl = {
                 <RefreshControl
                     refreshing = {this.props.isLoading}
