@@ -21,7 +21,7 @@ const renderStatus = (status) => {
         </View>)
     } else if (status.toUpperCase() ==="PENDING") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/pending.png')}
                 style = {styleObj}
@@ -32,7 +32,7 @@ const renderStatus = (status) => {
         
     } else if (status.toUpperCase() ==="WAITING") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/waiting.png')}
                 style = {styleObj}
@@ -42,7 +42,7 @@ const renderStatus = (status) => {
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/confirmed.png')}
                 style = {styleObj}
