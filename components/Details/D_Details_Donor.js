@@ -5,7 +5,6 @@ import * as actions from '../../actions'
 import { Avatar, ListItem, Button } from 'react-native-elements'
 import TextButton from '../TextInput/InputwithButton.js';
 import textbutton_styles from '../TextInput/styles.js';
-import { getTimeFieldValues } from 'uuid-js';
 const axios = require('axios')
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
@@ -21,7 +20,7 @@ const renderStatus = (status) => {
         </View>)
     } else if (status.toUpperCase() ==="PENDING") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/pending.png')}
                 style = {styleObj}
@@ -32,7 +31,7 @@ const renderStatus = (status) => {
         
     } else if (status.toUpperCase() ==="WAITING") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/waiting.png')}
                 style = {styleObj}
@@ -42,7 +41,7 @@ const renderStatus = (status) => {
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
-            <View style={{flex: 'space-around'}}>
+            <View style={{justifyContent: 'space-around'}}>
                 <Image
                 source = {require('../../assets/images/confirmed.png')}
                 style = {styleObj}

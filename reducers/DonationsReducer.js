@@ -12,7 +12,7 @@ const list_to_obj = (arr) => {
     return temp
 }
 
-export default function(state = {loading: true, isFetching: true}, action) {
+export default function(state = {loading: true, isFetching: true, donations: []}, action) {
 
     switch(action.type) {
         case LOADING_DONATIONS:
