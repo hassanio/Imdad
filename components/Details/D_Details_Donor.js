@@ -92,15 +92,27 @@ class D_Details_Donor extends Component {
                 </View>
             </View>
             <View style={styles.detailContainer}>
+            <Text style = {styles.textCat}>Donation Info</Text>
             <View style = {styles.donview}>
-                <Text style = {styles.textCat}>Donation Info</Text>
-                <Text style = {styles.itemview}>• {categories[0]}</Text>
-                <Text style = {styles.itemview}>• {description}</Text>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}> Category: </Text>
+                <Text style = {styles.itemview}>{categories[0]}</Text>
+              </View>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}>Description: </Text>
+                <Text style = {styles.itemview}>{description}</Text>
+              </View>
             </View>
+            <Text style = {styles.textCat}>Collection Info</Text>
             <View style = {styles.donview}>
-                <Text style = {styles.textCat}>Collection Info</Text>
-                <Text style = {styles.itemview}>• {collection_address}, {location}</Text>
-                <Text style = {styles.itemview}>• {contact}</Text>
+            <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}>Address: </Text>
+                <Text style = {styles.itemview}>{collection_address}, {location}</Text>
+            </View>
+            <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}>Conact#: </Text>
+                <Text style = {styles.itemview}>{contact}</Text>
+            </View>
             </View>
             </View>
         </View>
@@ -131,12 +143,11 @@ class D_Details_Donor extends Component {
           }
 
           return (
-              <View style={{ borderWidth: 0.25, borderColor: 'white', borderRadius: 5}}>
-                  <View style={{justifyContent: 'center', alignItems: 'center', paddingVertical: 5}}>
-                    <Text style={[styles.defaultText, {fontSize: 17}]}>
-                        {`List of requesting NGOs (${requestingNGOs.length})`}
-                    </Text>
-                  </View>
+          <View>
+                <Text style={styles.textCat}>
+                   {`List of requesting NGOs (${requestingNGOs.length})`}
+                </Text>
+              <View style={{ borderWidth: 1, borderColor: 'white', borderRadius: 5}}>
                   {
                       requestingNGOs.map((ngo, i) => (
                           <ListItem
@@ -159,26 +170,33 @@ class D_Details_Donor extends Component {
                       ))
                   }
               </View>
+          </View>
           )
       }
       else if (status === 'WAITING') {
           const { hasDonorConfirmed } = donation
           if(hasDonorConfirmed) {
               return (
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
-                    <Text style={{color: 'white', fontSize: 17}}>Waiting for NGO...</Text>
+                <View  style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Text style={{paddingTop: imageHeight/15, color: 'white', fontSize: 17}}>*Waiting for NGO to confirm collection</Text>
                 </View>
               )
           }
 
+          modified_ConfirmButton = JSON.parse(JSON.stringify(textbutton_styles))
+          modified_ConfirmButton.container.height = imageHeight/15
+          modified_ConfirmButton.container.top = imageHeight/70
+          modified_ConfirmButton.buttonText.fontSize = imageHeight/30
+
           return (
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <TextButton
-                    buttonText={'Confirm Pickup'}
-                    my_style = {textbutton_styles}
-                    onPress = {() => onConfirm(donation.id)}
-                />
-            </View>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{paddingTop: imageHeight/70,textAlign: 'center', color: 'white', fontSize: 15}}>*Press the button below once the NGO has collected the donation</Text>
+                  <TextButton
+                      buttonText={'Confirm Pickup'}
+                      my_style = {modified_ConfirmButton}
+                      onPress = {() => onConfirm(donation.id)}
+                  />
+              </View>
           )
       }
   }
@@ -266,7 +284,7 @@ const styles = {
         height: imageWidth/2,
         width: imageWidth/2,
         borderRadius: 5,
-        borderWidth: 0.25,
+        borderWidth: 1,
         borderColor: 'white',
         backgroundColor: 'grey'
     },
@@ -276,7 +294,7 @@ const styles = {
     textview: {
         flexDirection: 'column',
         marginHorizontal: imageWidth/50,
-        borderWidth: 0.25,
+        borderWidth: 1,
         borderColor: 'white',
         width: '45%',
         borderRadius: 5,
@@ -287,8 +305,10 @@ const styles = {
         paddingTop: imageHeight/100,
         paddingBottom: imageHeight/100,
         alignItems: 'center',
-        textAlign: 'center',
+        textAlign: 'left',
         fontWeight: 'bold',
+        paddingLeft: imageWidth/80,
+        textAlign: 'center'
     },
     textDesc: {
         color: 'white',
@@ -305,7 +325,7 @@ const styles = {
         paddingBottom: imageHeight/100,
         marginBottom: imageHeight/100,
         borderColor: 'white',
-        borderWidth: 0.25,
+        borderWidth: 1,
         borderRadius: 5,
         
       },
@@ -315,15 +335,32 @@ const styles = {
         paddingBottom: imageHeight/100,
         paddingLeft: imageWidth/50,
         fontSize: imageHeight /35,
+        width: '80%'
+    },
+    itemheadview: {
+        color: 'white',
+        fontWeight: 'bold',
+        paddingTop: imageHeight/100,
+        paddingBottom: imageHeight/100,
+        paddingLeft: imageWidth/50,
+        fontSize: imageHeight /35,
     },
     NGOListContainer:{
         backgroundColor: '#316538',
     },
     NGOListName: {
-        color:'white'
+        color: 'white',
+        fontSize: imageHeight /30,
+        paddingTop: imageHeight/100,
+        paddingBottom: imageHeight/100,
+        alignItems: 'center',
+        textAlign: 'left',
+        fontWeight: 'bold',
+        paddingLeft: imageWidth/80,
     },
     acceptButton: {
-        backgroundColor: '#CAEEA2'
+        backgroundColor: '#CAEEA2',
+        width: imageWidth/3
     },
     acceptButtonTitle: {
         fontWeight: '400',
