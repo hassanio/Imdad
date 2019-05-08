@@ -12,7 +12,7 @@ const renderStatus = (status) => {
         return null
     } else if (status.toUpperCase() ==="PENDING") {
         return (
-            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>You have pending requests from NGO(s)</Text>}>
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text style={{fontSize: imageHeight/50}}>You have pending requests from NGO(s)</Text>}>
                 <Image
                 source = {require('../../assets/images/pending.png')}
                 style = {styleObj}
@@ -22,7 +22,7 @@ const renderStatus = (status) => {
         
     } else if (status.toUpperCase() ==="WAITING") {
         return (
-            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>Waiting for pickup confirmation from both parties</Text>}>
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text style={{fontSize: imageHeight/50}}>Waiting for pickup confirmation from both parties</Text>}>
                 <Image
                 source = {require('../../assets/images/waiting.png')}
                 style = {styleObj}
@@ -31,7 +31,7 @@ const renderStatus = (status) => {
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
-            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>Pickup has been confirmed. Thankyou for donating!</Text>}>
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text style={{fontSize: imageHeight/50}}>Pickup has been confirmed. Thankyou for donating!</Text>}>
                 <Image
                 source = {require('../../assets/images/confirmed.png')}
                 style = {styleObj}
