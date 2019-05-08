@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
-
+import { Tooltip } from 'react-native-elements';
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height;
 const thumbnailHeight = imageHeight/6 
@@ -12,25 +12,31 @@ const renderStatus = (status) => {
         return null
     } else if (status.toUpperCase() ==="PENDING") {
         return (
-            <Image
-            source = {require('../../assets/images/pending.png')}
-            style = {styleObj}
-            />
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>You have pending requests from NGO(s)</Text>}>
+                <Image
+                source = {require('../../assets/images/pending.png')}
+                style = {styleObj}
+                />
+            </Tooltip>
         )
         
     } else if (status.toUpperCase() ==="WAITING") {
         return (
-            <Image
-            source = {require('../../assets/images/waiting.png')}
-            style = {styleObj}
-            />
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>Waiting for pickup confirmation from both parties</Text>}>
+                <Image
+                source = {require('../../assets/images/waiting.png')}
+                style = {styleObj}
+                />
+            </Tooltip>
         )
     } else if (status.toUpperCase() ==="CONFIRMED") {
         return (
-            <Image
-            source = {require('../../assets/images/confirmed.png')}
-            style = {styleObj}
-            />
+            <Tooltip width={imageWidth/1.05} backgroundColor='#CAEEA2' popover={<Text>Pickup has been confirmed. Thankyou for donating!</Text>}>
+                <Image
+                source = {require('../../assets/images/confirmed.png')}
+                style = {styleObj}
+                />
+            </Tooltip>
         )
     }
 }

@@ -73,12 +73,19 @@ class D_Details_NGO extends Component {
     }
 
     if(status === 'NONE' || status === 'PENDING') {
+      modified_RequestButton = JSON.parse(JSON.stringify(textbutton_styles))
+      modified_RequestButton.container.height = imageHeight/15
+      modified_RequestButton.container.top = imageHeight/50
+      modified_RequestButton.buttonText.fontSize = imageHeight/30
+
       return (
-        <TextButton
-        buttonText="Request"
-        my_style = {textbutton_styles}
-        onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${donation.id}`, token, this.props.navigation)}
-        />
+        <View style = {{paddingTop: imageHeight/15}}>
+          <TextButton
+          buttonText="Request Item"
+          my_style = {modified_RequestButton}
+          onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${donation.id}`, token, this.props.navigation)}
+          />
+        </View>
       )
     }
 
@@ -88,18 +95,24 @@ class D_Details_NGO extends Component {
       if(hasNGOConfirmed) {
         return (
           <View  style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{color: 'white', fontSize: 17}}>Waiting for Donor...</Text>
+              <Text style={{paddingTop: imageHeight/15, color: 'white', fontSize: 17}}>*Waiting for Donor to confirm collection</Text>
           </View>
         )
       }
 
+      modified_ConfirmButton = JSON.parse(JSON.stringify(textbutton_styles))
+      modified_ConfirmButton.container.height = imageHeight/15
+      modified_ConfirmButton.container.top = imageHeight/50
+      modified_ConfirmButton.buttonText.fontSize = imageHeight/30
+
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <TextButton
-                buttonText={'Confirm Pickup'}
-                my_style = {textbutton_styles}
-                onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donation.id}`, token, this.props.navigation)}
-            />
+            <Text style={{paddingTop: imageHeight/35,textAlign: 'center', color: 'white', fontSize: 15}}>*Press the button below once the donation is collected</Text>
+              <TextButton
+                  buttonText={'Confirm Pickup'}
+                  my_style = {modified_ConfirmButton}
+                  onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donation.id}`, token, this.props.navigation)}
+              />
         </View>
       )
     }
@@ -121,16 +134,24 @@ class D_Details_NGO extends Component {
                   <Text style = {styles.textDesc}>• 0{this.props.donation.contact}</Text>
             </View>
             </View>
+            <Text style = {styles.textCat}>Donation Info</Text>
             <View style = {styles.donview}>
-              <Text style = {styles.textCat}>Donation Info</Text>
-              <Text style = {styles.itemview}>• {this.props.donation.categories}</Text>
-              <Text style = {styles.itemview}>• {this.props.donation.description}</Text>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}> Category: </Text>
+                <Text style = {styles.itemview}>{this.props.donation.categories[0]}</Text>
+              </View>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}>Description: </Text>
+                <Text style = {styles.itemview}>{this.props.donation.description}</Text>
+              </View>
             </View>
-            <View style = {{height: imageHeight/100}}/>
+            <Text style = {styles.textCat}>Collection Info</Text>
             <View style = {styles.donview}>
-              <Text style = {styles.textCat}>Collection Address</Text>
-              <Text style = {styles.itemview}>• {this.props.donation.collection_address}, {this.props.donation.location}</Text>
+            <View style = {{flexDirection: 'row'}}>
+                <Text style = {styles.itemheadview}>Address: </Text>
+                <Text style = {styles.itemview}>{this.props.donation.collection_address}, {this.props.donation.location}</Text>
             </View>
+            </View>  
             <View style = {{justifyContent: 'center', allignItems: 'center', flexDirection: 'row'}}>
               {this.renderButton(this.props)}
             </View>            
@@ -182,7 +203,7 @@ const styles = {
     paddingLeft: imageWidth/80,
     paddingBottom: imageHeight/100,
     borderColor: 'white',
-    borderWidth: 0.25,
+    borderWidth: 1,
     borderRadius: 5,
     
   },
@@ -192,12 +213,22 @@ const styles = {
     paddingBottom: imageHeight/100,
     paddingLeft: imageWidth/50,
     fontSize: imageHeight /35,
+    width: '80%'
   },
+
+  itemheadview: {
+        color: 'white',
+        fontWeight: 'bold',
+        paddingTop: imageHeight/100,
+        paddingBottom: imageHeight/100,
+        paddingLeft: imageWidth/50,
+        fontSize: imageHeight /35,
+    },
 
   textview: {
     flexDirection: 'column',
     marginHorizontal: imageWidth/50,
-    borderWidth: 0.25,
+    borderWidth: 1,
     borderColor: 'white',
     width: '45%',
     borderRadius: 5,
@@ -225,7 +256,7 @@ const styles = {
     height: imageWidth/2,
     width: imageWidth/2,
     borderRadius: 5,
-    borderWidth: 0.25,
+    borderWidth: 1,
     borderColor: 'white'
   }
 }

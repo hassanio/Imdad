@@ -52,6 +52,21 @@ class ItemNGO extends Component {
       }
     }
 
+    request_icon() {
+        if (this.props.is_approved) {
+            return null
+        } else {
+            return (
+                <TouchableOpacity onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${this.props.itemid}`, this.props.token)} style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
+                     <Image
+                    source = {src}
+                    style = {{height: imageHeight/30, width: imageHeight/30}}
+                    />
+                </TouchableOpacity>
+                )
+        }
+    }
+
   render() {
 
     if (this.state.loading) {
@@ -69,12 +84,7 @@ class ItemNGO extends Component {
                 <View style = {{width: '50%'}}>
                     <Text style={styles.textCategory}>• {this.props.itemCategory}</Text>
                 </View>
-                <TouchableOpacity onPress = {() => this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/requestDonation/${this.props.itemid}`, this.props.token)} style = {{flexDirection: "row", width: '70%', justifyContent: 'center', paddingLeft: imageWidth/20, paddingTop: imageHeight/100}}>
-                     <Image
-                    source = {src}
-                    style = {{height: imageHeight/30, width: imageHeight/30}}
-                    />
-                </TouchableOpacity>
+                {this.request_icon()}
             </View>
                 <Text style={styles.textDescription}>•  {this.props.itemAddress} </Text>
                 <View style={styles.componentLocation}>
