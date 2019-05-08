@@ -50,8 +50,16 @@ class ItemList extends React.Component {
                         />
                     )
                 } else {
+
+                    if (this.props.is_approved === undefined) {
+                        is_app = false
+                    } else {
+                        is_app = true
+                    }
+
                     return (
                         <ItemNGO
+                            is_approved = {is_app}
                             itemCategory = {info.item.categories[0]}
                             DonatedImage = {info.item.image}
                             itemLocation = {info.item.location}

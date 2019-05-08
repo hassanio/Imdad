@@ -61,6 +61,7 @@ class ApprovedDonations extends Component {
 
     renderApprovedDonations({ loading, donations }) {
 		return <ItemList 
+                        is_approved = {true}
 						isLoading = {loading} 
 						items={donations} 
 						onPress={(donationID) => this.props.navigation.navigate('d_details', {donationID: donationID})}
