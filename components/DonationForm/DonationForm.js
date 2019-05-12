@@ -117,7 +117,6 @@ class DonationForm extends Component {
 
 				console.log(name_)
 				console.log(type_)
-				console.log("-------------")
 
 				let formData = new FormData();
 				const photo = {
