@@ -60,7 +60,8 @@ class D_Details_Donor extends Component {
     super(props)
     this.state = {
         is_image: false,
-        loading: false
+        loading: false,
+        conf_ngo: null
     }
   }
 
@@ -121,6 +122,11 @@ class D_Details_Donor extends Component {
   }
 
   renderExtra(donation, onAccept, onConfirm) {
+
+      if (donation.approvedNGO !== undefined && this.state.conf_ngo === null ) {
+        this.setState({conf_ngo: donation.approvedNGO.name})
+      }
+
       if(this.state.loading) {
           return (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
@@ -131,8 +137,12 @@ class D_Details_Donor extends Component {
 
       const status = donation.status.toUpperCase()
 
-      if(status === 'NONE' || status === 'CONFIRMED') {
+      if(status === 'NONE') {
           return null
+      }
+
+      if(status === 'CONFIRMED') {
+          return <Text style={{paddingTop: imageHeight/100,fontWeight: 'bold', textAlign: 'center', color: 'white', fontSize: 20}}>Approved NGO: {this.state.conf_ngo}</Text>
       }
 
       if(status === 'PENDING') {
@@ -160,7 +170,7 @@ class D_Details_Donor extends Component {
                                 raised
                                 buttonStyle = {styles.acceptButton}
                                 titleStyle = {styles.acceptButtonTitle}
-                                onPress={() => onAccept(ngo._id, donation.id)}
+                                onPress={() => onAccept(ngo.name, ngo._id, donation.id)}
                             />}
                             bottomDivider={true}
                             topDivider = {true}
@@ -178,7 +188,8 @@ class D_Details_Donor extends Component {
           if(hasDonorConfirmed) {
               return (
                 <View  style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{paddingTop: imageHeight/15, color: 'white', fontSize: 17}}>*Waiting for NGO to confirm collection</Text>
+                  {this.state.conf_ngo && <Text style={{paddingTop: imageHeight/100,fontWeight: 'bold', textAlign: 'center', color: 'white', fontSize: 20}}>Approved NGO: {this.state.conf_ngo}</Text>}
+                  <Text style={{paddingTop: imageHeight/25, color: 'white', fontSize: 17}}>*Waiting for NGO to confirm collection</Text>
                 </View>
               )
           }
@@ -190,6 +201,7 @@ class D_Details_Donor extends Component {
 
           return (
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                {this.state.conf_ngo && <Text style={{paddingTop: imageHeight/100, fontWeight: 'bold', textAlign: 'center', color: 'white', fontSize: 20}}>Approved NGO: {this.state.conf_ngo}</Text>}
                 <Text style={{paddingTop: imageHeight/70,textAlign: 'center', color: 'white', fontSize: 15}}>*Press the button below once the NGO has collected the donation</Text>
                   <TextButton
                       buttonText={'Confirm Pickup'}
@@ -244,7 +256,12 @@ class D_Details_Donor extends Component {
               <View style={{flex: 1}}>
                       {this.renderExtra(
                           donation,
-                          (ngoID, donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/approveNGO/${donationID}/${ngoID}`, token, navigation)},
+                          (ngoname, ngoID, donationID) => {
+                            if (this.state.conf_ngo === null) {
+                              this.setState({conf_ngo: ngoname})
+                            }
+                            this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/approveNGO/${donationID}/${ngoID}`, token, navigation)
+                          },
                           (donationID) => {this.performAsyncRequest(`https://young-castle-56897.herokuapp.com/confirmPickup/${donationID}`, token, navigation)}
                           )}
                   </View>         
