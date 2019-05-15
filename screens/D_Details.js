@@ -48,7 +48,6 @@ class D_Details extends Component {
   renderDetails({ isDonor, navigation, donations }) {
     const donationID = navigation.getParam('donationID')
     if (isDonor) {
-      console.log(donations[donationID])
       return (
           <D_Details_Donor donation={donations[donationID]} navigation={navigation} />
                 )
