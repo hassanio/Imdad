@@ -79,6 +79,7 @@ class SignUpForm extends Component {
 
 			this.setState({error: "Successful", loading: false })
 
+			ToastAndroid.show('Signup Successful! Please login again.', ToastAndroid.LONG)
 			this.props.navigation.navigate('d_login', { isDonor: true })
 			
         }

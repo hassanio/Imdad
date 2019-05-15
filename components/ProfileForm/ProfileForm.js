@@ -39,11 +39,11 @@ const validate = values => {
 	} 
 
 	if (!values.address) {
-		errors.address = 'Required!'
+		errors.address = '(Required) '
 	}
 
 	if (!values.location || values.location == 'None') {
-		errors.location = 'Required!'
+		errors.location = '(Required) '
 	}
 
 	return errors
