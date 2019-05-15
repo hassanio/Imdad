@@ -66,9 +66,12 @@ exports.fetch_donation_donor = async (req, res) => {
             }).select('email name')
 
         }
-        else if (status == 'WAITING') {
+        else if (status == 'WAITING' || status == 'CONFIRMED') {
             baseObj.hasDonorConfirmed = donation.hasDonorConfirmed
             baseObj.hasNGOConfirmed = donation.hasNGOConfirmed
+
+            const approvedNGO = await NGO.findById(donation.approvedNGO).select('name contact address email')
+            baseObj.approvedNGO = approvedNGO
         }
 
         res.send(baseObj)
